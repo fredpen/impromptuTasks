@@ -35,25 +35,35 @@
                     </a>
 
                     <!--- Sidemenu -->
-                    <ul class="metismenu side-nav">
+                    <ul class="metismenu side-nav mt-4">
 
                         <li class="side-nav-title side-nav-item">Navigation</li>
 
                         <li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link">
                                 <i class="dripicons-meter"></i>
-                                <span class="badge badge-success float-right">3</span>
-                                <span> Users </span>
+                                <span>Launch</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="side-nav-second-level" aria-expanded="false">
+                                <li>
+                                    <a href="{{ route('home') }}">App</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a href="javascript: void(0);" class="side-nav-link">
+                                <i class="dripicons-meter"></i>
+                                <span> Users and Roles </span>
+                                <span class="menu-arrow"></span>
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
                                     <a href="{{ route('users.index') }}">All users</a>
                                 </li>
-                                <li>
-                                    <a href="dashboard-crm.html">CRM</a>
-                                </li>
-                                <li>
-                                    <a href="dashboard-projects.html">Projects</a>
+                                  <li>
+                                    <a href="{{ route('roles.index') }}">Manage Roles</a>
                                 </li>
                             </ul>
                         </li>
@@ -61,14 +71,10 @@
                         <li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link">
                                 <i class="dripicons-view-apps"></i>
-                                <span>Roles & Tasks</span>
+                                <span>Tasks & Sub Tasks</span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
-                                <li>
-                                    <a href="{{ route('roles.index') }}">Manage Roles</a>
-                                </li>
-
                                 <li>
                                     <a href="{{ route('tasks.index') }}">Manage Tasks</a>
                                 </li>
@@ -83,65 +89,63 @@
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
-                                    {{-- <a href="{{ route('locations.index') }}">Manage Locations</a> --}}
+                                    <a href="pages-login.html">Countries</a>
                                 </li>
-
-                                <li class="side-nav-item">
-                                    <a href="javascript: void(0);" aria-expanded="false">Authentication
+                                    <li>
+                                    <a href="pages-login.html">Regions/states</a>
+                                </li>
+                                    <li>
+                                    <a href="pages-login.html">cities</a>
+                                </li>
+                                {{-- <li class="side-nav-item">
+                                    <a href="javascript: void(0);" aria-expanded="false">Manage Locations
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <ul class="side-nav-third-level" aria-expanded="false">
                                         <li>
-                                            <a href="pages-login.html">Login</a>
+                                            <a href="pages-login.html">Countries</a>
+                                        </li>
+                                         <li>
+                                            <a href="pages-login.html">Regions/states</a>
+                                        </li>
+                                         <li>
+                                            <a href="pages-login.html">cities</a>
                                         </li>
                                     </ul>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="javascript: void(0);" aria-expanded="false">Error
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <ul class="side-nav-third-level" aria-expanded="false">
-                                        <li>
-                                            <a href="pages-404.html">Error 404</a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-404-alt.html">Error 404-alt</a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-500.html">Error 500</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
 
                         <li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link">
                                 <i class="dripicons-browser"></i>
-                                <span> Layouts </span>
+                                <span> Projects </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
-                                    <a href="layouts-horizontal.html">Horizontal</a>
+                                    <a href="layouts-horizontal.html">All Projects</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-light-sidenav.html">Light Sidenav</a>
+                                    <a href="layouts-light-sidenav.html">On going Project</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-collapsed.html">Collapsed Sidenav</a>
+                                    <a href="layouts-collapsed.html">Completed Projectes</a>
                                 </li>
                                 <li>
-                                    <a href="javascript: void(0);" class="right-bar-toggle">Right Sidebar</a>
+                                    <a href="layouts-collapsed.html">Unattended Projects</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-boxed-vertical.html">Boxed Vertical</a>
+                                    <a href="javascript: void(0);" class="right-bar-toggle">Uncompleted Projects</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-boxed-horizontal.html">Boxed Horizontal</a>
+                                    <a href="layouts-collapsed.html">Admin Cancelled</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-scrollable-sidenav.html">Scrollable Sidenav</a>
+                                    <a href="layouts-collapsed.html">Task Master Cancelled</a>
+                                </li>
+                                <li>
+                                    <a href="layouts-collapsed.html">Task Giver Cancelled</a>
                                 </li>
                             </ul>
                         </li>
@@ -151,7 +155,7 @@
                         <li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link">
                                 <i class="dripicons-briefcase"></i>
-                                <span> UI Kit </span>
+                                <span> UI </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
@@ -190,146 +194,9 @@
                                 </li>
                             </ul>
                         </li>
-
-                        <li class="side-nav-item">
-                            <a href="widgets.html" class="side-nav-link">
-                                <i class="dripicons-heart"></i>
-                                <span class="badge badge-light float-right">New</span>
-                                <span> Widgets </span>
-                            </a>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-document"></i>
-                                <span> Forms </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-second-level" aria-expanded="false">
-                                <li>
-                                    <a href="form-elements.html">Basic Elements</a>
-                                </li>
-                                <li>
-                                    <a href="form-advanced.html">Form Advanced</a>
-                                </li>
-                                <li>
-                                    <a href="form-validation.html">Validation</a>
-                                </li>
-                                <li>
-                                    <a href="form-wizard.html">Wizard</a>
-                                </li>
-                                <li>
-                                    <a href="form-fileuploads.html">File Uploads</a>
-                                </li>
-                                <li>
-                                    <a href="form-editors.html">Editors</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-graph-pie"></i>
-                                <span> Charts </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-second-level" aria-expanded="false">
-                                <li>
-                                    <a href="charts-chartjs.html">Chartjs</a>
-                                </li>
-                                <li>
-                                    <a href="charts-brite.html">Britecharts</a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="javascript: void(0);" aria-expanded="false">Apex Charts
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <ul class="side-nav-third-level" aria-expanded="false">
-                                        <li>
-                                            <a href="charts-apex-line.html">Line</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-area.html">Area</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-column.html">Column</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-bar.html">Bar</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-mixed.html">Mixed</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-bubble.html">Bubble</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-scatter.html">Scatter</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-pie.html">Pie</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-radialbar.html">RadialBar</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-heatmap.html">Heatmap</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-sparklines.html">Sparklines</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-candlestick.html">Candlestick</a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-apex-radar.html">Radar</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="charts-sparkline.html">Sparklines</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-list"></i>
-                                <span> Tables </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-second-level" aria-expanded="false">
-                                <li>
-                                    <a href="tables-basic.html">Basic Tables</a>
-                                </li>
-                                <li>
-                                    <a href="tables-datatable.html">Data Tables</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-location"></i>
-                                <span> Maps </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-second-level" aria-expanded="false">
-                                <li>
-                                    <a href="maps-google.html">Google Maps</a>
-                                </li>
-                                <li>
-                                    <a href="maps-vector.html">Vector Maps</a>
-                                </li>
-                            </ul>
-                        </li>
-
                     </ul>
 
-
-
                     <div class="clearfix"></div>
-
                 </div>
             </div>
 
@@ -345,6 +212,7 @@
                                     <i class="dripicons-bell noti-icon"></i>
                                     <span class="noti-icon-badge"></span>
                                 </a>
+
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
 
                                     <!-- item-->

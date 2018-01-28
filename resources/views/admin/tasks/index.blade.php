@@ -24,8 +24,9 @@
 
                                 {!! Form::open(['method' => 'POST', 'action' => 'TasksController@store']) !!}
                                     <div class="form-group mb-3 justify-content-center">
+                                        {!! Form::label('name', 'For storing more than one Task at a time, Separate them with comma like so web dev, mobiledev', ['class' => 'h6']) !!}
                                         {!! Form::text('name', null, ['class' => 'form-control mb-3', 'placeholder' => 'Enter task name']) !!}
-                                        {!! Form::submit('Create Task', ['class' => 'btn btn-primary d-block mx-auto']) !!}
+                                        {!! Form::submit('Create Task', ['class' => 'btn btn-dark d-block mx-auto']) !!}
                                     </div>
                                 {!! Form::close() !!}
                             </div>

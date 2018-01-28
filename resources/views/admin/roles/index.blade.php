@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row mt-4">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
 
             @if ($errors->any())
                 @include('partials.errorBag')
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-         <div class="col-sm-4">
+         <div class="col-sm-6">
             <div class="card card-body">
                 <h4 class="card-title text-center">Edit Roles</h4>
                 <div class="card-text">
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="card card-body">
                 <h4 class="card-title text-center">Roles</h4>
                 <div class="card-text">

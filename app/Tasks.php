@@ -26,13 +26,13 @@ class Tasks extends Model
         return $this->hasMany(SubTask::class, 'task_id');
     }
 
-    /**
-     * Project
-     *
-     * @return an instance of project
-    //  */
-    // public function projects()
-    // {
-    //     return $this->HasOne(Project::class);
-    // }
+    public function storeTasks($taskString)
+    {
+        if (strpos($taskString, ",") === false) return $this::create(['name' => $taskString]);
+        $taskArray = explode(",", $taskString);
+        foreach ($taskArray as  $taskName) {
+            $this::firstOrcreate(['name' => $taskName]);
+        }
+        return true;
+    }
 }

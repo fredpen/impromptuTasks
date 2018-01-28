@@ -293,7 +293,7 @@
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('projects.create') }}" id="topnav-layouts" role="button">
-                                                <span class="text-white bg-danger px-2 py-1">Post Task</span>
+                                                <span class="text-nowrap text-white bg-danger px-2 py-1">Post Task</span>
                                             </a>
                                         </li>
 

@@ -98,10 +98,9 @@ class AdminUsersController extends Controller
     {
         if (!$request->has('role_id')) {
             $this->_toggleUser($user);
-            return back();
+        } else {
+            $user->update($this->_validate($request));
         }
-
-        $user->update($this->_validate($request));
         return back();
     }
 

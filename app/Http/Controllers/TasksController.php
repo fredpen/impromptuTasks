@@ -52,10 +52,10 @@ class TasksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Tasks $tasks)
     {
         $validatedData = $this->_validate($request);
-        Tasks::create($validatedData);
+        $tasks->storeTasks($validatedData['name']);
         return back();
     }
 
