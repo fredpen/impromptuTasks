@@ -47,7 +47,7 @@
                                                 <div class="media-body mt-3">
 
                                                     <h4 class="mt-1 mb-1 h3 text-capitalise">{{$user->name}}</h4>
-                                                    <p class="text-capitalize font-13">{!!($user->title ? $user->title : 'Care Giver')!!}</p>
+                                                    <p class="text-capitalize font-13">{!!($user->title ? $user->title : 'Update your Title')!!}</p>
 
                                                     <ul class="mb-2 list-inline">
                                                         <li class="list-inline-item mr-3">
@@ -71,6 +71,14 @@
 
                                                         </li>
                                                     </ul>
+
+                                                    {!! Form::open(['action' => ['AccountController@update', $user->id], "method" => "PATCH"]) !!}
+                                                        {!! Form::file('imageurl', []) !!}
+                                                        <button type="submit" class="btn btn-outline-primary my-2">Upload New Avatar</button>
+                                                    {!! Form::close() !!}
+
+
+                                                    <button type="button" class="btn btn-outline-danger">Remove current Avatar</button>
                                                 </div>
                                             </div>
                                         </div>

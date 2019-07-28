@@ -26,8 +26,8 @@
                         <div class="container-fluid">
 
                             <!-- LOGO -->
-                            <a href="route" id="fred-logo" class="topnav-logo">
-                                    <img src="{{ asset('images/basic.jpg') }}" alt="" height="16">
+                            <a href="{{ route('home') }}" id="fred-logo" class="topnav-logo">
+                                <img src="{{ asset('images/basic.jpg') }}" alt="impromptutasks.com" height="16">
                             </a>
 
                             <ul class="list-unstyled topbar-right-menu float-right mb-0">
@@ -78,12 +78,16 @@
                                     <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
                                         aria-expanded="false">
                                         @guest
-                                            <span class="">
-                                                <i class="mdi mdi-account-plus"></i>Account
+                                            <span class="account-user-avatar">
+                                                <img src="{{ asset('images/basic.jpg') }}" alt="register avatar" class="rounded-circle">
+                                            </span>
+                                            <span>
+                                                <span class="account-user-name">Account</span>
+                                                <span class="account-position">Register/Login</span>
                                             </span>
                                         @else
                                             <span class="account-user-avatar">
-                                                <img src="{{ asset('images/basic.jpg') }}" alt="user-image" class="rounded-circle">
+                                                <img src="{{ asset('images/basic.jpg') }}" alt="{{Auth::User()->name}}" class="rounded-circle">
                                             </span>
                                             <span>
                                                 <span class="account-user-name">{{ Auth::User()->name }} </span>
@@ -105,17 +109,17 @@
                                                 </a>
                                             @endif
                                         @else
-                                            <a href="{{ route('register') }}" class="dropdown-item notify-item">
+                                            <a href="{{ route('account.edit', Auth::User()->id) }}" class="dropdown-item notify-item">
                                                 <i class="mdi mdi-account-circle mr-1"></i>
-                                                <span>Profile</span>
+                                                <span>My Profile</span>
                                             </a>
                                             <a href="{{ route('logout') }}" class="dropdown-item notify-item"
                                                 onclick="event.preventDefault();
-                                                                     document.getElementById('logout-form').submit();">
-                                                        {{ __('Logout') }}
-                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                    </form>
+                                                document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
                                             </a>
                                         @endguest
                                     </div>

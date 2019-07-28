@@ -79,12 +79,11 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $this->_validate($request);
-
-
         $skill_ids = $request->skills;
         $user = $this->_user();
-        $user->skills()->sync($skill_ids);
+        $user->skills()->sync($skill_ids);  //update user skills
+        $validatedData = $this->_validate($request);
+        $validatedData['isActive'] = 1;
         $user->update($validatedData);
         return back();
     }
