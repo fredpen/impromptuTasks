@@ -25,8 +25,6 @@ class CreateUsersTable extends Migration
                 $table->integer('orders_in')->nullable();
                 $table->string('email')->unique();
                 $table->string('imageurl')->nullable();
-                $table->string('facebook')->unique()->nullable();
-                $table->string('twitter')->unique()->nullable();
                 $table->string('linkedln')->unique()->nullable();
                 $table->longText('bio')->nullable();
                 $table->timestamp('email_verified_at')->nullable();

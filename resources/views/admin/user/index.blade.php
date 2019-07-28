@@ -34,7 +34,6 @@
                                                         <input onchange="this.form.submit()" type="checkbox" name="isActive" {{ $user->isActive ? 'checked' : '' }}>
                                                 {!! Form::close() !!}
                                             </td>
-
                                             <td style="cursor: pointer;" class="table-action text-center" onclick="deleted(this)">
                                                 <i class="mdi mdi-delete"></i>
                                                 {!! Form::open(['method' => 'DELETE', 'action' =>['UsersController@destroy', $user->id]]) !!}
