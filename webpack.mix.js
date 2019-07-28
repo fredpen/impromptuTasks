@@ -28,10 +28,11 @@ mix.styles([
 
 mix.scripts([
    'resources/js/app.min.js',
-    // 'resources/js/buttons.html5.min.js',
-    // 'resources/js/responsive.bootstrap4.js',
     'resources/js/custom.js'
-    // 'resources/js/jquery-ui.min.js'
 
 ], 'public/js/all.js');
 
+mix.scripts([
+    'resources/js/form.js'
+
+], 'public/js/form.js');

@@ -14,8 +14,9 @@
     min-height: 40vh;
 }
 
-.wrapper {
-    height: unset;
+.wrapper, .content-page {
+    min-height: 100%;
+    overflow: unset;
 }
 
 .note {
@@ -32,10 +33,6 @@
     border: 1px solid #ced4da;
     margin-bottom: 2%;
 }
-
-/*.form-control {
-    border-radius:1.5rem;
-}*/
 
 .btnSubmit {
     border:none;
