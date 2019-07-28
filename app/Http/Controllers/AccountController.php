@@ -82,7 +82,6 @@ class AccountController extends Controller
         $validatedData = $this->_validate($request);
 
 
-
         $skill_ids = $request->skills;
         $user = $this->_user();
         $user->skills()->sync($skill_ids);

@@ -56,7 +56,7 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        return $id;
+        // return $id;
     }
 
     /**
@@ -90,6 +90,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
