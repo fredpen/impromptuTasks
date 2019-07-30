@@ -30,19 +30,18 @@
                                             <td> {{ $user->updated_at->diffForHumans() }}</td>
                                             <td> {{ $user->created_at->diffForHumans() }}</td>
                                             <td>
-                                                {!! Form::open(['method' => 'PUT', 'action' => ['UsersController@update', $user->id]]) !!}
+                                                {!! Form::open(['method' => 'PUT', 'action' => ['AdminUsersController@update', $user->id]]) !!}
                                                         <input onchange="this.form.submit()" type="checkbox" name="isActive" {{ $user->isActive ? 'checked' : '' }}>
                                                 {!! Form::close() !!}
                                             </td>
                                             <td style="cursor: pointer;" class="table-action text-center" onclick="deleted(this)">
                                                 <i class="mdi mdi-delete"></i>
-                                                {!! Form::open(['method' => 'DELETE', 'action' =>['UsersController@destroy', $user->id]]) !!}
+                                                {!! Form::open(['method' => 'DELETE', 'action' =>['AdminUsersController@destroy', $user->id]]) !!}
                                                 {!! Form::close() !!}
                                             </td>
                                         </tr>
                                     @endforeach
                                 @endif
-
                             </tbody>
                         </table>
                     </div>

@@ -20,7 +20,7 @@ Route::get('/admin', 'RolesController@create')->name('admin.home');
 
 Route::resource('account', 'AccountController');
 
-
+// Route::resource('admin/users', 'AdminUsersController');
 Route::resource('admin/users', 'AdminUsersController');
 Route::resource('admin/tasks', 'TasksController');
 Route::resource('admin/subtasks', 'SubTaskController');

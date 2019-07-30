@@ -44,7 +44,7 @@
                     <div class="card-header" id="headingedit">
                         <h5 class="m-0">
                             <a class="custom-accordion-title collapsed d-block pt-2 pb-2" data-toggle="collapse" href="#collapseedit" aria-expanded="false" aria-controls="collapseOne">
-                                Update Existing Locations<span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
+                                Rename/Delete Existing Locations  ({{ $locations->count() }})<span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
                             </a>
                         </h5>
                     </div>
@@ -83,49 +83,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-8">
-            <div id="accordion" class="custom-accordion mb-4">
-
-                <div class="card mb-0">
-                    <div class="card-header" id="headingedit">
-                        <h5 class="m-0">
-                            <a class="custom-accordion-title collapsed d-block pt-2 pb-2" data-toggle="collapse" href="#collapseedold" aria-expanded="false" aria-controls="collapseOne">
-                                Existing Locations ({{ $locations->count() }})<span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
-                            </a>
-                        </h5>
-                    </div>
-                    <div id="collapseedold" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card card-body">
-                            <div class="card-text">
-                                @if ($locations->count() > 0)
-                                    <div class="table-responsive-sm">
-                                        <table class="table table-bordered table-centered mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>S/N</th>
-                                                    <th>location Name</th>
-                                                    <th>Created</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($locations as $key => $location) {
-                                                    <tr>
-                                                        <td> {{ $key + 1 }} </td>
-                                                        <td> {{ $location->name }} </td>
-                                                        <td> {{ $location->created_at->diffForHumans() }} </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>

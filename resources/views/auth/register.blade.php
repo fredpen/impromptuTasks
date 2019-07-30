@@ -17,7 +17,7 @@
 
             <div class="card">
                 <div class="card-body pt-0">
-                     <form method="POST" action="{{ route('home') }}">
+                    <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div id="progressbarwizard">
@@ -54,7 +54,7 @@
                                             <div class="form-group row mb-3">
                                                 <label class="col-md-3 col-form-label" for="name">Full Name</label>
                                                 <div class="col-md-9">
-                                                    <input required id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Full Name">
+                                                    <input required id="name" type="text" class="form-control  @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Full Name">
 
                                                     @error('name')
                                                         <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                             <div class="form-group row mb-3">
                                                 <label class="col-md-3 col-form-label" for="email"> Email</label>
                                                 <div class="col-md-9">
-                                                    <input required id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address">
+                                                    <input required id="email" type="email" class="form-control  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address">
 
                                                     @error('email')
                                                         <span class="invalid-feedback" role="alert">
@@ -107,11 +107,11 @@
                                             </div>
 
                                             <div class="form-group row mb-">
-                                                <label class="col-md-4 col-form-label" for="role_id"> Nearest Location</label>
+                                                <label class="col-md-4 col-form-label" for="location_id"> Nearest Location</label>
                                                 <div class="col-md-8">
-                                                    <select required name="location_id" class="form-control custom-select">
+                                                    <select required name="location_id" class="form-control custom-select text-capitalize">
                                                         @foreach (( DB::table('locations')->orderBy('name', 'asc')->get(['id', 'name'])) as $location)
-                                                            <option class="text-capitalise" value="{{$location->id}}">{{$location->name}}</option>
+                                                            <option  value="{{$location->id}}">{{$location->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -122,7 +122,7 @@
                                                 <div class="col-md-8">
                                                     <select required name="role_id" class="custom-select form-control" value="{{ old('role_id') }}">
                                                         @foreach (( DB::table('roles')->get(['id', 'name'])) as $role)
-                                                            <option value="{{$role->id}}">{{$role->name}}</option>
+                                                            <option value="{{$role->id}}">{{($role->id === 1 ? "I need to some tasks done" : "I want to apply as a Task Master")}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

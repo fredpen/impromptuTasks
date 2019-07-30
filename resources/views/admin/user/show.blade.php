@@ -18,7 +18,7 @@
                     <p>Becareful when editing this page, this should only be done on rare cases</p>
                 </div>
 
-                {!! Form::model($user, ['method' => 'PUT', 'action' => ['UsersController@update', $user->id]]) !!}
+                {!! Form::model($user, ['method' => 'PUT', 'action' => ['AdminUsersController@update', $user->id]]) !!}
                     <div class="form-content">
                         <div class="row">
                             <div class="col-md-6">

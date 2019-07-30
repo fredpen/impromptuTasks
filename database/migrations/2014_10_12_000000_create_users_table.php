@@ -19,10 +19,10 @@ class CreateUsersTable extends Migration
                 $table->integer('role_id')->nullable()->index();
                 $table->integer('isActive')->index()->default(0); // 0 = incomreg 1 = accountactive 2 = accountdeactivate
                 $table->string('name');
-                $table->text('title')->nullable();
-                $table->text('phone_number')->unique();
-                $table->text('location_id')->nullable();
-                $table->text('address')->nullable();
+                $table->string('title')->nullable();
+                $table->string('phone_number')->unique();
+                $table->integer('location_id')->nullable();
+                $table->longText('address')->nullable();
                 $table->string('revenue')->nullable();
                 $table->integer('orders_out')->nullable();
                 $table->integer('orders_in')->nullable();

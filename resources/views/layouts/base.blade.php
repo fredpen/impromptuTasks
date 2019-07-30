@@ -99,7 +99,7 @@
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
                                         @guest
                                             <a href="{{ route('login') }}" class="dropdown-item notify-item">
-                                                <i class="mdi mdi-account-circle mr-1"></i>
+                                                <i class="mdi mdi-login mr-1"></i>
                                                 <span>Login</span>
                                             </a>
                                             @if (Route::has('register'))
@@ -116,6 +116,7 @@
                                             <a href="{{ route('logout') }}" class="dropdown-item notify-item"
                                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
+                                                <i class="mdi mdi-login mr-1"></i>
                                                     {{ __('Logout') }}
                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                     @csrf
