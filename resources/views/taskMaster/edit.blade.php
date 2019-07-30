@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h1 class="header-title h1 mb-3">Settings</h1>
+                        <h1 class="header-title h1 mb-3">settings 0</h1>
 
                         <ul class="nav nav-tabs nav-bordered mb-3">
                             <li class="nav-item">
@@ -90,7 +90,7 @@
 
                                         <div class="card">
 
-                                            <div class="card-header lead">Basic Info</div>
+                                            <div class="card-header lead">Basic Info - {{($user->role_id == 1 ? "Task Giver" : "Task Master")}}</div>
 
                                             <div class="card-body">
                                                 {!! Form::model($user, ['method' => 'PATCH', 'action' => ['AccountController@update', $user->id]]) !!}

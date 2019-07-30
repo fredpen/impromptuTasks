@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 class SubTaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retruns array of validated data
      *
-     * @return \Illuminate\Http\Response
+     * @return $arrayName = array('' => , );
      */
     private function _validate($request)
     {
@@ -85,7 +85,7 @@ class SubTaskController extends Controller
      */
     public function update(Request $request, SubTask $subtask)
     {
-        $subTask->update($this->_validate($request));
+        $subtask->update($this->_validate($request));
         return back();
     }
 
@@ -97,7 +97,7 @@ class SubTaskController extends Controller
      */
     public function destroy(SubTask $subtask)
     {
-        SubTask::findOrFail($id)->delete();
+        $subtask->delete();
         return back();
     }
 }

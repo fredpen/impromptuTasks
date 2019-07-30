@@ -9,16 +9,12 @@
 
     @include('partials.jumbotron', ['pageTitle' => 'Sub-task'])
 
-    <div class="row mt-4">
-        <div class="col-xl-12">
-            @if ($errors->any())
-                <div class="alert alert-warning border-0 mb-2" role="alert">
-                    @foreach ($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-                </div>
-            @endif
+    @if ($errors->any())
+        @include('partials.errorBag')
+    @endif
 
+    <div class="row mt-4 justify-content-center align-items-center">
+        <div class="col-xl-10">
             <div class="card">
                 <div class="card-body">
                     <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
@@ -34,34 +30,31 @@
                                 <span class="d-none d-lg-block"> Update Sub Task</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#settings1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
                                 <i class="mdi mdi-settings-outline d-lg-none d-block mr-1"></i>
                                 <span class="d-none d-lg-block">Info</span>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
 
                     <div class="tab-content">
-                        <div class="tab-pane" id="home1">
-                             <div class="card card-body col-md-6">
-                                <h4 class="card-title text-center">Create Sub-Tasks</h4>
-
+                        <div class="tab-pane justify-content-center align-items-center" id="home1">
+                             <div class="card card-body col-lg-6 ">
                                 <div class="card-text">
                                     {!! Form::open(['method' => 'POST', 'action' => 'SubTaskController@store']) !!}
                                         <div class="form-group mb-3 justify-content-center">
                                             {!! Form::text('name', null, ['class' => 'form-control mb-3', 'placeholder' => 'Enter task name']) !!}
                                             {!! Form::hidden('task_id', $task->id, []) !!}
-                                            {!! Form::submit('Add Sub-Task to ' . $task->name, ['class' => 'btn btn-dark d-block mx-auto']) !!}
+                                            {!! Form::submit('Add Sub-Task to ' . $task->name . ' Task', ['class' => 'btn btn-dark d-block mx-auto']) !!}
                                         </div>
                                     {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>
 
-                        <div class="tab-pane show active" id="profile1">
-                            <div class="card card-body col-sm-6 d-flex justify-content-center">
-                                <h4 class="card-title text-center">Edit subTasks</h4>
+                        <div class="tab-pane  show active" id="profile1">
+                            <div class="card card-body col-lg-12">
                                 <div class="card-text">
                                     <div class="table-responsive-sm">
                                         <table class="table table-bordered table-centered mb-0">
@@ -93,7 +86,6 @@
                                                         </tr>
                                                     @endforeach
                                                 @endif
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -101,9 +93,9 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="settings1">
+                        {{-- <div class="tab-pane" id="settings1">
                            All tasks are connected to a sub tasks
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -112,6 +104,7 @@
 @endsection
 
 @section('scripts')
+
     <script async="true">
         function deleted(target)
         {

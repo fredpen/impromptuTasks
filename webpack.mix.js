@@ -36,3 +36,8 @@ mix.scripts([
     'resources/js/form.js'
 
 ], 'public/js/form.js');
+
+mix.scripts([
+    'resources/js/chat.js'
+
+], 'public/js/chat.js');

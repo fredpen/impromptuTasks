@@ -47,6 +47,12 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+
     /**
      * The attributes that should be cast to native types.
      *

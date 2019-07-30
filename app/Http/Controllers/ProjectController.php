@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use App\SubTask;
+use App\Location;
 
 class ProjectController extends Controller
 {
@@ -14,7 +16,7 @@ class ProjectController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'isActive']);
+        $this->middleware(['auth', 'verified']);
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +35,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return "you can create all your projects here";
+        $subtasks = SubTask::all();
+        $locations = Location::all();
+        return view('projects.create');
     }
 
     /**
