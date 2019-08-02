@@ -9,11 +9,6 @@
 
     <div class="row justify-content-center align-items-center my-4">
         <div class="col-lg-8">
-            <div class="card widget-flat bg-primary text-white">
-                <div class="card-body">
-                    <h3 class="my-0 text-white">Get started here</h3>
-                </div>
-            </div>
 
             <div class="card">
                 <div class="card-body pt-0">
