@@ -1,4 +1,6 @@
 <?php
+use App\Country;
+use App\Region;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +19,15 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/welcome', 'HomeController@welcome')->name('welcome'); // redirect after signing in
 Route::get('/admin', 'RolesController@create')->name('admin.home');
 
+// testing the location
+// Route::get("/location", function(){
+//     $home = Region::findOrFail(100);
+//     $home = Country::findOrFail(30);
+//     return $home->regions->first()->cities;
+// });
 
 Route::resource('account', 'AccountController');
 
-// Route::resource('admin/users', 'AdminUsersController');
 Route::resource('admin/users', 'AdminUsersController');
 Route::resource('admin/tasks', 'TasksController');
 Route::resource('admin/subtasks', 'SubTaskController');

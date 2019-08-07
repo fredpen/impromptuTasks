@@ -21,7 +21,9 @@ class CreateUsersTable extends Migration
                 $table->string('name');
                 $table->string('title')->nullable();
                 $table->string('phone_number')->unique();
-                $table->integer('location_id')->nullable();
+                $table->integer('country_id')->nullable();
+                $table->integer('region_id')->nullable();
+                $table->integer('city_id')->nullable();
                 $table->longText('address')->nullable();
                 $table->string('revenue')->nullable();
                 $table->integer('orders_out')->nullable();
