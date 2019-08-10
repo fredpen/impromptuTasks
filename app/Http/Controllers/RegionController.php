@@ -12,9 +12,10 @@ class RegionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $regions = Region::where('country_id', $request->country_id)->get(['id', 'name']);
+        return $regions;
     }
 
     /**
@@ -35,7 +36,7 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

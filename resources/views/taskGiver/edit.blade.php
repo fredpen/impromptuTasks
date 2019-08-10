@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h1 class="header-title h1 mb-3">settings 0</h1>
+                        <h1 class="header-title h1 mb-3">settings </h1>
 
                         <ul class="nav nav-tabs nav-bordered mb-3">
                             <li class="nav-item">
@@ -86,7 +86,7 @@
 
                                                     <div class="form-group row">
 
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 mb-3">
                                                             {!! Form::label('name', 'Name', []) !!}
                                                             {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required', 'autocomplete' => 'name']) !!}
                                                             @error('name')
@@ -96,7 +96,7 @@
                                                             @enderror
                                                         </div>
 
-                                                        <div class="col-md-6">
+                                                        <div class="col-lg-6 mb-3">
                                                             {!! Form::label('email', 'Email', ['class' =>'']) !!}
                                                             {!! Form::text('email', null, ['class' => 'form-control', 'required' => 'required', 'autocomplete' => 'email']) !!}
                                                             @error('email')
@@ -108,10 +108,8 @@
                                                     </div>
 
                                                     <div class="form-group row">
-
-                                                        <div class="col-md-6">
-                                                            {!! Form::label('phone_number', 'Phone Number', []) !!}
-                                                            {!! Form::text('phone_number', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                                        <div class="col-lg-6 mb-3">
+                                                            {!! Form::text('phone_number', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Phone']) !!}
                                                             @error('phone_number')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -119,10 +117,9 @@
                                                             @enderror
                                                         </div>
 
-                                                        <div class="col-md-6">
-                                                            {!! Form::label('location_id', 'Location', ['class' =>'']) !!}
-                                                            {!! Form::text('location_id', $user->location->name, ['class' => 'form-control', 'required' => 'required']) !!}
-                                                            @error('location_id')
+                                                        <div class="col-lg-6 mb-3">
+                                                            {!! Form::select("country_id", $countries, null, ['placeholder' => 'Choose a country', 'class' => 'form-control select2 select2-hidden-accessible form-control', 'data-toggle' => 'select2', 'onchange' => 'fetch_regions(this)']) !!}
+                                                            @error('country_id')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
                                                                 </span>
@@ -131,8 +128,31 @@
                                                     </div>
 
 
+                                                    <div class="form-group row">
+                                                        <div class="col-lg-6 mb-3">
+                                                            <select onchange="fetch_cities(this)" id="region_id" name="region_id" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2" placeholder="Choose a region">
+                                                                <option value="0">Choose a region</option>
+                                                            </select>
+                                                             @error('region_id')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
 
-                                                     <div class="form-group row">
+                                                        <div class="col-lg-6 mb-3">
+                                                            <select id="city_id" name="city_id" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                                                <option value="0">Select Your nearest City</option>
+                                                            </select>
+                                                             @error('city_id')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
                                                         <div class="col-md-12">
                                                             {!! Form::label('address', 'Address', ['class' =>'']) !!}
                                                             {!! Form::text('address', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -143,15 +163,6 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-
-                                                    <hr class="my-4">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-12 mb-3">
-                                                            {!! Form::label('password', 'Update Password', []) !!}
-                                                            {!! Form::password('password', ['class' => 'form-control']) !!}
-                                                        </div>
-                                                    </div>
-
                                                     <div class="form-group row mb-0">
                                                         <div class="col-md-6 offset-md-4">
                                                             <button type="submit" class="btn btn-primary">
@@ -166,10 +177,9 @@
                                 </div>
                             </div>
 
-                                {{-- messages pane --}}
+                            {{-- messages pane --}}
                             <div class="tab-pane show justify-content-center" id="profile-b1">
                                <div class="col-lg-6">
-                                    <!-- Messages-->
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="dropdown float-right">
@@ -246,5 +256,48 @@
     </div>
 @endsection
 @section('scripts')
-     {{-- <script src="{{ asset('js/chat.js') }}"></script> --}}
+    <script>
+        function fetch_cities(target)
+        {
+            let region_id = $(target).val();
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                method: 'GET',
+                url: '/cities/',
+                data: {region_id:region_id},
+                success: function(response){
+                    $('#city_id').html('');
+                    for (var i = response.length - 1; i >= 0; i--) {
+                        $('#city_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
+
+        function fetch_regions(target)
+        {
+            let country_id = $(target).val();
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                method: 'GET',
+                url: '/regions/',
+                data: {country_id:country_id},
+                success: function(response){
+                    $('#region_id').html('');
+                    for (var i = response.length - 1; i >= 0; i--) {
+                        $('#region_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
+    </script>
 @endsection
+{{--  --}}

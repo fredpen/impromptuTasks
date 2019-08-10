@@ -9,14 +9,13 @@
 
     <div class="row justify-content-center align-items-center my-4">
         <div class="col-lg-7">
-            <div class="card widget-flat bg-primary text-white">
-                <div class="card-body">
-                    <h3 class="my-0 text-white">Sign up in 3 easy steps</h3>
-                </div>
-            </div>
 
             <div class="card">
                 <div class="card-body">
+
+                    <h2 class="mt-2 mb-2 text-center text-primary">Sign me up</h2>
+                    <hr class="mb-3">
+
                    <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -37,7 +36,7 @@
 
                             <div class="col-md-6">
                                 <label for="email">Email</label>
-                                <input required id="email" type="email" class="form-control  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address">
+                                <input required id="email" type="email" class="form-control  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email ">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -53,7 +52,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="phone_number">Phone Number</label>
-                                    <input required type="number" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="email" placeholder="phone_number Address">
+                                    <input required type="number" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="email" placeholder="phone">
 
                                     @error('phone_number')
                                         <span class="invalid-feedback" role="alert">
@@ -76,19 +75,20 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <label" for="role_id"> What would you like to do</label>
-                                <select required name="role_id" class="custom-select form-control" value="{{ old('role_id') }}">
-                                    <option value="1">I want to get some task done (Task Giver)</option>
-                                    <option value="2">I want to apply for tasks (Task Master)</option>
-                                </select>
+                            <label" for="role_id" class="mb-1"> What would you like to do</label>
+                            <select required name="role_id" class="custom-select form-control" value="{{ old('role_id') }}">
+                                <option value="1">I want to get some task done (Task Giver)</option>
+                                <option value="2">I want to apply for tasks (Task Master)</option>
+                            </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="mt-2 btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
 @section('scripts')
 @endsection

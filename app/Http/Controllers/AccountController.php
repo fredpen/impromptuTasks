@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Skills;
 use App\Tasks;
 use App\User;
+use App\Country;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Role;
+use App\Region;
+use App\City;
 
 class AccountController extends Controller
 {
@@ -66,11 +69,12 @@ class AccountController extends Controller
     public function edit($id)
     {
         $user = $this->_user();
+        $countries = Country::pluck('name', 'id');
         $skills = new Skills();
         $skill_ids = $skills->skillArray($user);
         $tasks = Tasks::all();
         if ($this->_user()->role_id === 1) {
-            return view('taskGiver.edit', compact('user', 'tasks', 'skill_ids'));
+            return view('taskGiver.edit', compact('user', 'tasks', 'countries'));
         }
         return view('taskMaster.edit', compact('user', 'tasks', 'skill_ids'));
     }

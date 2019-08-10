@@ -2,18 +2,21 @@
 <html lang="en">
 
 <head>
-        <meta charset="utf-8" />
-        <title>Impromptu Tasks</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Redfining how taks is done " name="description" />
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <meta charset="utf-8" />
+    <title>Impromptu Tasks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Redfining how taks is done " name="description" />
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-        <!-- App css -->
-        <link rel="stylesheet" href="{{ asset('css/all.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    </head>
+    <!-- App css -->
+    <link rel="stylesheet" href="{{ asset('css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+</head>
 
     <body data-layout="topnav" style="min-height: 100vh;">
 
