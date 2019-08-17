@@ -86,7 +86,7 @@
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
-                                    <a href="{{ route('locations.index') }}">Manage Locations</a>
+                                    {{-- <a href="{{ route('locations.index') }}">Manage Locations</a> --}}
                                 </li>
 
                                 <li class="side-nav-item">

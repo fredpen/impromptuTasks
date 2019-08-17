@@ -14,9 +14,7 @@ const mix = require('laravel-mix');
 
 mix.styles([
     'resources/css/app.min.css',
-    // 'resources/css/buttons.bootstrap4.css',
     'resources/css/icons.min.css',
-    // 'resources/css/responsive.bootstrap4.css',
 
 ], 'public/css/all.css');
 
@@ -26,18 +24,36 @@ mix.styles([
 
 ], 'public/css/custom.css');
 
+// fileupload css
+mix.styles([
+    'resources/css/fileupload.css'
+
+], 'public/css/fileupload.css');
+
+
 mix.scripts([
    'resources/js/app.min.js',
     'resources/js/custom.js'
-
 ], 'public/js/all.js');
 
+// wizard and basic responsive form
 mix.scripts([
     'resources/js/form.js'
 
 ], 'public/js/form.js');
 
+
+// for chatting and mail format
 mix.scripts([
     'resources/js/chat.js'
 
 ], 'public/js/chat.js');
+
+
+// file uploads
+mix.scripts([
+    'resources/js/fileupload.js'
+
+], 'public/js/fileupload.js');
+
+

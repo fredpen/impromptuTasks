@@ -1,7 +1,9 @@
 {
     "/css/all.css": "/css/all.css",
     "/css/custom.css": "/css/custom.css",
+    "/css/fileupload.css": "/css/fileupload.css",
     "/js/all.js": "/js/all.js",
     "/js/form.js": "/js/form.js",
-    "/js/chat.js": "/js/chat.js"
+    "/js/chat.js": "/js/chat.js",
+    "/js/fileupload.js": "/js/fileupload.js"
 }

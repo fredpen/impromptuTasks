@@ -10,11 +10,13 @@ class RegionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param [object] $request [request object from the form]
+     *
+     * @return [array] $regions
      */
     public function index(Request $request)
     {
-        $regions = Region::where('country_id', $request->country_id)->get(['id', 'name']);
+        $regions = Region::where('country_id', $request->country_id)->orderBy('name', 'desc')->get(['id', 'name']);
         return $regions;
     }
 
@@ -31,7 +33,8 @@ class RegionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)

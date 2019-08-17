@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\SubTask;
+use App\Tasks;
 use Illuminate\Http\Request;
 
 class SubTaskController extends Controller
@@ -27,9 +28,10 @@ class SubTaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $subtasks = SubTask::where('task_id', $request->task_id)->get(['id', 'name']);
+        return $subtasks;
     }
 
     /**

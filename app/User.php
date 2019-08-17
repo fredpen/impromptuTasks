@@ -47,9 +47,20 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-    public function location()
+    public function country()
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Country::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 
 

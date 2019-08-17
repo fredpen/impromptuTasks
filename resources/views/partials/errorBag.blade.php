@@ -4,7 +4,6 @@
     <span style="right: 0" class="close-jq-toast-single">×</span>
     <div>
         @foreach ($errors->all() as $error)
-            <div>The name field must be unique </div>
             <div>{{ $error }}</div>
         @endforeach
     </div>

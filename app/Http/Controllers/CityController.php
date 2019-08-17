@@ -10,11 +10,13 @@ class CityController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param [object] $request [request object from the form]
+     *
+     * @return [array] $cities
      */
     public function index(Request $request)
     {
-        $cities = City::where('region_id', $request->region_id)->get(['id', 'name']);
+        $cities = City::where('region_id', $request->region_id)->orderBy('name', 'desc')->get(['id', 'name']);
         return $cities;
     }
 

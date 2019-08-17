@@ -17,7 +17,7 @@ class Active
     public function handle($request, Closure $next)
     {
         $isActive = Auth::User()->isActive;
-        if (!$isActive) {
+        if ($isActive === 0) {
             abort('402'); //incomplete reg
         } elseif ($isActive === 2) {
             abort('401'); //your account has been deactivated

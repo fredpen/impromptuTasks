@@ -79,7 +79,7 @@
 
                                         <div class="card">
 
-                                        <div class="card-header lead">Basic Info</div>
+                                            <div class="card-header lead">Basic Info</div>
 
                                             <div class="card-body">
                                                 {!! Form::model($user, ['method' => 'PATCH', 'action' => ['AccountController@update', $user->id]]) !!}
@@ -109,6 +109,7 @@
 
                                                     <div class="form-group row">
                                                         <div class="col-lg-6 mb-3">
+                                                             {!! Form::label('phone_number', 'Phone', []) !!}
                                                             {!! Form::text('phone_number', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Phone']) !!}
                                                             @error('phone_number')
                                                                 <span class="invalid-feedback" role="alert">
@@ -118,7 +119,8 @@
                                                         </div>
 
                                                         <div class="col-lg-6 mb-3">
-                                                            {!! Form::select("country_id", $countries, null, ['placeholder' => 'Choose a country', 'class' => 'form-control select2 select2-hidden-accessible form-control', 'data-toggle' => 'select2', 'onchange' => 'fetch_regions(this)']) !!}
+                                                            {!! Form::label('country_id', 'Country', []) !!}
+                                                            {!! Form::select("country_id", $countries, null, ['placeholder' => 'Choose a country', 'class' => 'form-control select2 select2-hidden-accessible form-control', 'data-toggle' => 'select2', 'onchange' => 'fetch_regions(this)', 'required' => 'required']) !!}
                                                             @error('country_id')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -130,8 +132,13 @@
 
                                                     <div class="form-group row">
                                                         <div class="col-lg-6 mb-3">
-                                                            <select onchange="fetch_cities(this)" id="region_id" name="region_id" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2" placeholder="Choose a region">
-                                                                <option value="0">Choose a region</option>
+                                                            {!! Form::label('region_id', 'Region/State', []) !!}
+                                                            <select onchange="fetch_cities(this)" id="region_id" name="region_id" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2" placeholder="Choose a region" required>
+                                                                @if ($user->region_id)
+                                                                    <option value="{{$user->region_id}}">{{$user->region->name}}</option>
+                                                                @else
+                                                                    <option value="">Choose a region</option>
+                                                                @endif
                                                             </select>
                                                              @error('region_id')
                                                                 <span class="invalid-feedback" role="alert">
@@ -141,8 +148,14 @@
                                                         </div>
 
                                                         <div class="col-lg-6 mb-3">
-                                                            <select id="city_id" name="city_id" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                                                                <option value="0">Select Your nearest City</option>
+                                                            {!! Form::label('city_id', 'City', []) !!}
+                                                            <select required id="city_id" name="city_id" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                                                 @if ($user->region_id)
+                                                                    <option value="{{$user->city_id}}">{{$user->city->name}}</option>
+                                                                @else
+                                                                    <option value="">Select Your nearest City</option>
+                                                                @endif
+
                                                             </select>
                                                              @error('city_id')
                                                                 <span class="invalid-feedback" role="alert">
@@ -153,9 +166,9 @@
                                                     </div>
 
                                                     <div class="form-group row">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-12 mb-3">
                                                             {!! Form::label('address', 'Address', ['class' =>'']) !!}
-                                                            {!! Form::text('address', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                                            {!! Form::text('address', $user->address, ['class' => 'form-control', 'required' => 'required']) !!}
                                                             @error('address')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -204,39 +217,7 @@
                                                         <a href="#" class="btn btn-sm btn-link text-info font-13"> Reply </a>
                                                     </p>
                                                 </div>
-                                                <div class="inbox-item">
-                                                    <div class="inbox-item-img"><img src="{{ asset('images/basic.jpg') }}" class="rounded-circle" alt=""></div>
-                                                    <p class="inbox-item-author">Stillnotdavid</p>
-                                                    <p class="inbox-item-text">This theme is awesome!</p>
-                                                    <p class="inbox-item-date">
-                                                        <a href="#" class="btn btn-sm btn-link text-info font-13"> Reply </a>
-                                                    </p>
-                                                </div>
-                                                <div class="inbox-item">
-                                                    <div class="inbox-item-img"><img src="{{ asset('images/basic.jpg') }}" class="rounded-circle" alt=""></div>
-                                                    <p class="inbox-item-author">Kurafire</p>
-                                                    <p class="inbox-item-text">Nice to meet you</p>
-                                                    <p class="inbox-item-date">
-                                                        <a href="#" class="btn btn-sm btn-link text-info font-13"> Reply </a>
-                                                    </p>
-                                                </div>
 
-                                                <div class="inbox-item">
-                                                    <div class="inbox-item-img"><img src="{{ asset('images/basic.jpg') }}" class="rounded-circle" alt=""></div>
-                                                    <p class="inbox-item-author">Shahedk</p>
-                                                    <p class="inbox-item-text">Hey! there I'm available...</p>
-                                                    <p class="inbox-item-date">
-                                                        <a href="#" class="btn btn-sm btn-link text-info font-13"> Reply </a>
-                                                    </p>
-                                                </div>
-                                                <div class="inbox-item">
-                                                    <div class="inbox-item-img"><img src="{{ asset('images/basic.jpg') }}" class="rounded-circle" alt=""></div>
-                                                    <p class="inbox-item-author">Adhamdannaway</p>
-                                                    <p class="inbox-item-text">This theme is awesome!</p>
-                                                    <p class="inbox-item-date">
-                                                        <a href="#" class="btn btn-sm btn-link text-info font-13"> Reply </a>
-                                                    </p>
-                                                </div>
                                             </div> <!-- end inbox-widget -->
                                         </div> <!-- end card-body-->
                                     </div> <!-- end card-->
@@ -260,15 +241,19 @@
         function fetch_cities(target)
         {
             let region_id = $(target).val();
+            let country_id = $("#country_id").val();
+            $('#city_id').append('<option value="">Loading</option>');
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 method: 'GET',
                 url: '/cities/',
-                data: {region_id:region_id},
+                data: {region_id:region_id, country_id :country_id },
                 success: function(response){
                     $('#city_id').html('');
-                    for (var i = response.length - 1; i >= 0; i--) {
-                        $('#city_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
+                    if (response.length > 1) {
+                        for (var i = response.length - 1; i >= 0; i--) {
+                            $('#city_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
+                        }
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -281,6 +266,8 @@
         function fetch_regions(target)
         {
             let country_id = $(target).val();
+            $('#region_id').append('<option value="">Loading</option>');
+            $('#city_id').html('<option title="select a region first">Select a city</option>');
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 method: 'GET',
@@ -288,8 +275,11 @@
                 data: {country_id:country_id},
                 success: function(response){
                     $('#region_id').html('');
-                    for (var i = response.length - 1; i >= 0; i--) {
-                        $('#region_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
+                    if (response.length > 1) {
+                        $('#region_id').parent().removeClass('d-none');
+                        for (var i = response.length - 1; i >= 0; i--) {
+                            $('#region_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
+                        }
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
