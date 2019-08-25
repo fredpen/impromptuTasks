@@ -1,6 +1,10 @@
-<div class="jq-toast-single jq-has-icon jq-icon-info"  style="width: 300px; position: fixed; left: 45%; top: 70px; z-index: 999">
+
+<div class="jq-toast-single jq-icon-danger" role="alert"  style="width: 300px; position: fixed; left: 45%; top: 70px; z-index: 999; display: flex;">
+
+    <i class="mr-2 mdi mdi-heart-broken-outline" style="font-size: 30px"></i>
     <span style="right: 0" class="close-jq-toast-single">×</span>
-    {{$errorBody}}
+    <div>
+        <div>error message goes here</div>
+    </div>
+
 </div>
-
-

@@ -64,14 +64,13 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var    array
-     * @return array [<instance of subtasks>]
-     */
     public function skills()
     {
         return $this->belongsToMany(SubTask::class, 'user_sub_task');
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
     }
 }

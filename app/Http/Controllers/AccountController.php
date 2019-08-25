@@ -26,6 +26,7 @@ class AccountController extends Controller
         return Auth::User();
     }
 
+
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
@@ -54,7 +55,6 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return "aasasa";
     }
 
     /**
@@ -78,9 +78,8 @@ class AccountController extends Controller
     {
         $user = $this->_user();
         $countries = Country::pluck('name', 'id');
-        if ($user->role_id === 1) {
-            return view('taskGiver.edit', compact('user', 'countries'));
-        }
+        if ($user->role_id === 1) return view('taskGiver.edit', compact('user', 'countries'));
+
         $skills = new Skills();
         $tasks = Tasks::all();
         $skill_ids = $skills->skillArray($user);

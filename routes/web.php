@@ -29,6 +29,8 @@ Route::resource('admin/tasks', 'TasksController');
 Route::resource('admin/subtasks', 'SubTaskController');
 Route::resource('admin/roles', 'RolesController');
 
+Route::resource('project/photos', 'ProjectphotoController');
+
 
 Route::resource('projects', 'ProjectController');
 // Route::group(

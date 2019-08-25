@@ -7,10 +7,14 @@ use App\Project;
 use App\SubTask;
 use App\Tasks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Country;
+use App\Region;
 
 class ProjectController extends Controller
 {
     protected $durationArray =  [
+        'Few Hours' => 'Few Hours',
         'A day' => 'A day',
         'less than a week' => 'less than a week',
         'less than a month' => 'less than a month',
@@ -20,19 +24,6 @@ class ProjectController extends Controller
     ];
 
 
-    private function _validateProject($request)
-    {
-        return $request->validate(
-            [
-                'model' => 'required',
-                'task_id' => 'required|integer',
-                'duration' => 'required',
-                'start_date' => 'required',
-                'sub_task_id' => 'required|integer'
-            ]
-        );
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +32,6 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified', 'isActive']);
-        $durationArray = $this->durationArray;
     }
 
 
@@ -62,10 +52,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $projects = Project::where('user_id', Auth::id())->get();
         $tasks = Tasks::pluck('name', 'id');
-        $countries = Location::pluck('name', 'id');
-        $duration = $this->durationArray;
-        return view('projects.create', compact('tasks', 'countries', 'duration'));
+        return view('projects.create', compact('projects', 'tasks'));
     }
 
     /**
@@ -77,20 +66,12 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $validated_data = $this->_validateProject($request);
-        if ($request->description) {
-            $validated_data['description'] = $request->description;
-        }
-
-        if ($file = $request->file('attachment')) {
-            $image_name = time() . $file->getClientOriginalName();
-            $file->move('images', $image_name);
-            $validated_data['attachment_url'] = $image_name;
-        }
-        $project = Project::create($validated_data);
-        return redirect()->action(
-            'ProjectController@show', ['id' => $project->id]
+        $validatedData = $request->validate(
+            ['model' => 'required', 'task_id' => 'required']
         );
+        $validatedData['user_id'] = Auth::id();
+        $project = Project::create($validatedData);
+        return redirect()->action('ProjectController@edit', ['id' => $project->id]);;
     }
 
     /**
@@ -101,7 +82,6 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('projects.show', compact('project'));
     }
 
     /**
@@ -112,7 +92,13 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        $duration = $this->durationArray;
+        $tasks = Tasks::with('subTasks')->get(['name', 'id']);
+        if ($project->model == "onsite") {
+            $countries = Country::with('regions')->get(['name', 'id']);
+            return view('projects.edit', compact('project', 'tasks', 'countries', 'duration'));
+        }
+        return view('projects.edit', compact('project', 'tasks', 'duration'));
     }
 
     /**
@@ -124,7 +110,8 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $project->update([$request->field => $request->value]);
+        if ($request->field == 'task_id') return SubTask::where(['task_id' => $request->value])->get(['id', 'name']);
     }
 
     /**

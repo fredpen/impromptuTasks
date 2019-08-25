@@ -17,17 +17,22 @@ class CreateProjectsTable extends Migration
         Schema::create(
             'projects', function (Blueprint $table) {
                 $table->bigIncrements('id');
+                $table->integer('user_id')->index();
                 $table->string('model')->index();
+                $table->integer('num_of_taskMaster')->index()->nullable()->default(1);
+                $table->float('budget')->nullable();
+                $table->boolean('is_posted')->default(false); //when the project is posted
+                $table->boolean('is_started')->default(false); //when the task giver agrees task has stated
+                $table->boolean('is_completed')->default(false); //when the task giver marks it done
                 $table->string('start_date')->nullable();
-                $table->string('attachment_url')->nullable();
                 $table->longText('description')->nullable();
-                $table->integer('task_id');
-                $table->integer('sub_task_id');
+                $table->longText('title')->nullable();
+                $table->integer('task_id')->nullable();
+                $table->integer('sub_task_id')->nullable();
                 $table->integer('country_id')->nullable();
                 $table->integer('region_id')->nullable();
                 $table->integer('city_id')->nullable();
-                $table->longText('location')->nullable();
-                $table->string('duration');
+                $table->string('duration')->nullable();
                 $table->timestamps();
             }
         );

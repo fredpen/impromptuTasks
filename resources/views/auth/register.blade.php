@@ -21,7 +21,7 @@
 
                         {{-- names and email--}}
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-2">
                                 <div class="form-group">
                                     <label for="name">Full Name</label>
                                     <input required id="name" type="text" class="form-control  @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Full Name">
@@ -34,7 +34,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-2">
                                 <label for="email">Email</label>
                                 <input required id="email" type="email" class="form-control  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email ">
 
@@ -50,7 +50,7 @@
                         {{-- password and phone --}}
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-2">
                                     <label for="phone_number">Phone Number</label>
                                     <input required type="number" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="email" placeholder="phone">
 
@@ -61,7 +61,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-2">
                                     <label for="password">Password</label>
                                     <input required id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="password">
 
@@ -74,15 +74,24 @@
                             </div>
                         </div>
 
-                        <div class="form-group mt-3">
-                            <label" for="role_id" class="mb-1"> What would you like to do</label>
-                            <select required name="role_id" class="custom-select form-control" value="{{ old('role_id') }}">
-                                <option value="1">I want to get some task done (Task Giver)</option>
-                                <option value="2">I want to apply for tasks (Task Master)</option>
-                            </select>
+                        <div class="col-md-12 my-3 d-flex space-around flex-wrap pl-0">
+                            {!! Form::label('role_id', 'I want to', ['class' => 'col-sm-12 pl-0 mb-2']) !!}
+                            <div class="custom-control custom-radio mr-3">
+                                <input type="radio" name="role_id" class="custom-control-input" value="1" id="taskGiver">
+                                <label class="custom-control-label" for="taskGiver">Hire for a Task</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" name="role_id" class="custom-control-input" value="2" id="taskMaster">
+                                <label class="custom-control-label" for="taskMaster">Apply as a Task Master</label>
+                            </div>
                         </div>
 
-                        <button type="submit" class="mt-2 btn btn-primary">Submit</button>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="agreementBox">
+                            <label class="custom-control-label" for="customCheck1">Yes, I understand and agree to the <a href="#">ImpromptuTasks Terms of service</a> and <a href="#">Privacy policy</a> </label>
+                        </div>
+
+                        <button type="submit" class="my-4 btn btn-lg btn-primary mx-auto d-block">Create my Account</button>
                     </form>
                 </div>
             </div>

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Skills extends Model
 {
-
     public function skillArray($user)
     {
         $skillId = [];
