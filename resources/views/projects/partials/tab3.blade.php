@@ -66,11 +66,48 @@
     </div>
 </div>
 
+<div id="taskModelModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-top">
+        <div class="modal-content">
+            <div class="modal-header modal-colored-header bg-primary">
+                <h4 class="modal-title" id="primary-header-modalLabel">Number of task master you want for your task</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12 my-3">
+                    <select onchange="updateTaskModel(this, 'model')" id="model" name="model" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                       <option {{$project->model == "onsite" ? "selected" : ""}} value="onsite">Onsite</option>
+                       <option {{$project->model == "remote" ? "selected" : ""}} value="remote">Remote</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="tab-pane" id="basictab3">
     <div class="row">
         <div class="d-flex flex-wrap w-100 justify-content-between">
+
+
+
             <div class="card widget-flat col-md-5">
+                <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
+                    <div class="col-sm-12 mb-3">
+                        {!! Form::label('model', ' Task Model', ['class' => 'd-block mt-0 h4']) !!}
+                        <span class="d-block h6 text-muted">I want my task done </span>
+                         <div class="d-block">
+                            <button id="taskModelModalButton" type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#taskModelModal">{{$project->model ? $project->model : "Select Task model"}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card widget-flat col-md-6">
                 <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                     <div class="col-sm-12 mb-3">
                         {!! Form::label('duration', ' Task Duration', ['class' => 'd-block mt-0 h4']) !!}
@@ -83,7 +120,7 @@
                 </div>
             </div>
 
-            <div class="card widget-flat col-md-6">
+            <div class="card widget-flat col-md-5">
                 <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                     <div class="col-sm-12 mb-3">
                         {!! Form::label('start_date', 'Proposed Start Date', ['class' => 'd-block mt-0 h4']) !!}
@@ -95,18 +132,6 @@
                 </div>
             </div>
 
-            <div class="card widget-flat col-md-5">
-                <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
-                    <div class="col-sm-12 mb-3">
-                        {!! Form::label('duration', ' Task Duration', ['class' => 'd-block mt-0 h4']) !!}
-                        <span class="d-block h6 text-muted">Estimated time for the project</span>
-                         <div class="d-block">
-                            <button id="fredTaskDurationModalButton" type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#fredTaskDurationModal">{{$project->duration ? $project->duration : "Select Task duration"}}</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
 
 
             <div class="card widget-flat col-md-6">

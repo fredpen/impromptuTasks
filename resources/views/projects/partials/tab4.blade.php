@@ -2,17 +2,20 @@
     <div class="row">
 
         {{-- supporting documents --}}
-        @if ($project->photos->count() > 0)
+        @if ($project->photos->count())
             <div class="card widget-flat col-md-12 mb-2">
                 <div class="card-body mb-3 pb-0 px-0" style="position: relative;">
-                    <h5 onclick="download()" id="attachedButton" class="text-muted">{{$project->photos->count()}} Attached Document(s) click here to downlad</h5>
-                    <div class="card mt-1 mb-0 shadow-none border">
+                <h5 class="text-muted">Attached Document{{$project->photos->count() == 1 ? "" : "s"}}</h5>
+                    <div class="card mt-1 mb-0 shadow-none">
                         <div class="p-2">
                             <div class="row align-items-center">
-                                @foreach ($project->photos as $photo)
-                                    <div class="col-auto">
-                                        <a class="photosattached" href="{{asset('images/'.$photo->url)}}" download>Download</a>
-                                        <img style="cursor:pointer" src="{{asset('images/'.$photo->url)}} " class="avatar-sm rounded bg-light" alt="">
+                                @foreach ($project->photos as $key => $photo)
+                                    <div id="fileParent" class="col-sm-12 d-flex justify-content-between border-bottom">
+                                        <span class="h6">
+                                            <a href="{{asset('images/'.$photo->url)}}" download>Supporting Document {{$key + 1}}</a>
+                                        </span>
+
+                                        <i onclick="deleteFile(this, {{$photo->id}})" class="mdi mx-2 h4 mdi-delete pointer text-danger"></i>
                                     </div>
                                 @endforeach
                             </div>
@@ -23,10 +26,14 @@
         @endif
 
         <div class="card widget-flat col-sm-12">
-            <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
+            <div class="card-body pb-5 pb-0 px-0" style="position: relative;">
                 <div class="col-sm-12">
 
-                    <p class="d-block mt-0 h4 "> Attach supporting Documents (optional) limit of 3 files</p>
+                    <p class="d-block mt-0 h4 "> Attach supporting Documents (optional)</p>
+                    <ul class="text-muted h6 mb-3">
+                        <li>You can't upload more than three(3) files</li>
+                        <li>Maximum file size is 1MB</li>
+                    </ul>
                     {!! Form::open(['method' => 'POST', 'action' => 'ProjectphotoController@store', 'class' => 'dropzone', 'data-plugin' => 'dropzone', 'data-previews-container' => '#file-previews', 'data-upload-preview-template' => '#uploadPreviewTemplate', 'id' => 'myAwesomeDropzone', 'files' => true]) !!}
 
                         <div class="fallback"><input name="file" type="file" multiple /> </div>
@@ -36,32 +43,18 @@
                             <h3>Drop files here or click to upload.</h3>
                         </div>
                     {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
 
-                    <!-- Preview -->
-                    <div class="dropzone-previews mt-3" id="file-previews"></div>
-
-                    <div class="d-none" id="uploadPreviewTemplate" class=" mb-3">
-                        <div class="card mt-1 mb-0 shadow-none border">
-                            <div class="p-2">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <img data-dz-thumbnail class="avatar-sm rounded bg-light" alt="">
-                                    </div>
-                                    <div class="pl-0 d-none d-md-block">
-                                        <a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
-                                        <p class="mb-0" data-dz-size></p>
-                                    </div>
-                                    <div class="col-auto">
-                                        <a href="#" class="btn btn-link btn-lg text-muted" data-dz-remove>
-                                            <i class="dripicons-cross"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+         <div class="col-12">
+            <div class="form-group row m-3">
+                <div class="col-md-6 offset-md-4">
+                    <button type="submit" class="btn btn-primary">  {{ __('Create Project') }} </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+

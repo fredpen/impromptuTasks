@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Projectphoto;
 use App\Project;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectphotoController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +20,7 @@ class ProjectphotoController extends Controller
         //
     }
 
-    /**
+    /**Projectphoto
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -37,11 +39,11 @@ class ProjectphotoController extends Controller
     public function store(Request $request, Projectphoto $projectphoto)
     {
         $project = Project::findOrFail($request->project_id);
-        if ($project->photos->count() == 3) return false;
-        if ($file = $request->file('file')) {
-            $image_name = time() . $file->getClientOriginalName();
-            $file->move('images', $image_name);
+        if ($project->photos->count() <= 2 && $file = $request->file('file')) {
+            $image_name = $projectphoto->saveFile($file);
             $projectphoto->create(['url' => $image_name, 'project_id' => $request->project_id]);
+        } else {
+            return false;
         }
     }
 
@@ -87,6 +89,8 @@ class ProjectphotoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $file = Projectphoto::findOrFail($id);
+        unlink(public_path() . "/images/".$file->url);
+        $file->delete();
     }
 }

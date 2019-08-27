@@ -19,6 +19,16 @@
                             <span class="d-none d-sm-inline">Basics</span>
                         </a>
                     </li>
+
+                    @if ($project->model == "onsite")
+                        <li class="nav-item">
+                            <a href="#basictab5" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                <i class="mdi mdi-account-circle mr-1"></i>
+                                <span class="d-none d-sm-inline">Location</span>
+                            </a>
+                        </li>
+                    @endif
+
                     <li class="nav-item">
                         <a href="#basictab2" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                             <i class="mdi mdi-account-star-outline"></i>
@@ -38,16 +48,15 @@
                             <span class="d-none d-sm-inline">Attachements</span>
                         </a>
                     </li>
-                        <li class="nav-item">
-                        <a href="#basictab5" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                            <i class="mdi mdi-account-circle mr-1"></i>
-                            <span class="d-none d-sm-inline">new4</span>
-                        </a>
-                    </li>
+
                 </ul>
 
                 <div class="tab-content b-0 mb-0">
                     @include('projects.partials.tab1')
+
+                    @if ($project->model == "onsite")
+                        @include('projects.partials.tab5')
+                    @endif
 
                     @include('projects.partials.tab2')
 
@@ -55,7 +64,7 @@
 
                     @include('projects.partials.tab4')
 
-                    @include('projects.partials.tab5')
+
 
                     <ul class="list-inline wizard mb-0">
                         <li class="previous list-inline-item disabled">
@@ -72,17 +81,54 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/form.js') }}"></script>
+    <script src="{{ asset('js/dropzone.js') }}"></script>
 
     <script>
+        Dropzone.autoDiscover = false;
+        var dropzone = new Dropzone('#myAwesomeDropzone', {
+            parallelUploads: 1,
+            thumbnailHeight: 120,
+            thumbnailWidth: 120,
+            maxFilesize: 1, //1mb
+            maxFiles: 3,
+            filesizeBase: 1000,
+            thumbnail: function (file, dataUrl) {
+                if (file.previewElement) {
+                file.previewElement.classList.remove("dz-file-preview");
+                var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                for (var i = 0; i < images.length; i++) {
+                    var thumbnailElement = images[i];
+                    thumbnailElement.alt = file.name;
+                    thumbnailElement.src = dataUrl;
+                }
+                setTimeout(function () { file.previewElement.classList.add("dz-image-preview"); }, 1);
+                }
+            }
+        });
+
+
         var project_id = {{$project->id}};
 
-        $(document).ready(function () {
-        })
+        function updateTaskModel(target, field) {
+            $('#taskModelModalButton').text($('#model :selected').text());
+            updateProject(target, field);
+            document.location.reload();
+        }
 
-        function download() {
-            $('.photosattached').each(function(photo) {
-                $(this).click();
-            })
+        function deleteFile(target, file_id) {
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                method: 'DELETE',
+                url: '/project/photos/' + file_id,
+                success: function(response){
+                    $(target).parent().fadeOut();
+                    $(target).parent().removeClass('d-flex');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                }
+            });
         }
 
         function updateTask(target, field) {
@@ -139,6 +185,5 @@
         }
     </script>
 
-    <script src="{{ asset('js/form.js') }}"></script>
-    <script src="{{ asset('js/dropzone.min.js') }}"></script>
+
 @endsection

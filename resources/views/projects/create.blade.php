@@ -68,7 +68,7 @@
 
         @if (count($projects) > 0)
             @foreach ($projects as $project)
-                <div class="col-xl-4 col-lg-4">
+                <div class="col-md-6 col-lg-4">
                     <div class="card widget-flat">
                         <div class="card-body" style="position: relative;">
                             <div class="float-right">
