@@ -39,12 +39,10 @@ class ProjectphotoController extends Controller
     public function store(Request $request, Projectphoto $projectphoto)
     {
         $project = Project::findOrFail($request->project_id);
-        if ($project->photos->count() <= 2 && $file = $request->file('file')) {
-            $image_name = $projectphoto->saveFile($file);
-            $projectphoto->create(['url' => $image_name, 'project_id' => $request->project_id]);
-        } else {
-            return false;
-        }
+        if ($project->photos->count() >= 3) return false;
+        $file = $request->file('file');
+        $image_name = $projectphoto->saveFile($file);
+        $projectphoto->create(['url' => $image_name, 'project_id' => $request->project_id]);
     }
 
     /**

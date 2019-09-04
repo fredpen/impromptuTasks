@@ -1,24 +1,24 @@
 <div id="fredCategoryModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-top">
-            <div class="modal-content">
-                <div class="modal-header modal-colored-header bg-primary">
-                    <h4 class="modal-title" id="primary-header-modalLabel">Select Category</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-12 my-3">
-                        <select onchange="updateTask(this, 'task_id')" id="task_id" name="task_id" class="h5 mt-0 col-sm-7 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                            @foreach ($tasks as $task)
-                                <option {{$project->task_id == $task->id ? "selected" : ""}} value="{{$task->id}}">{{$task->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+        <div class="modal-content">
+            <div class="modal-header modal-colored-header bg-primary">
+                <h4 class="modal-title" id="primary-header-modalLabel">Select Category</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12 my-3">
+                    <select onchange="updateTask(this, 'task_id')" id="task_id" name="task_id" class="h5 mt-0 col-sm-7 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                        @foreach ($tasks as $task)
+                            <option {{$project->task_id == $task->id ? "selected" : ""}} value="{{$task->id}}">{{$task->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -38,7 +38,6 @@
                                     <option {{ $project->sub_task_id ? ($project->sub_task_id == $subtask->id ? "selected" : "" ) : ""}} value="{{$subtask->id}}">{{$subtask->name}}</option>
                                 @endforeach
                             @endif
-
                         </select>
                     </div>
                 </div>
@@ -58,7 +57,7 @@
             <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                 <div class="col-sm-12 col-lg-9">
                     {!! Form::label('title', 'Enter the title for your Task', ['class' => 'd-block mt-0 h4']) !!}
-                    <input onfocusout="updateProject(this, 'title')" type="text" class="form-control" value="{{$project->title}}" maxlength="80" name="title" data-toggle="maxlength" data-threshold="80" autocomplete="off">
+                    <input onfocusout="updateProject(this, 'title')" type="text" class="form-control" value="{{$project->title}}" maxlength="80" name="title" data-toggle="maxlength" data-threshold="80" autocomplete="off" id="task_title">
                     <h6 class="text d-block mt-2">Sample: </h6>
                     <ul class="text-muted h6 mb-3">
                         <li>Experience Plumber needed for a 3 hours job</li>

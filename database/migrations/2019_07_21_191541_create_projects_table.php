@@ -21,10 +21,10 @@ class CreateProjectsTable extends Migration
                 $table->string('model')->index();
                 $table->integer('num_of_taskMaster')->index()->nullable()->default(1);
                 $table->float('budget')->nullable();
-                $table->boolean('is_posted')->default(false); //when the project is posted
-                $table->boolean('is_started')->default(false); //when the task giver agrees task has stated
-                $table->boolean('is_completed')->default(false); //when the task giver marks it done
+                $table->string('status')->default('created')->nullable(); //created, posted, completed, cancelled
+                $table->timestamp('posted_on')->nullable();
                 $table->string('start_date')->nullable();
+                $table->timestamp('completed_on')->nullable();
                 $table->longText('description')->nullable();
                 $table->longText('title')->nullable();
                 $table->integer('task_id')->nullable();
@@ -32,6 +32,7 @@ class CreateProjectsTable extends Migration
                 $table->integer('country_id')->nullable();
                 $table->integer('region_id')->nullable();
                 $table->integer('city_id')->nullable();
+                $table->longText('location')->nullable();
                 $table->string('duration')->nullable();
                 $table->timestamps();
             }

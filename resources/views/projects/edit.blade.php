@@ -1,13 +1,22 @@
 @extends('layouts.base')
 
+
+
 @section('content')
 <div class="container">
 
-    @if ($errors->any())
-        @include('partials.errorBag')
-    @endif
+    {{-- errorBag --}}
+    <div id="postingModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-dialog">
+            <div class="jq-toast-single jq-icon-danger d-flex" role="alert">
+                <i class="mr-2 mdi mdi-heart-broken-outline" style="font-size: 30px"></i>
+                <span style="right: 0" class="close close-jq-toast-single" data-dismiss="modal" aria-hidden="true">×</span>
+                <div id="postErrMess"></div>
+            </div>
+        </div>
+    </div>
 
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center mx-0">
         <div class="col-md-12 mt-2">
             <div id="basicwizard">
 
@@ -21,12 +30,12 @@
                     </li>
 
                     @if ($project->model == "onsite")
-                        <li class="nav-item">
-                            <a href="#basictab5" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                <i class="mdi mdi-account-circle mr-1"></i>
-                                <span class="d-none d-sm-inline">Location</span>
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a href="#basictab5" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                            <i class="mdi mdi-account-circle mr-1"></i>
+                            <span class="d-none d-sm-inline">Location</span>
+                        </a>
+                    </li>
                     @endif
 
                     <li class="nav-item">
@@ -42,34 +51,52 @@
 
                         </a>
                     </li>
-                        <li class="nav-item">
+                    <li class="nav-item">
                         <a href="#basictab4" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                             <i class="mdi mdi-account-circle mr-1"></i>
-                            <span class="d-none d-sm-inline">Attachements</span>
+                            <span class="d-none d-sm-inline">Files</span>
                         </a>
                     </li>
 
                 </ul>
 
                 <div class="tab-content b-0 mb-0">
-                    @include('projects.partials.tab1')
+                    @include('partials.projectEdit.tab1')
 
                     @if ($project->model == "onsite")
-                        @include('projects.partials.tab5')
+                    @include('partials.projectEdit.tab5')
                     @endif
 
-                    @include('projects.partials.tab2')
+                    @include('partials.projectEdit.tab2')
 
-                    @include('projects.partials.tab3')
+                    @include('partials.projectEdit.tab3')
 
-                    @include('projects.partials.tab4')
+                    @include('partials.projectEdit.tab4')
 
 
+                    <div class="col-12">
+                        <div class="form-group d-flex">
+                            <div class="col-sm-6 ">
+                                {!! Form::open(['method' => 'PUT', 'action' => ['ProjectController@update', $project->id], 'id' => 'postForm']) !!}
+                                    {!! Form::hidden('status', 'post') !!}
+                                {!! Form::close() !!}
+                                <button onclick="postProject(this, '{{$project->model}}')" type="submit" class="d-block mx-auto btn btn-primary">  {{ __('Post Task') }} </button>
+                            </div>
 
-                    <ul class="list-inline wizard mb-0">
+                            <div class="col-sm-6">
+                                {!! Form::open(['method' => 'PUT', 'action' => ['ProjectController@update', $project->id], 'id' => 'postForm']) !!}
+                                    {!! Form::hidden('status', 'cancelled') !!}
+                                {!! Form::close() !!}
+                                <button onclick="postProject(this, '{{$project->model}}')" type="submit" class="d-block mx-auto btn btn-danger">  {{ __('Delete Task') }} </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="list-inline wizard mb-3">
                         <li class="previous list-inline-item disabled">
                             <a href="#" class="btn btn-info" title="previous"><i class="dripicons-arrow-thin-left"></i></a>
                         </li>
+
                         <li class="next list-inline-item float-right">
                             <a href="#" class="btn btn-info"><i class="dripicons-arrow-thin-right"></i></a>
                         </li>
@@ -78,23 +105,27 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/form.js') }}"></script>
-    <script src="{{ asset('js/dropzone.js') }}"></script>
+<script src="{{ asset('js/form.js') }}"></script>
+<script src="{{ asset('js/dropzone.js') }}"></script>
+<script>
+    var project_id = {{ $project-> id}};
+    var is_onsite = {{$project->model == "onsite" ? 1 : 0}};
 
-    <script>
-        Dropzone.autoDiscover = false;
-        var dropzone = new Dropzone('#myAwesomeDropzone', {
-            parallelUploads: 1,
-            thumbnailHeight: 120,
-            thumbnailWidth: 120,
-            maxFilesize: 1, //1mb
-            maxFiles: 3,
-            filesizeBase: 1000,
-            thumbnail: function (file, dataUrl) {
-                if (file.previewElement) {
+
+    Dropzone.autoDiscover = false;
+    var dropzone = new Dropzone('#myAwesomeDropzone', {
+        parallelUploads: 1,
+        thumbnailHeight: 120,
+        thumbnailWidth: 120,
+        maxFilesize: 1, //1mb
+        maxFiles: 3,
+        filesizeBase: 1000,
+        thumbnail: function (file, dataUrl) {
+            if (file.previewElement) {
                 file.previewElement.classList.remove("dz-file-preview");
                 var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
                 for (var i = 0; i < images.length; i++) {
@@ -102,88 +133,10 @@
                     thumbnailElement.alt = file.name;
                     thumbnailElement.src = dataUrl;
                 }
-                setTimeout(function () { file.previewElement.classList.add("dz-image-preview"); }, 1);
-                }
+                setTimeout(function () {file.previewElement.classList.add("dz-image-preview"); }, 1);
             }
-        });
-
-
-        var project_id = {{$project->id}};
-
-        function updateTaskModel(target, field) {
-            $('#taskModelModalButton').text($('#model :selected').text());
-            updateProject(target, field);
-            document.location.reload();
         }
+    });
 
-        function deleteFile(target, file_id) {
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                method: 'DELETE',
-                url: '/project/photos/' + file_id,
-                success: function(response){
-                    $(target).parent().fadeOut();
-                    $(target).parent().removeClass('d-flex');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-
-                }
-            });
-        }
-
-        function updateTask(target, field) {
-            $('#fredTaskSelectionModalButton').text($('#task_id :selected').text());
-            updateProject(target, field);
-            return $("#fredCategoryModal, #fredSubCategoryModal").modal('toggle');
-        }
-
-        function updateTaskDuration(target, field) {
-            $('#fredTaskDurationModalButton').text($('#duration :selected').text());
-            updateProject(target, field);
-            return $("#fredTaskDurationModal").modal('toggle');
-        }
-
-        function updateTaskStartDate(target, field) {
-            $('#fredDateModalButton').text($('#start_date').val());
-            updateProject(target, field);
-            return $("#fredDateModal").modal('toggle');
-        }
-
-         function updateTaskMasterNumber(target, field) {
-            $('#frednumberButton').text($('#num_of_taskMaster :selected').text());
-            updateProject(target, field);
-            return $("#frednumber").modal('toggle');
-        }
-
-        function updateSubtask(target, field) {
-            $('#fredSubTaskSelectionModalButton').text($('#sub_task_id :selected').text());
-            updateProject(target, field);
-            return $("#fredSubCategoryModal").modal('toggle');
-        }
-
-        function updateProject(target, field) {
-            let value = $(target).val();
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                method: 'PUT',
-                url: '/projects/' + project_id,
-                data: {value:value, field:field},
-                success: function(response){
-                    if (field == "task_id") {
-                        $('#sub_task_id').html('');
-                        $('#sub_task_id').append('<option value="0">Make sub task</option>')
-                        for (var i = response.length - 1; i >= 0; i--) {
-                            $('#sub_task_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
-                        }
-                    }
-                    return;
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    return $(target).val('Select Task');
-                }
-            });
-        }
-    </script>
-
-
+</script>
 @endsection

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-top">
         <div class="modal-content">
             <div class="modal-header modal-colored-header bg-primary">
-                <h4 class="modal-title" id="primary-header-modalLabel">Proposed start date</h4>
+                <h4 class="modal-title" id="primary-header-modalLabel">Task Duartion</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
@@ -91,9 +91,6 @@
 <div class="tab-pane" id="basictab3">
     <div class="row">
         <div class="d-flex flex-wrap w-100 justify-content-between">
-
-
-
             <div class="card widget-flat col-md-5">
                 <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                     <div class="col-sm-12 mb-3">
@@ -105,7 +102,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="card widget-flat col-md-6">
                 <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
@@ -132,15 +128,13 @@
                 </div>
             </div>
 
-
-
             <div class="card widget-flat col-md-6">
                 <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                     <div class="col-sm-12 mb-3">
                         {!! Form::label('num_of_taskMaster', 'Number of task Master', ['class' => 'd-block mt-0 h4']) !!}
                         <span class="d-block text-muted h6">How many task master do you need for this task</span>
                          <div class="d-block">
-                            <button id="frednumberButton" type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#frednumber">{{$project->num_of_taskMaster ? $project->num_of_taskMaster  : "1 Task master"}}</button>
+                            <button id="frednumberButton" type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#frednumber">{{$project->num_of_taskMaster ? $project->num_of_taskMaster  : "1"}}</button>
                         </div>
                     </div>
                 </div>

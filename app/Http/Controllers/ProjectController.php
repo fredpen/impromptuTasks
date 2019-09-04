@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Country;
 use App\Region;
+use App\City;
 
 class ProjectController extends Controller
 {
@@ -71,7 +72,7 @@ class ProjectController extends Controller
         );
         $validatedData['user_id'] = Auth::id();
         $project = Project::create($validatedData);
-        return redirect()->action('ProjectController@edit', ['id' => $project->id]);;
+        return redirect()->action('ProjectController@edit', ['id' => $project->id]);
     }
 
     /**
@@ -82,6 +83,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        return view("projects.show", compact('project'));
     }
 
     /**
@@ -92,13 +94,14 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $regions = $cities = 0;
         $duration = $this->durationArray;
-        $tasks = Tasks::with('subTasks')->get(['name', 'id']);
-        if ($project->model == "onsite") {
-            $countries = Country::with('regions')->get(['name', 'id']);
-            return view('projects.edit', compact('project', 'tasks', 'countries', 'duration'));
-        }
-        return view('projects.edit', compact('project', 'tasks', 'duration'));
+        $countries = Country::all(['name', 'id']);
+        $tasks = Tasks::with('subTasks')->get(['id', 'name']);
+        if ($project->country) $regions = Region::where('country_id', $project->country_id)->get(['id', 'name']);
+        if ($project->region) $cities = City::where('region_id', $project->region_id)->get(['id', 'name']);
+        return view('projects.edit', compact('regions', 'cities', 'project', 'tasks', 'countries', 'duration'));
+
     }
 
     /**
@@ -110,8 +113,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $project->update([$request->field => $request->value]);
-        if ($request->field == 'task_id') return SubTask::where(['task_id' => $request->value])->get(['id', 'name']);
+        if (!$request->status) return "what are u doing here";
+        $project->updateStatus($request->status);
+        return redirect()->action('ProjectController@create');
     }
 
     /**
@@ -123,5 +127,15 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+
+    public function ajax(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+        $project->update([$request->field => $request->value]);
+        if ($request->field == 'task_id') return SubTask::where(['task_id' => $request->value])->get(['id', 'name']);
+        if ($request->field == 'country_id') return Region::where(['country_id' => $request->value])->get(['id', 'name']);
+        if ($request->field == 'region_id') return City::where(['region_id' => $request->value])->get(['id', 'name']);
     }
 }

@@ -1,7 +1,6 @@
 <div class="tab-pane" id="basictab4">
     <div class="row">
 
-        {{-- supporting documents --}}
         @if ($project->photos->count())
             <div class="card widget-flat col-md-12 mb-2">
                 <div class="card-body mb-3 pb-0 px-0" style="position: relative;">
@@ -11,8 +10,8 @@
                             <div class="row align-items-center">
                                 @foreach ($project->photos as $key => $photo)
                                     <div id="fileParent" class="col-sm-12 d-flex justify-content-between border-bottom">
-                                        <span class="h6">
-                                            <a href="{{asset('images/'.$photo->url)}}" download>Supporting Document {{$key + 1}}</a>
+                                        <span class="h5">
+                                            <a href="{{asset('images/'.$photo->url)}}" download>Supporting Document {{$key + 1}}  <i class="mdi mdi-download"></i></a>
                                         </span>
 
                                         <i onclick="deleteFile(this, {{$photo->id}})" class="mdi mx-2 h4 mdi-delete pointer text-danger"></i>
@@ -43,14 +42,6 @@
                             <h3>Drop files here or click to upload.</h3>
                         </div>
                     {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-
-         <div class="col-12">
-            <div class="form-group row m-3">
-                <div class="col-md-6 offset-md-4">
-                    <button type="submit" class="btn btn-primary">  {{ __('Create Project') }} </button>
                 </div>
             </div>
         </div>

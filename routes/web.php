@@ -20,6 +20,7 @@ Route::get('/admin', 'RolesController@create')->name('admin.home');
 
 
 
+
 Route::resource('account', 'AccountController');
 Route::resource('regions', 'RegionController');
 Route::resource('cities', 'CityController');
@@ -33,6 +34,7 @@ Route::resource('project/photos', 'ProjectphotoController');
 
 
 Route::resource('projects', 'ProjectController');
+Route::put('project/ajax/{id}', 'ProjectController@ajax')->name('project.ajax');
 // Route::group(
 //     ['middleware' => ['auth', 'verified', 'isActive'] ], function () {
 //         Route::resource('projects', 'ProjectController');

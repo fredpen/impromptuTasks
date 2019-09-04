@@ -55,7 +55,6 @@
                                                         <li class="list-inline-item">
                                                             <p class="mb-0 h4">Jobs</p>
                                                             <p>{{($user->orders_out ? $user->oders_out : "0")}}</p>
-
                                                         </li>
                                                     </ul>
 

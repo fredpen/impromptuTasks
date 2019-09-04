@@ -4,9 +4,19 @@
     <div id="full_width_container">
         <div class="jumbotron jumbotron-fluid bg-secondary text-white">
           <div class="container">
-            <h1 class="display-5">Hire Task Manager.</h1>
-            <h1 class="display-6">Be more productive.</h1>
-            <p class="lead">Let our qualified task manager handle your tasks. Hire talent nearby or worldwide.</p>
+            @guest
+                <h1 class="display-5">Hire Task Master.</h1>
+                <h1 class="display-6">Be more productive.</h1>
+                <p class="lead">Let our qualified task manager handle your tasks. Hire talent nearby or worldwide.</p>
+                <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Get started</a>
+            @else
+                @if (Auth::id() == 1)
+                    <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Hire Freelancer</a>
+                @else
+                    <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Apply to Tasks</a>
+                @endif
+            @endguest
+
           </div>
         </div>
     </div>
