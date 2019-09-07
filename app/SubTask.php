@@ -13,14 +13,17 @@ class SubTask extends Model
         return ucfirst($value);
     }
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var    array
-     * @return array [<instance of subtasks>]
-     */
     public function subtasks()
     {
         return $this->belongsToMany(User::class, 'user_subtask');
+    }
+
+    public function storeSubtasks($subTaskString, $taskId)
+    {
+        if (strpos($subTaskString, ",") === false) return $this::create(['task_id' => $taskId, 'name' => $subTaskString]);
+        $subTaskArray = explode(",", $subTaskString);
+        foreach ($subTaskArray as  $subTask) {
+            $this::firstOrcreate(['task_id' => $taskId, 'name' => $subTask]);
+        }
     }
 }

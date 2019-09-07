@@ -47,12 +47,14 @@ class SubTaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+        // }
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, SubTask $subTask)
     {
-        SubTask::create($this->_validate($request));
+        $subTasks = $this->_validate($request);
+        $subTask->storeSubtasks($request['name'], $subTasks['task_id']);
         return back();
     }
 
@@ -87,7 +89,8 @@ class SubTaskController extends Controller
      */
     public function update(Request $request, SubTask $subtask)
     {
-        $subtask->update($this->_validate($request));
+        $subTask = $this->_validate($request);
+        $subtask->update($subTask);
         return back();
     }
 

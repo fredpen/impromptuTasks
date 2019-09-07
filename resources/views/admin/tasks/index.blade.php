@@ -97,12 +97,12 @@
                         <div class="card-body">
                             <div class="card-widgets">
                                 <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
-                                <a data-toggle="collapse" href="#cardCollpase{{$task->id}}" role="button" aria-expanded="false" aria-controls="cardCollpase1"><i class="mdi mdi-minus"></i></a>
+                                <a data-toggle="collapse" href="#cardCollpase{{$task->id}}" role="button" aria-expanded="false" aria-controls="cardCollpase1"><i class="mdi mdi-plus"></i></a>
                             </div>
 
                             <h5 class="card-title mb-0">{{$task->name}}</h5>
 
-                            <div id="cardCollpase{{$task->id}}" class="collapse pt-3 show">
+                            <div id="cardCollpase{{$task->id}}" class="collapse pt-3 ">
                                 <ul class="list-group text-capitalize">
                                     @if ($task->subTasks->count() > 0)
                                         @foreach ($task->subTasks as $subTask)

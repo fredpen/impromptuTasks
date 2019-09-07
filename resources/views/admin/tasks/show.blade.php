@@ -13,46 +13,45 @@
         @include('partials.errorBag')
     @endif
 
-    <div class="row mt-4 justify-content-center align-items-center">
-        <div class="col-xl-10">
-            <div class="card">
-                <div class="card-body">
-                    <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
-                        <li class="nav-item">
-                            <a href="#home1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-                                <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
-                                <span class="d-none d-lg-block">Create Sub-task</span>
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <div id="accordion" class="custom-accordion mb-4">
+                <div class="card mb-0">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="m-0">
+                            <a class="custom-accordion-title collapsed d-block pt-2 pb-2" data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Create Sub Task<span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#profile1" data-toggle="tab" aria-expanded="true" class="nav-link rounded-0 active">
-                                <i class="mdi mdi-account-circle d-lg-none d-block mr-1"></i>
-                                <span class="d-none d-lg-block"> Update Sub Task</span>
-                            </a>
-                        </li>
-                        {{-- <li class="nav-item">
-                            <a href="#settings1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-                                <i class="mdi mdi-settings-outline d-lg-none d-block mr-1"></i>
-                                <span class="d-none d-lg-block">Info</span>
-                            </a>
-                        </li> --}}
-                    </ul>
-
-                    <div class="tab-content">
-                        <div class="tab-pane justify-content-center align-items-center" id="home1">
-                             <div class="card card-body col-lg-6 ">
-                                <div class="card-text">
-                                    {!! Form::open(['method' => 'POST', 'action' => 'SubTaskController@store']) !!}
-                                        <div class="form-group mb-3 justify-content-center">
-                                            {!! Form::text('name', null, ['class' => 'form-control mb-3', 'placeholder' => 'Enter task name']) !!}
-                                            {!! Form::hidden('task_id', $task->id, []) !!}
-                                            {!! Form::submit('Add Sub-Task to ' . $task->name . ' Task', ['class' => 'btn btn-dark d-block mx-auto']) !!}
-                                        </div>
-                                    {!! Form::close() !!}
-                                </div>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card card-body col-12 ">
+                            <div class="card-text">
+                                {!! Form::open(['method' => 'POST', 'action' => 'SubTaskController@store']) !!}
+                                    <div class="form-group mb-3 justify-content-center">
+                                        {!! Form::text('name', null, ['class' => 'form-control mb-3', 'placeholder' => 'Enter sub task name']) !!}
+                                        {!! Form::hidden('task_id', $task->id, []) !!}
+                                        {!! Form::submit('Add Sub-Task to ' . $task->name . ' Task', ['class' => 'btn btn-primary d-block mx-auto']) !!}
+                                    </div>
+                                {!! Form::close() !!}
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-lg-6">
+            <div id="accordion" class="custom-accordion mb-4">
+                <div class="card mb-0">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="m-0">
+                            <a class="custom-accordion-title collapsed d-block pt-2 pb-2" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+                                Update/Delete Existing subtasks<span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="tab-pane  show active" id="profile1">
                             <div class="card card-body col-lg-12">
                                 <div class="card-text">
@@ -92,10 +91,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="tab-pane" id="settings1">
-                           All tasks are connected to a sub tasks
-                        </div> --}}
                     </div>
                 </div>
             </div>
