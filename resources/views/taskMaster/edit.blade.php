@@ -136,7 +136,6 @@
                                                     </div>
 
                                                     <p class="h4 mt-5 text-dark">Your skill set</p>
-                                                    {{-- <hr class="2"> --}}
 
                                                     <select required name="skills[]" class="select2 form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="4" tabindex="-1" aria-hidden="true" required>
                                                         @foreach ($tasks as $task)

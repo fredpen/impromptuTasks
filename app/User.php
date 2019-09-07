@@ -73,4 +73,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Project::class);
     }
+
+    public function fetchskillsId()
+    {
+        $skillsObject = $this->skills;
+        $skillsArray = json_decode(json_encode($skillsObject), true) ;
+        return array_column($skillsArray, 'id');
+    }
 }

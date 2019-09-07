@@ -12,6 +12,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\SubTask;
 
 class AccountController extends Controller
 {
@@ -38,10 +39,10 @@ class AccountController extends Controller
     {
         return $request->validate(
             [
-                'country_id' => 'required',
-                "region_id" => 'required',
-                'city_id' => 'required',
-                'address' => 'required'
+                // 'country_id' => 'required',
+                // "region_id" => 'required',
+                // 'city_id' => 'required',
+                // 'address' => 'required'
             ]
         );
     }
@@ -80,9 +81,8 @@ class AccountController extends Controller
         $countries = Country::pluck('name', 'id');
         if ($user->role_id === 1) return view('taskGiver.edit', compact('user', 'countries'));
 
-        $skills = new Skills();
-        $tasks = Tasks::all();
-        $skill_ids = $skills->skillArray($user);
+        $skill_ids = $user->fetchskillsId();
+        $tasks = Tasks::with(['subTasks:id,name,task_id'])->get(['id', 'name']);
         return view('taskMaster.edit', compact('user', 'tasks', 'skill_ids'));
     }
 

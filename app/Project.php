@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $guarded = [];
-    protected $with = ['task', 'subtask'];
+    protected $with = ['task:id,name', 'subtask:id,name'];
 
 
     public function task()
@@ -47,7 +47,7 @@ class Project extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function updateStatus($status)
+    public function updateTaskStatus($status)
     {
         if ($status == "post") return $this->post();
         if ($status == "cancelled") return $this->cancelled();

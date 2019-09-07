@@ -35,6 +35,8 @@ Route::resource('project/photos', 'ProjectphotoController');
 
 Route::resource('projects', 'ProjectController');
 Route::put('project/ajax/{id}', 'ProjectController@ajax')->name('project.ajax');
+
+
 // Route::group(
 //     ['middleware' => ['auth', 'verified', 'isActive'] ], function () {
 //         Route::resource('projects', 'ProjectController');

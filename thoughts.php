@@ -1,4 +1,8 @@
+as it turns out, type casting is not so good cos it creates a column for the array by itself
+However using json_encode and then decode and then using true to force the newly php variable to be an array instead of an object is cool
+like json_decode(json_encode($array), true) without the true an object is returned back. okay
 
+also array filter is useful but not so useful cos in d end i have to tell it whether something is true of flase
 
 I have successfully create a task<
 
