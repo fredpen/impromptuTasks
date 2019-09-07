@@ -37,10 +37,10 @@ class AccountController extends Controller
     {
         return $request->validate(
             [
-                'country_id' => 'required',
-                "region_id" => 'required',
-                'city_id' => 'required',
-                'address' => 'required'
+                // 'country_id' => 'required',
+                // "region_id" => 'required',
+                // 'city_id' => 'required',
+                // 'address' => 'required'
             ]
         );
     }

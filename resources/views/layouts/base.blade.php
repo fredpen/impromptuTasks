@@ -33,11 +33,9 @@
                                 <img src="{{ asset('images/basic.jpg') }}" alt="impromptutasks.com" height="16">
                             </a>
 
+
+
                             <ul class="list-unstyled topbar-right-menu float-right mb-0">
-
-                                {{-- <li class="dropdown"> <button type="button" class="py-1 px-1 btn btn-danger">Post Task</button></li> --}}
-
-
                                 <li class="dropdown notification-list">
 
                                     <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" id="topbar-notifydrop" role="button" aria-haspopup="true" aria-expanded="false">
@@ -161,8 +159,6 @@
                                                 <i class="mdi mdi-speedometer mr-1"></i>Dashboards <div class="arrow-down"></div>
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="topnav-dashboards">
-                                                <a href="index.html" class="dropdown-item">Ecommerce</a>
-                                                <a href="dashboard-crm.html" class="dropdown-item">CRM</a>
                                                 <a href="dashboard-projects.html" class="dropdown-item">Projects</a>
                                             </div>
                                         </li>
@@ -177,7 +173,6 @@
                                                         Projects <div class="arrow-down"></div>
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="topnav-project">
-                                                        <a href="apps-projects-list.html" class="dropdown-item">List</a>
                                                         <a href="apps-projects-details.html" class="dropdown-item">Details</a>
                                                     </div>
                                                 </div>
@@ -187,13 +182,6 @@
                                                         eCommerce <div class="arrow-down"></div>
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
-                                                        <a href="apps-ecommerce-products.html" class="dropdown-item">Products</a>
-                                                        <a href="apps-ecommerce-products-details.html" class="dropdown-item">Products Details</a>
-                                                        <a href="apps-ecommerce-orders.html" class="dropdown-item">Orders</a>
-                                                        <a href="apps-ecommerce-orders-details.html" class="dropdown-item">Order Details</a>
-                                                        <a href="apps-ecommerce-customers.html" class="dropdown-item">Customers</a>
-                                                        <a href="apps-ecommerce-shopping-cart.html" class="dropdown-item">Shopping Cart</a>
-                                                        <a href="apps-ecommerce-checkout.html" class="dropdown-item">Checkout</a>
                                                         <a href="apps-ecommerce-sellers.html" class="dropdown-item">Sellers</a>
                                                     </div>
                                                 </div>
@@ -228,15 +216,9 @@
                                                         Error <div class="arrow-down"></div>
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="topnav-error">
-                                                        <a href="pages-404.html" class="dropdown-item">Error 404</a>
-                                                        <a href="pages-404-alt.html" class="dropdown-item">Error 404-alt</a>
                                                         <a href="pages-500.html" class="dropdown-item">Error 500</a>
                                                     </div>
                                                 </div>
-                                                <a href="pages-starter.html" class="dropdown-item">Starter Page</a>
-                                                <a href="pages-profile.html" class="dropdown-item">Profile</a>
-                                                <a href="pages-invoice.html" class="dropdown-item">Invoice</a>
-                                                <a href="pages-faq.html" class="dropdown-item">FAQ</a>
                                                 <a href="pages-pricing.html" class="dropdown-item">Pricing</a>
                                                 <a href="pages-maintenance.html" class="dropdown-item">Maintenance</a>
                                             </div>
@@ -247,11 +229,6 @@
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="topnav-layouts">
                                                 <a href="layouts-horizontal.html" class="dropdown-item">Horizontal</a>
-                                                <a href="layouts-light-sidenav.html" class="dropdown-item">Light Sidenav</a>
-                                                <a href="layouts-collapsed.html" class="dropdown-item">Collapsed Menu</a>
-                                                <a href="javascript: void(0);" class="dropdown-item right-bar-toggle">Right Sidebar</a>
-                                                <a href="layouts-boxed-vertical.html" class="dropdown-item">Boxed Vertical</a>
-                                                <a href="layouts-boxed-horizontal.html" class="dropdown-item">Boxed Horizontal</a>
                                                 <a href="layouts-scrollable-sidenav.html" class="dropdown-item">Scrollable Sidenav</a>
                                             </div>
                                         </li>
@@ -266,15 +243,6 @@
                                                         UI Elements <div class="arrow-down"></div>
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="topnav-ui-kit">
-                                                        <a href="ui-cards.html" class="dropdown-item">Cards</a>
-                                                        <a href="ui-buttons.html" class="dropdown-item">Buttons</a>
-                                                        <a href="ui-modals.html" class="dropdown-item">Modals</a>
-                                                        <a href="ui-tabs.html" class="dropdown-item">Tabs</a>
-                                                        <a href="ui-notifications.html" class="dropdown-item">Notifications</a>
-                                                        <a href="ui-grid.html" class="dropdown-item">Grid</a>
-                                                        <a href="ui-general.html" class="dropdown-item">General</a>
-                                                        <a href="ui-typography.html" class="dropdown-item">Typography</a>
-                                                        <a href="ui-icons.html" class="dropdown-item">Icons</a>
                                                         <a href="ui-spinners.html" class="dropdown-item">Spinners</a>
                                                         <a href="ui-dragula.html" class="dropdown-item">Dragula</a>
                                                     </div>
@@ -328,6 +296,15 @@
                                                 <span class="text-white bg-danger px-2 py-1">Post Task</span>
                                             </a>
                                         </li>
+
+                                        @if (Auth::id() && Auth::user()->role_id === 0)
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('admin.home') }}" id="topnav-layouts" role="button">
+                                                    <span class="text-white bg-danger px-2 py-1">Admin</span>
+                                                </a>
+                                            </li>
+                                        @endif
+
                                     </ul>
                                 </div>
                             </nav>

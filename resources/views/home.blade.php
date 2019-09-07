@@ -2,13 +2,14 @@
 
 @section('content')
     <div id="full_width_container">
-        <div class="jumbotron jumbotron-fluid bg-secondary text-white">
+        <div class="jumbotron jumbotron-fluid bg-secondary text-white p-3">
           <div class="container">
-            @guest
-                <h1 class="display-5">Hire Task Master.</h1>
+               <h1 class="display-5">Hire Task Master.</h1>
                 <h1 class="display-6">Be more productive.</h1>
                 <p class="lead">Let our qualified task manager handle your tasks. Hire talent nearby or worldwide.</p>
-                <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Get started</a>
+            @guest
+                <a class="btn btn-lg btn-primary m-2" href="{{ route('register') }}">Hire Task Master</a>
+                <a class="btn btn-lg btn-primary m-2" href="{{ route('register') }}">Become a Task Master</a>
             @else
                 @if (Auth::id() == 1)
                     <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Hire Freelancer</a>

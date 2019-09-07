@@ -97,7 +97,7 @@
 
                                 <div class="col-md-4 col-lg-6">
                                     <p class="d-block m-2">Category:
-                                        <span class="mb-0 text-primary">{{$project->task->name}}</spam>
+                                        <span class="mb-0 text-primary">{{$project->task->name}}</span>
                                     </p>
                                 </div>
 

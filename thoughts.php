@@ -22,3 +22,11 @@ i think its better i do that first so that i can work on something else while so
     if anyone cant find its address he or she should do well to specify his closest adress in the adress bar
 
 ///////
+git merge
+be where u want to merge to
+git merge whereumergingfrom
+
+next course of action
+    guard all the admin sections since we putting it online
+    users must be signed in and is admin
+    before the end of the weekend.
