@@ -78,8 +78,7 @@
                                 </li>
 
                                 <li class="dropdown notification-list">
-                                    <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
-                                        aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                         @guest
                                             <span class="account-user-avatar">
                                                 <img src="{{ asset('images/basic.jpg') }}" alt="register avatar" class="rounded-circle">

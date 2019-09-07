@@ -33,21 +33,17 @@ class AccountController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-
-
     private function _validate($request)
     {
         return $request->validate(
             [
-                // 'country_id' => 'required',
-                // "region_id" => 'required',
-                // 'city_id' => 'required',
-                // 'address' => 'required'
+                'country_id' => 'required',
+                "region_id" => 'required',
+                'city_id' => 'required',
+                'address' => 'required'
             ]
         );
     }
-
-
 
     /**
      * Display a listing of the resource.
@@ -108,7 +104,6 @@ class AccountController extends Controller
         $skill_ids = $request->skills;
         $user->skills()->sync($skill_ids);  //update user skills
         return view('projects.index');
-        return back();
     }
 
     /**

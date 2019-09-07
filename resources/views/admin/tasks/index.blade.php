@@ -92,7 +92,7 @@
         @if ($tasks->count() > 0)
             @foreach ($tasks as $task)
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <div class="card-widgets">
@@ -105,11 +105,11 @@
                             <div id="cardCollpase{{$task->id}}" class="collapse pt-3 ">
                                 <ul class="list-group text-capitalize">
                                     @if ($task->subTasks->count() > 0)
+                                    <li class="list-group-item">
                                         @foreach ($task->subTasks as $subTask)
-                                            <li class="list-group-item">
-                                                <a href="{{ route('tasks.show', $task->id) }}">{{ $subTask->name }}</a>
-                                            </li>
+                                            <a href="{{ route('tasks.show', $task->id) }}">{{ $subTask->name }}, </a>
                                         @endforeach
+                                    </li>
                                     @endif
                                 </ul>
                                 <div> <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-primary d-inline-block mt-4 mx-auto">Add Sub/Edit tasks</a></div>

@@ -29,11 +29,8 @@
 
                     <!-- LOGO -->
                     <a href="index.html" class="logo text-center">
-                        <span class="logo-lg">
-                            <img src="assets/images/logo.png" alt="" height="16">
-                        </span>
                         <span class="logo-sm">
-                            <img src="assets/images/logo_sm.png" alt="" height="16">
+                            <img src="{{ asset('images/basic.jpg') }}" alt="" height="16">
                         </span>
                     </a>
 
@@ -371,57 +368,6 @@
                                                 <small class="text-muted">1 min ago</small>
                                             </p>
                                         </a>
-
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-info">
-                                                <i class="mdi mdi-account-plus"></i>
-                                            </div>
-                                            <p class="notify-details">New user registered.
-                                                <small class="text-muted">5 hours ago</small>
-                                            </p>
-                                        </a>
-
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon">
-                                                <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
-                                            <p class="notify-details">Cristina Pride</p>
-                                            <p class="text-muted mb-0 user-msg">
-                                                <small>Hi, How are you? What about our next meeting</small>
-                                            </p>
-                                        </a>
-
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-primary">
-                                                <i class="mdi mdi-comment-account-outline"></i>
-                                            </div>
-                                            <p class="notify-details">Caleb Flakelar commented on Admin
-                                                <small class="text-muted">4 days ago</small>
-                                            </p>
-                                        </a>
-
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon">
-                                                <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
-                                            <p class="notify-details">Karen Robinson</p>
-                                            <p class="text-muted mb-0 user-msg">
-                                                <small>Wow ! this admin looks good and awesome design</small>
-                                            </p>
-                                        </a>
-
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-info">
-                                                <i class="mdi mdi-heart"></i>
-                                            </div>
-                                            <p class="notify-details">Carlos Crouch liked
-                                                <b>Admin</b>
-                                                <small class="text-muted">13 days ago</small>
-                                            </p>
-                                        </a>
                                     </div>
 
                                     <!-- All-->
@@ -432,55 +378,57 @@
                                 </div>
                             </li>
 
+
                             <li class="dropdown notification-list">
-                                <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-                                    aria-expanded="false">
-                                    <span class="account-user-avatar">
-                                        <img src="assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
-                                    </span>
-                                    <span>
-                                        <span class="account-user-name">Dominic Keller</span>
-                                        <span class="account-position">Founder</span>
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
-                                    <!-- item-->
-                                    <div class=" dropdown-header noti-title">
-                                        <h6 class="text-overflow m-0">Welcome !</h6>
+                                    <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                        @guest
+                                            <span class="account-user-avatar">
+                                                <img src="{{ asset('images/basic.jpg') }}" alt="register avatar" class="rounded-circle">
+                                            </span>
+                                            <span>
+                                                <span class="account-user-name">Account</span>
+                                                <span class="account-position">Register/Login</span>
+                                            </span>
+                                        @else
+                                            <span class="account-user-avatar">
+                                                <img src="{{ asset('images/basic.jpg') }}" alt="{{Auth::User()->name}}" class="rounded-circle">
+                                            </span>
+                                            <span>
+                                                <span class="account-user-name">{{ Auth::User()->name }} </span>
+                                                <span class="account-position">Joined {{ Auth::User()->created_at->diffForHumans() }} </span>
+                                            </span>
+                                        @endguest
+
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
+                                        @guest
+                                            <a href="{{ route('login') }}" class="dropdown-item notify-item">
+                                                <i class="mdi mdi-login mr-1"></i>
+                                                <span>Login</span>
+                                            </a>
+                                            @if (Route::has('register'))
+                                                <a href="{{ route('register') }}" class="dropdown-item notify-item">
+                                                    <i class="mdi mdi-account-circle mr-1"></i>
+                                                    <span>Register</span>
+                                                </a>
+                                            @endif
+                                        @else
+                                            <a href="{{ route('account.edit', Auth::User()->id) }}" class="dropdown-item notify-item">
+                                                <i class="mdi mdi-account-circle mr-1"></i>
+                                                <span>My Profile</span>
+                                            </a>
+                                            <a href="{{ route('logout') }}" class="dropdown-item notify-item"
+                                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                                <i class="mdi mdi-login mr-1"></i>
+                                                    {{ __('Logout') }}
+                                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </a>
+                                        @endguest
                                     </div>
-
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-account-circle mr-1"></i>
-                                        <span>My Account</span>
-                                    </a>
-
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-account-edit mr-1"></i>
-                                        <span>Settings</span>
-                                    </a>
-
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-lifebuoy mr-1"></i>
-                                        <span>Support</span>
-                                    </a>
-
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-lock-outline mr-1"></i>
-                                        <span>Lock Screen</span>
-                                    </a>
-
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-logout mr-1"></i>
-                                        <span>Logout</span>
-                                    </a>
-
-                                </div>
-                            </li>
+                                </li>
 
                         </ul>
                         <button class="button-menu-mobile open-left disable-btn">

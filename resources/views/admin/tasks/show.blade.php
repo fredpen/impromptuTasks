@@ -14,7 +14,7 @@
     @endif
 
     <div class="row mt-4">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div id="accordion" class="custom-accordion mb-4">
                 <div class="card mb-0">
                     <div class="card-header" id="headingOne">
@@ -31,7 +31,7 @@
                                     <div class="form-group mb-3 justify-content-center">
                                         {!! Form::text('name', null, ['class' => 'form-control mb-3', 'placeholder' => 'Enter sub task name']) !!}
                                         {!! Form::hidden('task_id', $task->id, []) !!}
-                                        {!! Form::submit('Add Sub-Task to ' . $task->name . ' Task', ['class' => 'btn btn-primary d-block mx-auto']) !!}
+                                        {!! Form::submit('Add Sub-Task to ' . $task->name . ' Task', ['class' => 'btn btn-dark d-block mx-auto']) !!}
                                     </div>
                                 {!! Form::close() !!}
                             </div>
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div id="accordion" class="custom-accordion mb-4">
                 <div class="card mb-0">
                     <div class="card-header" id="headingTwo">
@@ -53,7 +53,7 @@
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="tab-pane  show active" id="profile1">
-                            <div class="card card-body col-lg-12">
+                            <div class="card card-body col-lg-6">
                                 <div class="card-text">
                                     <div class="table-responsive-sm">
                                         <table class="table table-bordered table-centered mb-0">
