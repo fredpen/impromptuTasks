@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Country;
 use App\Region;
 use App\City;
+use App\Notifications\projectCreated;
+use App\Notifications\projectCompleted;
 
 class ProjectController extends Controller
 {
@@ -32,7 +34,7 @@ class ProjectController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'isActive']);
+        $this->middleware(['auth', 'verified', 'isActive'])->except(['show', 'index']);
     }
 
 
@@ -43,7 +45,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Project::all();
+        return Project::first();
     }
 
     /**
@@ -53,7 +55,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $projects = Project::where('user_id', Auth::id())->get();
+        $projects = Project::where([
+            ['user_id', '=', Auth::id()],
+            ['status', '!=', 'deleted']
+            ])->get();
         $tasks = Tasks::pluck('name', 'id');
         return view('projects.create', compact('projects', 'tasks'));
     }
@@ -72,6 +77,7 @@ class ProjectController extends Controller
         );
         $validatedData['user_id'] = Auth::id();
         $project = Project::create($validatedData);
+        $project->notifyOwner('created');
         return redirect()->action('ProjectController@edit', ['id' => $project->id]);
     }
 
@@ -94,6 +100,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $this->authorize('edit', $project);
         $regions = $cities = 0;
         $duration = $this->durationArray;
         $countries = Country::all(['name', 'id']);
@@ -113,8 +120,8 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        if (!$request->status) return "what are u doing here";
-        $project->updateTaskStatus($request->status);
+        $this->authorize('edit', $project);
+        $project->notifyOwner($request->status);
         return redirect()->action('ProjectController@create');
     }
 
@@ -126,13 +133,16 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $this->authorize('edit', $project);
+        $project->notifyOwner('deleted');
+        return redirect()->action('ProjectController@create');
     }
 
 
     public function ajax(Request $request, $id)
     {
         $project = Project::findOrFail($id);
+        $this->authorize('edit', $project);
         $project->update([$request->field => $request->value]);
         if ($request->field == 'task_id') return SubTask::where(['task_id' => $request->value])->get(['id', 'name']);
         if ($request->field == 'country_id') return Region::where(['country_id' => $request->value])->get(['id', 'name']);

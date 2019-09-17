@@ -22,11 +22,6 @@ class AccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private function _user()
-    {
-        return Auth::User();
-    }
-
 
     public function __construct()
     {
@@ -37,10 +32,10 @@ class AccountController extends Controller
     {
         return $request->validate(
             [
-                // 'country_id' => 'required',
-                // "region_id" => 'required',
-                // 'city_id' => 'required',
-                // 'address' => 'required'
+                'country_id' => 'required',
+                "region_id" => 'required',
+                'city_id' => 'required',
+                'address' => 'required'
             ]
         );
     }
@@ -73,9 +68,10 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->_user();
+        if (Auth::id() === $id) abort('403');
+        $user = User::findOrFail($id)->first();
         $countries = Country::pluck('name', 'id');
-        if ($user->role_id === 1) return view('taskGiver.edit', compact('user', 'countries'));
+        if (!$user->isTaskMaster()) return view('taskGiver.edit', compact('user', 'countries'));
 
         $skill_ids = $user->fetchskillsId();
         $tasks = Tasks::with(['subTasks:id,name,task_id'])->get(['id', 'name']);
@@ -91,18 +87,15 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->_user();
+        $user = User::findOrFail($id)->first();
         $validatedData = $this->_validate($request);
         $validatedData['isActive'] = 1;
         $user->update($validatedData);
 
-        if ($user->role_id === 1) {
-            return view('projects.create');
-        }
+        if ($user->isTaskMaster()) return view('projects.create');
 
         // sync the skills of task master
-        $skill_ids = $request->skills;
-        $user->skills()->sync($skill_ids);  //update user skills
+        $user->skills()->sync($request->skills);  //update user skills
         return view('projects.index');
     }
 
@@ -115,5 +108,14 @@ class AccountController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function notifications()
+    {
+        $user =  Auth::user();
+        $allNotifications =  $user->notifications;
+        $unreadNotifications =  $user->unreadNotifications;
+        $user->unreadNotifications->markAsRead();
+        return view('notifications', compact('unreadNotifications', 'allNotifications'));
     }
 }

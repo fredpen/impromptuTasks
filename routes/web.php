@@ -17,10 +17,12 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/welcome', 'HomeController@welcome')->name('welcome'); // redirect after signing in
 
-Route::resource('account', 'AccountController');
-Route::resource('regions', 'RegionController');
-Route::resource('cities', 'CityController');
-Route::resource('projects', 'ProjectController');
+Route::resources([
+    'account' => 'AccountController',
+    'projects' => 'ProjectController'
+]);
+Route::get('notifications', 'AccountController@notifications')->name('notifications')->middleware('auth'); //for notifications
+
 
 Route::group(
     ['middleware' => ['auth', 'verified', 'isActive']], function () {
@@ -30,11 +32,16 @@ Route::group(
 );
 
 Route::group(
-    ['middleware' => ['auth', 'verified', 'isAdmin'] ], function () {
+    ['middleware' => ['auth', 'isAdmin'] ], function () {
         Route::get('/admin', 'RolesController@create')->name('admin.home');
-        Route::resource('admin/users', 'AdminUsersController');
-        Route::resource('admin/tasks', 'TasksController');
-        Route::resource('admin/subtasks', 'SubTaskController');
-        Route::resource('admin/roles', 'RolesController');
+        Route::resources([
+            'admin/users' => 'AdminUsersController',
+            'admin/tasks' => 'TasksController',
+            'admin/subtasks' => 'SubTaskController',
+            'admin/roles' => 'RolesController',
+            'admin/regions' => 'RegionController',
+            'admin/cities' => 'CityController',
+            'admin/countries' => 'CountryController'
+        ]);
     }
 );

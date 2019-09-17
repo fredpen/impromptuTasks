@@ -66,7 +66,7 @@
             @if (count($projects))
                 <h5 class="card-header">{{count($projects)}} Task{{count($projects) > 1 ? "s" : ""}} found</h5>
             @else
-                <h5 class="card-header">Post Your frst task</h5>
+                <h5 class="card-header">You do not have any task at the moment, Get started</h5>
             @endif
         </div>
 

@@ -29,6 +29,7 @@
                             <div class="card-text">
                                 {!! Form::open(['method' => 'POST', 'action' => 'SubTaskController@store']) !!}
                                     <div class="form-group mb-3 justify-content-center">
+                                         {!! Form::label('name', 'For storing more than one Task at a time, Separate them with comma like so web dev, mobiledev', ['class' => 'h6']) !!}
                                         {!! Form::text('name', null, ['class' => 'form-control mb-3', 'placeholder' => 'Enter sub task name']) !!}
                                         {!! Form::hidden('task_id', $task->id, []) !!}
                                         {!! Form::submit('Add Sub-Task to ' . $task->name . ' Task', ['class' => 'btn btn-dark d-block mx-auto']) !!}

@@ -6,10 +6,9 @@
         <title>Impromptu Tasks</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Redfining how taks is done " name="description" />
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="{{asset('images/favicon.ico') }}">
 
         <!-- App css -->
-        <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
         <link rel="stylesheet" href="{{ asset('css/all.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
@@ -89,7 +88,7 @@
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
-                                    <a href="pages-login.html">Countries</a>
+                                    <a href="{{ route('countries.index') }}">Countries</a>
                                 </li>
                                     <li>
                                     <a href="pages-login.html">Regions/states</a>

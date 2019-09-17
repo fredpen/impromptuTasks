@@ -14,7 +14,8 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        $countries = Country::paginate(40);
+        return view("admin.countries.index", compact('countries'));
     }
 
     /**
@@ -69,7 +70,7 @@ class CountryController extends Controller
      */
     public function update(Request $request, Country $country)
     {
-        //
+        return "this is update";
     }
 
     /**
@@ -80,6 +81,6 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
-        //
+        return "this is delete";
     }
 }

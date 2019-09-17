@@ -3,12 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Notifications\projectCreated;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\projectCompleted;
+use App\Notifications\ProjectCancelled;
 
 class Project extends Model
 {
     protected $guarded = [];
-    protected $with = ['task:id,name', 'subtask:id,name'];
+    protected $with = ['task:id,name'];
 
 
     public function task()
@@ -47,32 +50,19 @@ class Project extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function updateTaskStatus($status)
+
+    public function notifyOwner($action)
     {
-        if ($status == "post") return $this->post();
-        if ($status == "cancelled") return $this->cancelled();
-        if ($status == "completed") return $this->completed();
+        $this->updateStatus($action);
+        if ($action == 'created') return Auth::user()->notify(new projectCreated);
+        if ($action == 'posted') return $this->owner->notify(new projectPosted);
+        if ($action == 'deleted') return $this->owner->notify(new ProjectCancelled);
+        if ($action == 'completed') return $this->owner->notify(new projectCompleted);
     }
 
-    private function post()
+    private function updateStatus($action)
     {
-        if ($this->status == "posted") return false;
-        $date = date('Y-m-d H:i:s', time());
-        return $this->update(['posted_on' => $date, 'status' => 'posted']);
-    }
-
-    private function cancelled()
-    {
-        if ($this->status == "cancelled") return false;
-        $date = date('Y-m-d H:i:s', time());
-        return $this->update(['posted_on' => $date, 'status' => 'cancelled']);
-    }
-
-    private function completed()
-    {
-        if ($this->status == "completed") return false;
-        $date = date('Y-m-d H:i:s', time());
-        return $this->update(['posted_on' => $date, 'status' => 'completed']);
+        $this->update(['status' => $action]);
     }
 
 }

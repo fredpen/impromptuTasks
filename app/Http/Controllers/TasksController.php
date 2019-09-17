@@ -32,7 +32,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks =  Tasks::all();
+        $tasks =  Tasks::paginate(3);
         return view('admin.tasks.index', compact('tasks'));
     }
 

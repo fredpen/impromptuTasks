@@ -11,7 +11,6 @@
                         <li>This is happening because of one of the following
                             <ul>
                                 <li>You just finished registration and we have not verified your credentials</li>
-                                <li>You don't have enough access to view the requested page</li>
                                 <li>You violate the <a href="#">Rules and Regulation </a>of impromptuTasks</li>
                             </ul>
                         </li>

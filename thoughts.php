@@ -30,3 +30,28 @@ next course of action
     guard all the admin sections since we putting it online
     users must be signed in and is admin
     before the end of the weekend.
+
+next course of action
+    i need to sort my assets
+    css, js and all
+
+ssh -p 65002 u744829203@2.57.89.52 //ssh into the account
+
+
+<!-- ob the 12th of seot 2019 -->
+have a button that says all taks on top of the edit page
+in the controller use array filter to section the projects into posted and completed, ongoing -- started date
+let the deletion of post escape through the checks
+probably consider soft deletes
+ONly fetch posts that doesnt have the status = cancelled
+fix all the required classes in the notification class
+finally decide what the email will look like
+Create a notification view page for viewing all and mark all as read when this page is visited
+
+next push to live so i can uploads tasks and subtasks
+work on where people get to see tasks
+then work on applyiing for tasks
+
+sept 14th
+task 1 -- on  the homepage when a guest login he should see getstarted,  taskmaster should see hire, while that should see apply for tasks
+sort the policy issue 

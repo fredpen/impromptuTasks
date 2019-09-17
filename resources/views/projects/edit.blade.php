@@ -1,6 +1,8 @@
 @extends('layouts.base')
 
-
+@if ($message = Session::get('success'))
+    {{message}}
+@endif
 
 @section('content')
 <div class="container">
@@ -64,7 +66,7 @@
                     @include('partials.projectEdit.tab1')
 
                     @if ($project->model == "onsite")
-                    @include('partials.projectEdit.tab5')
+                        @include('partials.projectEdit.tab5')
                     @endif
 
                     @include('partials.projectEdit.tab2')
@@ -78,16 +80,15 @@
                         <div class="form-group d-flex">
                             <div class="col-sm-6 ">
                                 {!! Form::open(['method' => 'PUT', 'action' => ['ProjectController@update', $project->id], 'id' => 'postForm']) !!}
-                                    {!! Form::hidden('status', 'post') !!}
+                                    {!! Form::hidden('status', 'posted') !!}
                                 {!! Form::close() !!}
                                 <button onclick="postProject(this, '{{$project->model}}')" type="submit" class="d-block mx-auto btn btn-primary">  {{ __('Post Task') }} </button>
                             </div>
 
                             <div class="col-sm-6">
-                                {!! Form::open(['method' => 'PUT', 'action' => ['ProjectController@update', $project->id], 'id' => 'postForm']) !!}
-                                    {!! Form::hidden('status', 'cancelled') !!}
+                                {!! Form::open(['method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id], 'id' => 'postForm']) !!}
+                                    <button type="submit" class="d-block mx-auto btn btn-danger">  {{ __('Delete Task') }} </button>
                                 {!! Form::close() !!}
-                                <button onclick="postProject(this, '{{$project->model}}')" type="submit" class="d-block mx-auto btn btn-danger">  {{ __('Delete Task') }} </button>
                             </div>
                         </div>
                     </div>

@@ -21,7 +21,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#profile-b1" data-toggle="tab" aria-expanded="true" class="nav-link">
+                                <a href="#notifications" data-toggle="tab" aria-expanded="true" class="nav-link">
                                     <i class="mdi mdi-account-circle d-lg-none d-block mr-1"></i>
                                     <span class="d-none d-lg-block">Notifications</span>
                                 </a>
@@ -184,7 +184,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane show" id="profile-b1">
+                            <div class="tab-pane show" id="notifications">
                                 <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
                                 <p class="mb-0">Leggings occaecat dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
                             </div>

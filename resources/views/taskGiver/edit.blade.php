@@ -21,7 +21,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#profile-b1" data-toggle="tab" aria-expanded="true" class="nav-link">
+                                <a href="#notification" data-toggle="tab" aria-expanded="true" class="nav-link">
                                     <i class="mdi mdi-account-circle d-lg-none d-block mr-1"></i>
                                     <span class="d-none d-lg-block">Notifications</span>
                                 </a>
@@ -190,36 +190,9 @@
                             </div>
 
                             {{-- messages pane --}}
-                            <div class="tab-pane show justify-content-center" id="profile-b1">
+                            <div class="tab-pane show justify-content-center" id="notification">
                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="dropdown float-right">
-                                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                                </div>
-                                            </div>
-                                            <h4 class="header-title mb-3">Messages</h4>
-
-                                            <div class="inbox-widget">
-                                                <div class="inbox-item">
-                                                    <div class="inbox-item-img"><img src="{{ asset('images/basic.jpg') }}" class="rounded-circle" alt=""></div>
-                                                    <p class="inbox-item-author text-primary">Tomaslau</p>
-                                                    <p class="inbox-item-text">I've finished it! See you so...</p>
-                                                    <p class="inbox-item-date">
-                                                        <a href="#" class="btn btn-sm btn-link text-info font-13"> Reply </a>
-                                                    </p>
-                                                </div>
-
-                                            </div> <!-- end inbox-widget -->
-                                        </div> <!-- end card-body-->
-                                    </div> <!-- end card-->
+                                   {{-- @include('partials.profile.notificationstab') --}}
                                 </div>
                             </div>
 

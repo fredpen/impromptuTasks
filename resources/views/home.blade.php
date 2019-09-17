@@ -8,13 +8,12 @@
                 <h1 class="display-6">Be more productive.</h1>
                 <p class="lead">Let our qualified task manager handle your tasks. Hire talent nearby or worldwide.</p>
             @guest
-                <a class="btn btn-lg btn-primary m-2" href="{{ route('register') }}">Hire Task Master</a>
-                <a class="btn btn-lg btn-primary m-2" href="{{ route('register') }}">Become a Task Master</a>
+                <a class="btn btn-lg btn-primary m-2" href="{{ route('register') }}">Get Started</a>
             @else
-                @if (Auth::id() == 1)
-                    <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Hire Freelancer</a>
-                @else
+                @if (Auth::user()->isTaskMaster())
                     <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Apply to Tasks</a>
+                @else
+                    <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Hire Freelancer</a>
                 @endif
             @endguest
 

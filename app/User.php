@@ -80,4 +80,28 @@ class User extends Authenticatable implements MustVerifyEmail
         $skillsArray = json_decode(json_encode($skillsObject), true) ;
         return array_column($skillsArray, 'id');
     }
+
+    public function isTaskMaster()
+    {
+        if ($this->role_id == 2) return true;
+        return false;
+    }
+
+    public function isAdmin()
+    {
+        if ($this->role_id === 0) return true;
+        return false;
+    }
+
+    public function isActive()
+    {
+        if ($this->isActive === 1) return true;
+        return false;
+    }
+
+    public function status()
+    {
+        return $this->isActive;
+    }
+
 }
