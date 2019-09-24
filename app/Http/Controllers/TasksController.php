@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Tasks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Project;
 
 class TasksController extends Controller
 {
@@ -32,7 +34,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks =  Tasks::paginate(3);
+        $tasks =  Tasks::all();
         return view('admin.tasks.index', compact('tasks'));
     }
 
@@ -67,9 +69,13 @@ class TasksController extends Controller
      */
     public function show(Tasks $task)
     {
+        if (!Auth::user()->isAdmin()) abort('403');
+
         $sub_tasks = $task->subTasks;
         return view('admin.tasks.show', compact('task', 'sub_tasks'));
     }
+
+
 
     /**
      * Update the specified resource in storage.

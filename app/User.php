@@ -87,6 +87,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    public function isTaskGiver()
+    {
+        if ($this->role_id == 1) return true;
+        return false;
+    }
+
     public function isAdmin()
     {
         if ($this->role_id === 0) return true;

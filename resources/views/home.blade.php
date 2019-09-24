@@ -13,7 +13,7 @@
                 @if (Auth::user()->isTaskMaster())
                     <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Apply to Tasks</a>
                 @else
-                    <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Hire Freelancer</a>
+                    <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Hire Task Master</a>
                 @endif
             @endguest
 
@@ -22,21 +22,25 @@
     </div>
     <div class="container">
         <div class="row justify-content-center mt-3">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Dashboard</div>
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+            @foreach ($tasks as $task)
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">{{ $task->name}}</div>
 
-                        You are logged in!
+                        <div class="card-body">
+                            @if (session('status'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+
+                            You are logged in!
+                        </div>
                     </div>
-                </div>
             </div>
+            @endforeach
+
         </div>
     </div>
 @endsection

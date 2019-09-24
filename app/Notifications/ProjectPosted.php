@@ -6,11 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectPosted extends Notification
 {
     use Queueable;
- public $user;
 
     /**
      * Create a new notification instance.
@@ -19,7 +19,6 @@ class ProjectPosted extends Notification
      */
     public function __construct()
     {
-        $this->user = Auth::user();
     }
 
     /**
@@ -42,7 +41,7 @@ class ProjectPosted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->greeting('Hi ' . $this->user->name . ",")
+                    ->greeting('Hi ' . Auth::user()->name . ",")
                     ->line('This is to notify you that your new project is live, We will contact you when a Task master takes up your task. ')
                     ->action('impromptuTasks', route('home'))
                     ->line('Thanks for using impromptuTasks!');

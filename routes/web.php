@@ -17,10 +17,17 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/welcome', 'HomeController@welcome')->name('welcome'); // redirect after signing in
 
+
+// routes for outside users interacting with projects
+Route::get('/projects/task/{id}/show', 'ProjectshowController@show')->name('project.usershow'); // task show view for users
+
+
 Route::resources([
     'account' => 'AccountController',
     'projects' => 'ProjectController'
 ]);
+
+
 Route::get('notifications', 'AccountController@notifications')->name('notifications')->middleware('auth'); //for notifications
 
 
@@ -34,6 +41,8 @@ Route::group(
 Route::group(
     ['middleware' => ['auth', 'isAdmin'] ], function () {
         Route::get('/admin', 'RolesController@create')->name('admin.home');
+
+
         Route::resources([
             'admin/users' => 'AdminUsersController',
             'admin/tasks' => 'TasksController',

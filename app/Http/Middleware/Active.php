@@ -16,10 +16,10 @@ class Active
      */
     public function handle($request, Closure $next)
     {
-        $status = Auth::user()->status();
-        if ($status === 2)  abort('402'); //incomplete reg
-        if ($status === 4)  abort('401'); //your account has been deactivated
-        return $next($request);
-    }
+        $user = Auth::user();
+        if (!$user->isActive())  abort('402'); //incomplete reg
+        if ($user->status() === 2)  abort('402'); //incomplete reg
+        if ($user->status() === 4)  abort('401'); //your account has been deactivated
+        return $next($request);    }
 }
 

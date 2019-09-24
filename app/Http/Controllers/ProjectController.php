@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Country;
 use App\Region;
 use App\City;
-use App\Notifications\projectCreated;
-use App\Notifications\projectCompleted;
 
 class ProjectController extends Controller
 {
@@ -148,4 +146,7 @@ class ProjectController extends Controller
         if ($request->field == 'country_id') return Region::where(['country_id' => $request->value])->get(['id', 'name']);
         if ($request->field == 'region_id') return City::where(['region_id' => $request->value])->get(['id', 'name']);
     }
+
+
+  
 }

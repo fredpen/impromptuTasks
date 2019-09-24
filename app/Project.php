@@ -7,6 +7,7 @@ use App\Notifications\projectCreated;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\projectCompleted;
 use App\Notifications\ProjectCancelled;
+use App\Notifications\ProjectPosted;
 
 class Project extends Model
 {

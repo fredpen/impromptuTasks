@@ -53,17 +53,17 @@
                                         <div class="dropdown-item noti-title">
                                             <h5 class="m-0">
                                                 <span class="float-right">
-                                                    <a href="javascript: void(0);" class="text-dark">
-                                                        <small>Clear All</small>
+                                                    <a href="{{ route('notifications') }}" class="text-dark">
+                                                        <small>View All</small>
                                                     </a>
                                                 </span>Notification
                                             </h5>
                                         </div>
 
                                         @auth
-                                            @if ($notifications = Auth::user()->unreadNotifications)
+                                            @if (count(Auth::user()->unreadNotifications))
                                                 <div class="slimscroll" style="max-height: 230px;">
-                                                    @foreach ($notifications as $notification)
+                                                    @foreach (Auth::user()->unreadNotifications as $notification)
                                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                                                             <div class="notify-icon bg-primary">
                                                                 <i class="mdi mdi-comment-account-outline"></i>
@@ -74,13 +74,18 @@
                                                         </a>
                                                     @endforeach
                                                 </div>
-                                                <a href="{{ route('notifications') }}" class="dropdown-item text-center text-primary notify-item notify-all">
+                                                {{-- <a href="{{ route('notifications') }}" class="dropdown-item text-center text-primary notify-item notify-all">
                                                     View All
-                                                </a>
+                                                </a> --}}
                                             @else
-                                                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-                                                    You don't have any new Messages at the moment
-                                                </a>
+                                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                <div class="notify-icon bg-primary">
+                                                    <i class="mdi mdi-comment-account-outline"></i>
+                                                </div>
+                                                <p class="notify-details">You don't have any new Messages at the moment
+                                                    <small class="text-muted"> a second ago</small>
+                                                </p>
+                                            </a>
                                             @endif
                                         @endauth
 
@@ -191,29 +196,28 @@
                                         </li>
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-apps mr-1"></i>Apps <div class="arrow-down"></div>
+                                                <i class="mdi mdi-apps mr-1"></i>Tasks <div class="arrow-down"></div>
                                             </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-apps">
-                                                <a href="apps-calendar.html" class="dropdown-item">Calendar</a>
-                                                <div class="dropdown">
-                                                    <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-project" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Projects <div class="arrow-down"></div>
-                                                    </a>
-                                                    <div class="dropdown-menu" aria-labelledby="topnav-project">
-                                                        <a href="apps-projects-details.html" class="dropdown-item">Details</a>
-                                                    </div>
+
+                                                <div class="dropdown-menu" aria-labelledby="topnav-apps">
+                                                    @foreach (App\Tasks::all() as $task)
+                                                        <div class="dropdown">
+                                                            <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('project.usershow', $task->id) }}" id="topnav-project" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                {{ ucwords($task->name) }} <div class="arrow-down"></div>
+                                                            </a>
+                                                            <div class="dropdown-menu" aria-labelledby="topnav-project">
+                                                                @foreach ($task->subTasks as $subTask)
+                                                                    <a href="{{ route('project.usershow', $task->id) }}" class="dropdown-item"> {{ ucwords($subTask->name) }} </a>
+                                                                @endforeach
+
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
-                                                <a href="apps-tasks.html" class="dropdown-item">Tasks</a>
-                                                <div class="dropdown">
-                                                    <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-ecommerce" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        eCommerce <div class="arrow-down"></div>
-                                                    </a>
-                                                    <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
-                                                        <a href="apps-ecommerce-sellers.html" class="dropdown-item">Sellers</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+
+
                                         </li>
+
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-google-pages mr-1"></i>Pages <div class="arrow-down"></div>
