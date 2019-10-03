@@ -54,4 +54,8 @@ then work on applyiing for tasks
 
 sept 14th
 task 1 -- on  the homepage when a guest login he should see getstarted,  taskmaster should see hire, while that should see apply for tasks
-sort the policy issue 
+sort the policy issue
+
+
+8** find a solution to the phone issue
+

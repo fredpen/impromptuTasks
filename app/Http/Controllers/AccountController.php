@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\City;
 use App\Country;
-use App\Region;
-use App\Role;
-use App\Skills;
 use App\Tasks;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use App\SubTask;
+
 
 class AccountController extends Controller
 {
@@ -35,6 +30,10 @@ class AccountController extends Controller
                 'country_id' => 'required',
                 "region_id" => 'required',
                 'city_id' => 'required',
+                'address' => 'required',
+                'title' => 'required',
+                'name' => 'required',
+                'bio' => 'required',
                 'address' => 'required'
             ]
         );
@@ -57,7 +56,13 @@ class AccountController extends Controller
      */
     public function show($id)
     {
+        $user = User::findOrFail($id);
+        if (!$user->isActive()) return redirect()->action('AccountController@edit', $id)->with('message', 'Kindly Complete your profile to have full access');
 
+        if ($user->isTaskGiver()) return view('taskGiver.shomessw', compact('user'));
+
+        $skill_ids = $user->fetchskillsId();
+        return view('taskMaster.show', compact('user', 'skill_ids'));
     }
 
     /**
@@ -68,14 +73,14 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::id() === $id) abort('403');
-        $user = User::findOrFail($id)->first();
-        $countries = Country::pluck('name', 'id');
-        if (!$user->isTaskMaster()) return view('taskGiver.edit', compact('user', 'countries'));
+        if (Auth::id() != $id) abort('403'); // policy check
+        $user = User::findOrFail($id);
+        $countries = Country::get(['name', 'id']);
+        if ($user->isTaskGiver()) return view('taskGiver.edit', compact('user', 'countries'));
 
         $skill_ids = $user->fetchskillsId();
-        $tasks = Tasks::with(['subTasks:id,name,task_id'])->get(['id', 'name']);
-        return view('taskMaster.edit', compact('user', 'tasks', 'skill_ids'));
+        $tasks = Tasks::get(['id', 'name']);
+        return view('taskMaster.edit', compact('user', 'tasks', 'skill_ids', 'countries'));
     }
 
     /**
@@ -87,16 +92,15 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id)->first();
+        if (Auth::id() != $id) abort('403'); //policy check
+        $user = User::findOrFail($id);
         $validatedData = $this->_validate($request);
         $validatedData['isActive'] = 1;
+        $validatedData['linkedln'] = $request->linkedln;
         $user->update($validatedData);
 
-        if ($user->isTaskMaster()) return view('projects.create');
-
-        // sync the skills of task master
-        $user->skills()->sync($request->skills);  //update user skills
-        return view('projects.index');
+        if ($request->skills) $user->skills()->sync($request->skills);  //update user skills
+        return redirect()->action('AccountController@show', $id)->with("message", "Profile updated Successfully");
     }
 
     /**

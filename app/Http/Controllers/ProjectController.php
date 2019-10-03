@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Location;
 use App\Project;
 use App\SubTask;
 use App\Tasks;
@@ -32,7 +31,7 @@ class ProjectController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'isActive'])->except(['show', 'index']);
+        $this->middleware(['auth', 'verified'])->except(['show', 'index']);
     }
 
 
@@ -43,7 +42,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Project::first();
+        $projects = Project::where(['status' => 'posted'])->get();
+        return view('projects.index', compact('projects'));
     }
 
     /**
@@ -53,6 +53,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->isActive()) return redirect()->action('AccountController@edit', Auth::id())->with('message', 'Kindly Complete your profile to have full access');
         $projects = Project::where([
             ['user_id', '=', Auth::id()],
             ['status', '!=', 'deleted']
@@ -75,6 +76,7 @@ class ProjectController extends Controller
         );
         $validatedData['user_id'] = Auth::id();
         $project = Project::create($validatedData);
+        $project->updateStatus('created');
         $project->notifyOwner('created');
         return redirect()->action('ProjectController@edit', ['id' => $project->id]);
     }
@@ -87,6 +89,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        // return $project;
         return view("projects.show", compact('project'));
     }
 
@@ -119,6 +122,7 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $this->authorize('edit', $project);
+        $project->updateStatus($request->status);
         $project->notifyOwner($request->status);
         return redirect()->action('ProjectController@create');
     }
@@ -132,6 +136,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $this->authorize('edit', $project);
+        $project->updateStatus('deleted');
         $project->notifyOwner('deleted');
         return redirect()->action('ProjectController@create');
     }
@@ -145,8 +150,10 @@ class ProjectController extends Controller
         if ($request->field == 'task_id') return SubTask::where(['task_id' => $request->value])->get(['id', 'name']);
         if ($request->field == 'country_id') return Region::where(['country_id' => $request->value])->get(['id', 'name']);
         if ($request->field == 'region_id') return City::where(['region_id' => $request->value])->get(['id', 'name']);
+
+
     }
 
 
-  
+
 }

@@ -138,7 +138,7 @@
                                                 </a>
                                             @endif
                                         @else
-                                            <a href="{{ route('account.edit', Auth::User()->id) }}" class="dropdown-item notify-item">
+                                            <a href="{{ route('account.show', Auth::User()->id) }}" class="dropdown-item notify-item">
                                                 <i class="mdi mdi-account-circle mr-1"></i>
                                                 <span>My Profile</span>
                                             </a>

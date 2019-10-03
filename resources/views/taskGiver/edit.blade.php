@@ -5,261 +5,203 @@
         @include('partials.errorBag')
     @endif
 
-    <div class="container">
+     @if (session('message'))
+        @include('partials.notifs')
+    @endif
+
+    {{-- errorBag --}}
+    <div id="postingModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-dialog">
+            <div class="jq-toast-single jq-icon-danger d-flex" role="alert">
+                <i class="mr-2 mdi mdi-heart-broken-outline" style="font-size: 30px"></i>
+                <span style="right: 0" class="close close-jq-toast-single" data-dismiss="modal" aria-hidden="true">×</span>
+                <div id="postErrMess"></div>
+            </div>
+        </div>
+    </div>
+
+   <div class="container">
+        <div class="row mt-3">
+
+            <div class="col-sm-12">
+                <!-- Profile -->
+                <div class="card bg-primary">
+                    <div class="card-body profile-user-box">
+
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="media">
+                                    <span class="float-left m-2 mr-4"><img src="{{ $user->imageurl ? asset('images/'.$user->imageurl)  : asset('images/basic.jpg') }}" style="height: 100px;" alt="" class="img-thumbnail"></span>
+                                    <div class="media-body">
+
+                                        <h4 class="mt-1 mb-1 text-white">{{ ucwords($user->name) }}</h4>
+                                        <p class="font-13 text-white-50">{{ $user->email }} </p>
+
+                                        <ul class="mb-0 list-inline text-light">
+                                            <li class="list-inline-item mr-3">
+                                                <h5 class="mb-1">Registered:</h5>
+                                                <p class="mb-0 font-13 text-white-50"> {{ $user->created_at->diffForHumans() }}</p>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <h5 class="mb-1">Updated:</h5>
+                                                <p class="mb-0 font-13 text-white-50"> {{ $user->updated_at->diffForHumans() }}</p>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- end media-body-->
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-sm-4">
+                                <div class="text-center mt-sm-0 mt-3 text-sm-right">
+                                    <a href="{{ route('account.show', $user->id) }}" class="btn btn-light">
+                                        <i class="mdi mdi-account-edit mr-1"></i> Show Profile
+                                    </a>
+                                </div>
+                            </div> <!-- end col-->
+                        </div> <!-- end row -->
+
+                    </div> <!-- end card-body/ profile-user-box-->
+                </div><!--end profile/ card -->
+            </div> <!-- end col-->
+        </div>
+
+
         <div class="row">
-            <div class="col-sm-12 my-3">
+            <div class="col-md-5">
+                <!-- Personal-Information -->
+                {!! Form::model($user, ['method' => 'PUT', 'action' => ['AccountController@update', $user->id], 'id' => 'updateForm']) !!}
+
                 <div class="card">
                     <div class="card-body">
+                        <p class="text-muted"><strong><i class="text-danger">*</i> Full Name :</strong>
+                            <input type="text" class="form-control" value="{{ ucwords($user->name) }}" maxlength="30" name="name" data-toggle="maxlength" data-threshold="30" autocomplete="off" id="name" placeholder="Ola Eze Ahmed" required>
+                        </p>
 
-                        <h1 class="header-title h1 mb-3">settings </h1>
+                        <p class="text-muted"><strong><i class="text-danger">*</i> Country :</strong>
+                            <select onchange="fetchRegions(this)" id="country_id" name="country_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                @foreach ($countries as $country)
+                                    <option {{$user->country_id ? ($user->country_id == $country->id ? "selected" : "") : ""}} value="{{$country->id}}"> {{$country->name}} </option>
+                                @endforeach
+                            </select>
+                        </p>
 
-                        <ul class="nav nav-tabs nav-bordered mb-3">
-                            <li class="nav-item">
-                                <a href="#home-b1" data-toggle="tab" aria-expanded="false" class="nav-link active">
-                                    <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
-                                    <span class="d-none d-lg-block">Profile</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#notification" data-toggle="tab" aria-expanded="true" class="nav-link">
-                                    <i class="mdi mdi-account-circle d-lg-none d-block mr-1"></i>
-                                    <span class="d-none d-lg-block">Notifications</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#settings-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                    <i class="mdi mdi-settings-outline d-lg-none d-block mr-1"></i>
-                                    <span class="d-none d-lg-block">Privacy</span>
-                                </a>
-                            </li>
-                        </ul>
+                        <hr>
 
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="home-b1">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <span class="m-2">
-                                                    <img src="{{ asset('images/basic.jpg') }}" style="height: 100px;" alt="{{$user->name}}" class="img-thumbnail">
-                                                </span>
-
-                                                <div class="media-body mt-3">
-
-                                                    <h4 class="mt-1 mb-1 h3 text-capitalise">{{$user->name}}</h4>
-                                                    <h5> {{($user->role_id == 1 ? "Task Giver" : "Task Master")}}</h5>
-
-                                                    <hr class="2">
-
-                                                    <ul class="mb-2 list-inline">
-                                                        <li class="list-inline-item">
-                                                            <p class="mb-0 h4">Jobs</p>
-                                                            <p>{{($user->orders_out ? $user->oders_out : "0")}}</p>
-                                                        </li>
-                                                    </ul>
-
-                                                    {!! Form::open(['action' => ['AccountController@update', $user->id], "method" => "PATCH", 'id' => 'uploadAvatar']) !!}
-                                                        {!! Form::file('imageurl', ['class' => 'mb-3']) !!}
-                                                        <button type="button" id="uploadAvatarButton" class="btn btn-outline-primary my-1">Upload New Avatar</button>
-                                                    {!! Form::close() !!}
-
-
-                                                   {!! Form::open(['action' => ['AccountController@update', $user->id], "method" => "PATCH"]) !!}
-                                                        <button type="button" class="btn btn-outline-danger my-1">Remove old Avatar</button>
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-1"></div>
-
-                                    <div class="col-md-7">
-
-                                        <div class="card">
-
-                                            <div class="card-header lead">Basic Info</div>
-
-                                            <div class="card-body">
-                                                {!! Form::model($user, ['method' => 'PATCH', 'action' => ['AccountController@update', $user->id]]) !!}
-
-                                                    <div class="form-group row">
-
-                                                        <div class="col-lg-6 mb-3">
-                                                            {!! Form::label('name', 'Name', []) !!}
-                                                            {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required', 'autocomplete' => 'name']) !!}
-                                                            @error('name')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div>
-
-                                                        <div class="col-lg-6 mb-3">
-                                                            {!! Form::label('email', 'Email', ['class' =>'']) !!}
-                                                            {!! Form::text('email', null, ['class' => 'form-control', 'required' => 'required', 'autocomplete' => 'email']) !!}
-                                                            @error('email')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <div class="col-lg-6 mb-3">
-                                                             {!! Form::label('phone_number', 'Phone', []) !!}
-                                                            {!! Form::text('phone_number', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Phone']) !!}
-                                                            @error('phone_number')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div>
-
-                                                        <div class="col-lg-6 mb-3">
-                                                            {!! Form::label('country_id', 'Country', []) !!}
-                                                            {!! Form::select("country_id", $countries, null, ['placeholder' => 'Choose a country', 'class' => 'form-control select2 select2-hidden-accessible form-control', 'data-toggle' => 'select2', 'onchange' => 'fetch_regions(this)', 'required' => 'required']) !!}
-                                                            @error('country_id')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="form-group row">
-                                                        <div class="col-lg-6 mb-3">
-                                                            {!! Form::label('region_id', 'Region/State', []) !!}
-                                                            <select onchange="fetch_cities(this)" id="region_id" name="region_id" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2" placeholder="Choose a region" required>
-                                                                @if ($user->region_id)
-                                                                    <option value="{{$user->region_id}}">{{$user->region->name}}</option>
-                                                                @else
-                                                                    <option value="">Choose a region</option>
-                                                                @endif
-                                                            </select>
-                                                             @error('region_id')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div>
-
-                                                        <div class="col-lg-6 mb-3">
-                                                            {!! Form::label('city_id', 'City', []) !!}
-                                                            <select required id="city_id" name="city_id" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                                                                 @if ($user->region_id)
-                                                                    <option value="{{$user->city_id}}">{{$user->city->name}}</option>
-                                                                @else
-                                                                    <option value="">Select Your nearest City</option>
-                                                                @endif
-
-                                                            </select>
-                                                             @error('city_id')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <div class="col-md-12 mb-3">
-                                                            {!! Form::label('address', 'Address', ['class' =>'']) !!}
-                                                            {!! Form::text('address', $user->address, ['class' => 'form-control', 'required' => 'required']) !!}
-                                                            @error('address')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row mb-0">
-                                                        <div class="col-md-6 offset-md-4">
-                                                            <button type="submit" class="btn btn-primary">
-                                                                {{ __('Update Account') }}
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- messages pane --}}
-                            <div class="tab-pane show justify-content-center" id="notification">
-                               <div class="col-lg-6">
-                                   {{-- @include('partials.profile.notificationstab') --}}
-                                </div>
-                            </div>
-
-                            <div class="tab-pane" id="settings-b1">
-                                <p>Food truck quinoa dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                                <p class="mb-0">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                            </div>
+                        <div class="text-left">
+                             <p class="text-muted"><strong>linkedln :</strong>
+                                <input type="text" class="form-control" value="{{ $user->linkedln }}" maxlength="12" name="linkedln"  data-toggle="maxlength" data-threshold="12" autocomplete="off" id="name" placeholder="Your linkedln url">
+                            </p>
                         </div>
+                    </div>
+                </div>
+                <!-- Personal-Information -->
 
+                <div class="card text-white bg-info overflow-hidden">
+                    <div class="card-body">
+                        <div class="toll-free-box text-center">
+                            <h6> <i class="mdi mdi-deskphone"></i> Enquiry : {{ env('SUPPORT_EMAIL') }}</h6>
+                        </div>
                     </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+
+            <div class="col-md-7">
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <div class="card tilebox-one">
+                            <div class="card-body">
+                                <h6 class="text-muted text-uppercase mt-0"><i class="text-danger">*</i> Address</h6>
+                                <input type="text" class="form-control" value="{{ $user->address }}" maxlength="12" name="address" data-toggle="maxlength" data-threshold="12" autocomplete="off" id="address"  placeholder="No 74, Adebola Street">
+                                <span class="h6 text-info">* Do not put City, Region or Country here. Example: No 74, Kano Street</span>
+                            </div> <!-- end card-body-->
+                        </div> <!--end card-->
+                    </div><!-- end col -->
+
+                    <div class="col-sm-6">
+                        <div class="card tilebox-one">
+                            <div class="card-body"><i class="text-danger">*</i>
+                                <i class="dripicons-box float-right text-muted"></i>
+                                <h6 class="text-muted text-uppercase mt-0">Region/State</h6>
+                                <select onchange="fetchCities(this)" id="region_id" name="region_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                    <option value="{{ $user->region_id ? $user->region_id : 0}}"> {{$user->region_id ? $user->region->name  : "Select Country first" }}</option>
+                                </select>
+                            </div> <!-- end card-body-->
+                        </div> <!--end card-->
+                    </div><!-- end col -->
+
+                    <div class="col-sm-6">
+                        <div class="card tilebox-one">
+                            <div class="card-body">
+                                <i class="dripicons-box float-right text-muted"></i>
+                                <h6 class="text-muted text-uppercase mt-0"><i class="text-danger">*</i> City</h6>
+                                <select id="city_id" name="city_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                    <option value=" {{ $user->region_id ? $user->region_id : 0 }} ">{{$user->city_id ? $user->city->name  : "Select Country first" }}</option>
+                                </select>
+                            </div> <!-- end card-body-->
+                        </div> <!--end card-->
+                    </div><!-- end col -->
+
+                    {!! Form::close() !!}
+
+
+                    <div class="col-sm-12">
+                        <div class="card tilebox-one">
+                            <div class="card-body">
+                                <h6 class="text-muted text-uppercase mt-0">Profile Picture</h6>
+                                    {!! Form::open(['method' => 'POST', 'action' => 'ProjectphotoController@store', 'class' => 'dropzone', 'data-plugin' => 'dropzone', 'data-previews-container' => '#file-previews', 'data-upload-preview-template' => '#uploadPreviewTemplate', 'id' => 'myAwesomeDropzone', 'files' => true, 'style' => 'min-height:120px']) !!}
+
+                                        <div class="fallback"><input name="file" type="file"/> </div>
+                                        {!! Form::hidden('profilePicture', $user->id) !!}
+                                        <div class="dz-message needsclick">
+                                            <span>Drop profile picture here or click to upload.</span>
+                                        </div>
+                                    {!! Form::close() !!}
+                                    <span class="h6 text-info"><i class="text-danger">*</i> Task Master with profle picture foster a sense of trust and thereby get more tasks
+                                    <br> Uploaded pictures will take effect on page reload
+                                    </span>
+                            </div> <!-- end card-body-->
+                        </div> <!--end card-->
+                    </div><!-- end col -->
+
+                    <div class="col-sm-6 mt-3 mb-2">
+                        <button onclick="checkRequiredFields()" type="submit" class="d-block mx-auto btn-lg btn btn-primary">  {{ __('Update Profile') }} </button>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 @endsection
-@section('scripts')
-    <script>
-        function fetch_cities(target)
-        {
-            let region_id = $(target).val();
-            let country_id = $("#country_id").val();
-            $('#city_id').append('<option value="">Loading</option>');
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                method: 'GET',
-                url: '/cities/',
-                data: {region_id:region_id, country_id :country_id },
-                success: function(response){
-                    $('#city_id').html('');
-                    if (response.length > 1) {
-                        for (var i = response.length - 1; i >= 0; i--) {
-                            $('#city_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
-                        }
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                }
-            });
-        }
 
-        function fetch_regions(target)
-        {
-            let country_id = $(target).val();
-            $('#region_id').append('<option value="">Loading</option>');
-            $('#city_id').html('<option title="select a region first">Select a city</option>');
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                method: 'GET',
-                url: '/regions/',
-                data: {country_id:country_id},
-                success: function(response){
-                    $('#region_id').html('');
-                    if (response.length > 1) {
-                        $('#region_id').parent().removeClass('d-none');
-                        for (var i = response.length - 1; i >= 0; i--) {
-                            $('#region_id').append('<option value="'+ response[i].id +'">' + response[i].name +'</option>')
-                        }
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+
+
+@section('scripts')
+<script src="{{ asset('js/dropzone.js') }}"></script>
+<script>
+    var role_id = {{$user->role_id}};
+
+    Dropzone.autoDiscover = false;
+    var dropzone = new Dropzone('#myAwesomeDropzone', {
+        parallelUploads: 1,
+        thumbnailHeight: 120,
+        thumbnailWidth: 120,
+        maxFilesize: 1, //1mb
+        maxFiles: 1,
+        filesizeBase: 1000,
+        thumbnail: function (file, dataUrl) {
+            if (file.previewElement) {
+                file.previewElement.classList.remove("dz-file-preview");
+                var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                for (var i = 0; i < images.length; i++) {
+                    var thumbnailElement = images[i];
+                    thumbnailElement.alt = file.name;
+                    thumbnailElement.src = dataUrl;
                 }
-            });
+                setTimeout(function () {file.previewElement.classList.add("dz-image-preview"); }, 1);
+            }
         }
-    </script>
+    });
+
+</script>
 @endsection
-{{--  --}}

@@ -1,13 +1,5 @@
-
-<div class="jq-toast-single jq-icon-danger" role="alert"  style="width: 300px; position: fixed; left: 45%; top: 70px; z-index: 999; display: flex;">
-
-    <i class="mr-2 mdi mdi-heart-broken-outline" style="font-size: 30px"></i>
-    <span style="right: 0" class="close-jq-toast-single">×</span>
-    <div>
-        @foreach ($errors as $error)
-            <div>{{ $error }}</div>
-        @endforeach
-
+<div class="container">
+    <div class="alert alert-danger w-100 m-0">
+        <i class="mr-2 mdi mdi-heart-broken-outline"></i>{{ session('message') }}
     </div>
-
 </div>

@@ -4,16 +4,22 @@
     <div id="full_width_container">
         <div class="jumbotron jumbotron-fluid bg-secondary text-white p-3">
           <div class="container">
-               <h1 class="display-5">Hire Task Master.</h1>
+            @guest
+                <h1 class="display-5">Hire Task Master.</h1>
                 <h1 class="display-6">Be more productive.</h1>
                 <p class="lead">Let our qualified task manager handle your tasks. Hire talent nearby or worldwide.</p>
-            @guest
                 <a class="btn btn-lg btn-primary m-2" href="{{ route('register') }}">Get Started</a>
             @else
                 @if (Auth::user()->isTaskMaster())
-                    <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Apply to Tasks</a>
+                    <h1 class="display-5">Apply to Tasks</h1>
+                    <h1 class="display-6">Earn doing what you love.</h1>
+                    <p class="lead">Apply to the list of growing Tasks that suits your skill set</p>
+                    <a class="btn btn-lg btn-primary m-2" href="{{ route('register') }}">Get Started</a>
                 @else
-                    <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Hire Task Master</a>
+                    <h1 class="display-5">Hire Task Master.</h1>
+                    <h1 class="display-6">Be more productive.</h1>
+                    <p class="lead">Let our qualified task manager handle your tasks. Hire talent nearby or worldwide.</p>
+                    <a class="btn btn-lg btn-primary m-2" href="{{ route('register') }}">Get Started</a>
                 @endif
             @endguest
 

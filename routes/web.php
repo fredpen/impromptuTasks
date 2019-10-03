@@ -24,12 +24,16 @@ Route::get('/projects/task/{id}/show', 'ProjectshowController@show')->name('proj
 
 Route::resources([
     'account' => 'AccountController',
-    'projects' => 'ProjectController'
+    'projects' => 'ProjectController',
+    'admin/countries' => 'CountryController',
+    'admin/regions' => 'RegionController',
+    'admin/cities' => 'CityController'
 ]);
 
 
 Route::get('notifications', 'AccountController@notifications')->name('notifications')->middleware('auth'); //for notifications
-
+Route::put('region/show/ajax/{id}', 'RegionController@showAjax');//country ajax to show regions
+Route::put('city/show/ajax/{id}', 'CityController@showAjax');//country ajax to show city
 
 Route::group(
     ['middleware' => ['auth', 'verified', 'isActive']], function () {
@@ -37,6 +41,7 @@ Route::group(
         Route::put('project/ajax/{id}', 'ProjectController@ajax')->name('project.ajax');
     }
 );
+
 
 Route::group(
     ['middleware' => ['auth', 'isAdmin'] ], function () {
@@ -48,9 +53,8 @@ Route::group(
             'admin/tasks' => 'TasksController',
             'admin/subtasks' => 'SubTaskController',
             'admin/roles' => 'RolesController',
-            'admin/regions' => 'RegionController',
-            'admin/cities' => 'CityController',
-            'admin/countries' => 'CountryController'
+
+
         ]);
     }
 );

@@ -53,6 +53,12 @@ class RegionController extends Controller
         //
     }
 
+    public function showAjax(Request $request)
+    {
+        $resultArray = Region::where(['country_id' => $request->value])->get(['id', 'name']);
+        return $resultArray;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

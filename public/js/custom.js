@@ -135,3 +135,62 @@ function updateProject(target, field) {
     });
 }
 
+
+// the account update page
+function checkRequiredFields() {
+    if (role_id != 1) { //if taskmaster validate additional fields
+        if ($("#title").val().length < 10) return setErrorMess('The Title Must be at least 10 characters ');
+        if ($("#bio").val().length < 30) return setErrorMess('The Profile Description must be at least 30 characters ');
+        if ($("#skills").val().length < 1) return setErrorMess('Select at least one skill');
+    }
+
+    if ($("#name").val().length < 10) return setErrorMess('KIndly provide your name ');
+    if ($("#country_id").val().length < 1) return setErrorMess('Select Your Country');
+    if ($("#address").val().length < 10) return setErrorMess('Kindly Enter your Address');
+    if ($("#region_id").val() == 0) return setErrorMess('Select your State/Region');
+    if ($("#city_id").val() == 0) return setErrorMess('Select your City');
+
+    $("#updateForm").submit();
+}
+
+
+function fetchRegions(target) {
+    let value = $(target).val();
+    $.ajax({
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+        method: 'PUT',
+        url: '/region/show/ajax/' + value,
+        data: { value: value},
+        success: function (response) {
+            $('#region_id').html('');
+            $('#city_id').html('');
+
+            response.forEach(function (region) {
+                $('#region_id').append('<option value="' + region.id + '">' + region.name + '</option>')
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            return setErrorMess('Kindly select your country again ');
+        }
+    });
+}
+
+function fetchCities(target) {
+    let value = $(target).val();
+    $.ajax({
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+        method: 'PUT',
+        url: '/city/show/ajax/' + value,
+        data: { value: value},
+        success: function (response) {
+            $('#city_id').html('');
+
+            response.forEach(function (city) {
+                $('#city_id').append('<option value="' + city.id + '">' + city.name + '</option>')
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            return setErrorMess('Kindly select your country again ');
+        }
+    });
+}

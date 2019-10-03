@@ -12,7 +12,7 @@ use App\Notifications\ProjectPosted;
 class Project extends Model
 {
     protected $guarded = [];
-    protected $with = ['task:id,name'];
+    protected $with = ['task:id,name', 'subtask:id,name', 'owner:id,name', 'country:id,name', 'region:id,name', 'city:id,name', 'photos:url,project_id'];
 
 
     public function task()
@@ -54,18 +54,20 @@ class Project extends Model
 
     public function notifyOwner($action)
     {
-        $this->updateStatus($action);
         if ($action == 'created') return Auth::user()->notify(new projectCreated);
         if ($action == 'posted') return $this->owner->notify(new projectPosted);
         if ($action == 'deleted') return $this->owner->notify(new ProjectCancelled);
         if ($action == 'completed') return $this->owner->notify(new projectCompleted);
     }
 
-    private function updateStatus($action)
+    public function updateStatus($action)
     {
-        $this->update(['status' => $action]);
+        $dateTime = date("Y-m-d");
+        if ($action == 'created') return $this->update(['status' => $action]);
+        if ($action == 'posted') return $this->update(['status' => $action, 'posted_on' => $dateTime]);
+        if ($action == 'deleted') return $this->update(['status' => $action]);
+        if ($action == 'completed') return $this->update(['status' => $action, 'completed_on' => $dateTime]);
     }
-
 }
 
 

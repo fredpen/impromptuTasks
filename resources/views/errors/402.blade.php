@@ -6,7 +6,7 @@
             <div class="card">
                 <h6 class="card-header">Unauthorised</h6>
                 <div class="card-body">
-                    <h5 class="mb-3 card-title">You need to complete your registration before you can Post or apply for Tasks</h5>
+                    <h5 class="mb-3 card-title">Just few more details we need before you can perform this Task. </h5>
                     <a href="{{ route('account.edit', Auth::User()->id )}}" class="btn btn-primary">Complete my profile</a>
                 </div>
             </div>

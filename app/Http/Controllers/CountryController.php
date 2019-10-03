@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\Region;
+use App\City;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'isAdmin'])->except('showAjax');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -45,10 +52,12 @@ class CountryController extends Controller
      * @param  \App\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function show(Country $country)
+    public function show(Request $request, Country $country)
     {
-        //
+        // return $country;
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

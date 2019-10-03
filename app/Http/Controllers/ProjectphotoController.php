@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Projectphoto;
 use App\Project;
 use Illuminate\Support\Facades\Storage;
+use App\User;
 
 class ProjectphotoController extends Controller
 {
@@ -38,11 +39,17 @@ class ProjectphotoController extends Controller
      */
     public function store(Request $request, Projectphoto $projectphoto)
     {
-        $project = Project::findOrFail($request->project_id);
-        if ($project->photos->count() >= 3) return false;
         $file = $request->file('file');
         $image_name = $projectphoto->saveFile($file);
-        $projectphoto->create(['url' => $image_name, 'project_id' => $request->project_id]);
+        
+        if ($userId = $request->profilePicture) {
+            $user = User::findOrFail($userId);
+            $user->update(['imageurl' => $image_name]);
+        } else {
+            $project = Project::findOrFail($request->project_id);
+            if ($project->photos->count() >= 3) return false;
+            $projectphoto->create(['url' => $image_name, 'project_id' => $request->project_id]);
+        }
     }
 
     /**

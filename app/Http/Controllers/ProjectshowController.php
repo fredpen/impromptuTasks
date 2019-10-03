@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tasks;
 use Illuminate\Support\Facades\Auth;
 use App\Project;
+use App\User;
 
 class ProjectshowController extends Controller
 {
@@ -20,10 +21,13 @@ class ProjectshowController extends Controller
 
 
 
-    public function show($id)
+     public function show($id)
     {
         if (Auth::user()) {
-            if (Auth::user()->isTaskGiver()) return "list if freelancers";
+            if (Auth::user()->isTaskGiver()) {
+                $taskMaster = User::where()->get();
+                return "list if freelancers";
+            }
         }
 
         $projects = Project::where(['task_id' => $id])->get();
