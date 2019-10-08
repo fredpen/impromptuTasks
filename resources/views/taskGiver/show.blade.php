@@ -1,164 +1,141 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="container">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <!-- Profile -->
+                <div class="card bg-primary">
+                    <div class="card-body profile-user-box">
 
-    @if ($errors->any())
-        @include('partials.errorBag')
-    @endif
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="media">
+                                     <span class="float-left m-2 mr-4"><img src="{{ $user->imageurl ? asset('images/'.$user->imageurl)  : asset('images/basic.jpg') }}" style="height: 100px;" alt="" class="img-thumbnail"></span>
+                                    <div class="media-body">
 
-    <div class="row justify-content-center align-items-center my-4">
-        <div class="col-lg-8">
-            <div class="card widget-flat bg-primary text-white">
-                <div class="card-body">
-                    <h3 class="my-0 text-white">Sign up in 3 easy steps</h3>
-                </div>
-            </div>
+                                        <h4 class="mt-1 mb-1 text-white"> {{$user->name}} </h4>
+                                        <p class="font-13 text-white-50"> {{$user->title}} </p>
 
-            <div class="card">
-                <div class="card-body pt-0">
-                     <form method="POST" action="{{ route('register') }}">
-                        @csrf
-                        <div id="progressbarwizard">
-                            <ul class="nav nav-pills nav-justified form-wizard-header mb-3">
-                                <li class="nav-item">
-                                    <a href="#account-2" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                        <i class="mdi mdi-account-circle mr-1"></i>
-                                        <span class="d-none d-sm-inline">Account</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#profile-tab-2" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                                        <i class="mdi mdi-face-profile mr-1"></i>
-                                        <span class="d-none d-sm-inline">Profile</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#finish-2" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active">
-                                        <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
-                                        <span class="d-none d-sm-inline">Finish</span>
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <div class="tab-content b-0 mb-0">
-
-                                <div id="bar" class="progress mb-3" style="height: 7px;">
-                                    <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 100%;"></div>
+                                        <ul class="mb-0 list-inline text-light">
+                                            {{-- <li class="list-inline-item mr-3">
+                                                <h5 class="mb-1"> {{$user->revenexoenseue ? $user->revenue : 0 }} </h5>
+                                                <p class="mb-0 font-13 text-white-50">Total Revenue</p>
+                                            </li> --}}
+                                            <li class="list-inline-item">
+                                                <h5 class="mb-1"> {{ $user->orders_out ? $user->orders_out : 0 }} </h5>
+                                                <p class="mb-0 font-13 text-white-50">Number of Tasks Completed</p>
+                                            </li>
+                                        </ul>
+                                    </div> <!-- end media-body-->
                                 </div>
+                            </div> <!-- end col-->
 
-                                <div class="tab-pane" id="account-2">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="name">Full Name</label>
-                                                <div class="col-md-9">
-                                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Full Name">
+                            @if (Auth::id() == $user->id)
+                                <div class="col-sm-4">
+                                    <div class="text-center mt-sm-0 mt-3 text-sm-right">
+                                        <a href="{{ route('account.edit', $user->id) }}" class="btn btn-light">
+                                            <i class="mdi mdi-account-edit mr-1"></i> Edit Profile
+                                        </a>
 
-                                                    @error('name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="email"> Email</label>
-                                                <div class="col-md-9">
-                                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address">
-
-                                                    @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-
-
-                                            <div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="password">Password</label>
-                                                <div class="col-md-9">
-                                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="password">
-
-                                                    @error('password')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                        <a href="{{ route('notifications') }}" class="btn btn-light">
+                                            <i class="mdi mdi-news-edit mr-1"></i> Messages
+                                        </a>
                                     </div>
-                                </div>
-
-                                <div class="tab-pane" id="profile-tab-2">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="name1"> First name</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" id="name1" name="name1" class="form-control" value="Francis">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="surname1"> Last name</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" id="surname1" name="surname1" class="form-control" value="Brinkman">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="email1">Email</label>
-                                                <div class="col-md-9">
-                                                    <input type="email" id="email1" name="email1" class="form-control" value="cory1979@hotmail.com">
-                                                </div>
-                                            </div>
-                                        </div> <!-- end col -->
-                                    </div> <!-- end row -->
-                                </div>
-
-                                <div class="tab-pane active" id="finish-2">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="text-center">
-                                                <h2 class="mt-0"><i class="mdi mdi-check-all"></i></h2>
-                                                <h3 class="mt-0">Thank you !</h3>
-
-                                                <p class="w-75 mb-2 mx-auto">Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis dui. Aliquam
-                                                    mattis dictum aliquet.</p>
-
-                                                <div class="mb-3">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                        <label class="custom-control-label" for="customCheck3">I agree with the Terms and Conditions</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end col -->
-                                    </div> <!-- end row -->
-                                </div>
-
-                                <ul class="list-inline mb-0 wizard">
-                                    <li class="previous list-inline-item">
-                                        <a href="#" class="btn btn-info">Previous</a>
-                                    </li>
-                                    <li class="next list-inline-item float-right disabled">
-                                        <a href="#" class="btn btn-info">Next</a>
-                                    </li>
-                                </ul>
-
-                            </div> <!-- tab-content -->
-                        </div> <!-- end #progressbarwizard-->
-                    </form>
-                </div>
-            </div>
+                                </div> <!-- end col-->
+                            @endif
+                        </div> <!-- end row -->
+                    </div> <!-- end card-body/ profile-user-box-->
+                </div><!--end profile/ card -->
+            </div> <!-- end col-->
         </div>
+        <!-- end row -->
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Personal-Information -->
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title mt-0 mb-3">Task Master Information</h4>
+
+                        <div class="text-left">
+                            <p class="text-muted"><strong>Full Name :</strong> <span class="ml-2"> {{ ucwords($user->name)}} </span></p>
+
+                            <p class="text-muted"><strong>Email :</strong> <span class="ml-2"> {{ ucwords($user->email)}} </span></p>
+
+                            <p class="text-muted"><strong>Country :</strong> <span class="ml-2"> {{ ucwords($user->country->name)}} </span></p>
+                            <p class="text-muted"><strong>Region :</strong> <span class="ml-2"> {{ ucwords($user->region->name)}} </span></p>
+                            <p class="text-muted"><strong>City :</strong> <span class="ml-2"> {{ ucwords($user->city->name)}} </span></p>
+
+
+
+                            <p class="text-muted mb-0"><strong>Socials :</strong>
+                                <a class="d-inline-block ml-2 text-muted" title="" data-placement="top" data-toggle="tooltip" href="{{ $user->linkedln}}" data-original-title="linkedln"><i class="mdi mdi-linkedin"></i></a>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end col-->
+
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title mb-3">task history</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Task </th>
+                                        <th>Rating</th>
+                                        <th>Status</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ASOS Ridley High Waist</td>
+                                        <td>$79.49</td>
+                                        <td><span class="badge badge-primary">82 Pcs</span></td>
+                                        <td>$6,518.18</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Marco Lightweight Shirt</td>
+                                        <td>$128.50</td>
+                                        <td><span class="badge badge-primary">37 Pcs</span></td>
+                                        <td>$4,754.50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Half Sleeve Shirt</td>
+                                        <td>$39.99</td>
+                                        <td><span class="badge badge-primary">64 Pcs</span></td>
+                                        <td>$2,559.36</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lightweight Jacket</td>
+                                        <td>$20.00</td>
+                                        <td><span class="badge badge-primary">184 Pcs</span></td>
+                                        <td>$3,680.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Marco Shoes</td>
+                                        <td>$28.49</td>
+                                        <td><span class="badge badge-primary">69 Pcs</span></td>
+                                        <td>$1,965.81</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> <!-- end table responsive-->
+                    </div> <!-- end col-->
+                </div> <!-- end row-->
+
+            </div>
+            <!-- end col -->
+
+        </div>
+        <!-- end row -->
+
     </div>
-@endsection
-@section('scripts')
-      <script src="{{ asset('js/form.js') }}"></script>
 @endsection

@@ -189,8 +189,6 @@
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="topnav-dashboards">
                                                 <a href="{{ route('projects.index') }}" class="dropdown-item">All Tasks</a>
-                                                {{-- <a href="{{ route() }}" class="dropdown-item">Remote Tasks</a> --}}
-                                                {{-- <a href="{{ route() }}" class="dropdown-item">Onsite Tasks</a> --}}
                                             </div>
 
                                         </li>
@@ -200,7 +198,7 @@
                                             </a>
 
                                                 <div class="dropdown-menu" aria-labelledby="topnav-apps">
-                                                    @foreach (App\Tasks::all() as $task)
+                                                    {{-- @foreach (App\Tasks::all() as $task)
                                                         <div class="dropdown">
                                                             <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('project.usershow', $task->id) }}" id="topnav-project" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                 {{ ucwords($task->name) }} <div class="arrow-down"></div>
@@ -213,7 +211,7 @@
                                                             </div>
                                                         </div>
                                                     @endforeach
-                                                </div>
+                                                </div> --}}
 
 
                                         </li>

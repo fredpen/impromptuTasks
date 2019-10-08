@@ -56,6 +56,10 @@
                                     <a href="{{ route('account.show', $user->id) }}" class="btn btn-light">
                                         <i class="mdi mdi-account-edit mr-1"></i> Show Profile
                                     </a>
+
+                                    <a href="{{ route('notifications') }}" class="btn btn-light">
+                                        <i class="mdi mdi-news-edit mr-1"></i> Messages
+                                    </a>
                                 </div>
                             </div> <!-- end col-->
                         </div> <!-- end row -->

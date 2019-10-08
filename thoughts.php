@@ -59,3 +59,7 @@ sort the policy issue
 
 8** find a solution to the phone issue
 
+task application
+
+get notification ----task applied to master admin
+i will have a one to many between a project and task master ...........many task master can apply for a project

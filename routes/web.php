@@ -20,6 +20,7 @@ Route::get('/welcome', 'HomeController@welcome')->name('welcome'); // redirect a
 
 // routes for outside users interacting with projects
 Route::get('/projects/task/{id}/show', 'ProjectshowController@show')->name('project.usershow'); // task show view for users
+Route::get('/projects/task/{id}/apply', 'ProjectshowController@apply')->name('project.apply'); // task show view for users
 
 
 Route::resources([

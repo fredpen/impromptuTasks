@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $tasks = Tasks::all();
+        $tasks = Tasks::with('subtasks:id,name,task_id')->get();
         return view('home', compact('tasks'));
     }
 

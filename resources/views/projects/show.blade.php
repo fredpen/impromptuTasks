@@ -5,6 +5,11 @@
 @endsection
 
 @section('content')
+    @if (session('message'))
+        @include('partials.notifs')
+    @endif
+
+
     <div class="container">
         <div class="row mt-3">
             <div class="col-md-8">
@@ -91,62 +96,17 @@
                         <div>
                             <h5>Tags:</h5>
                             @foreach ($project->task->subtasks as $subtask)
-                                <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{$subtask->name}}" class="d-inline-block">
+                            <a href="{{route("project.usershow", $subtask->id)}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{$subtask->name}}" class="d-inline-block">
                             {{$subtask->name}}</a>
                             @endforeach
 
                         </div>
 
                         <div class="d-flex flex-row-reverse mt-5 mb-1">
-                            <button type="button" class="btn btn-md btn-primary">Apply to Task</button>
+                            <a href="{{route('project.apply', $project->id)}}" class="btn btn-md btn-primary">Apply to Task</a>
                         </div>
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
-
-
-
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="mt-0 mb-3">Comments (258)</h4>
-
-                        <textarea class="form-control form-control-light mb-2" placeholder="Write message" id="example-textarea" rows="3"></textarea>
-                            <div class="text-right">
-                                <div class="btn-group mb-2">
-                                    <button type="button" class="btn btn-link btn-sm text-muted font-18"><i class="dripicons-paperclip"></i></button>
-                                </div>
-                                <div class="btn-group mb-2 ml-2">
-                                    <button type="button" class="btn btn-primary btn-sm">Submit</button>
-                                </div>
-                            </div>
-
-                            <div class="media mt-2">
-                                <img class="mr-3 avatar-sm rounded-circle" src="assets/images/users/avatar-3.jpg" alt="Generic placeholder image">
-                                <div class="media-body">
-                                    <h5 class="mt-0">Jeremy Tomlinson</h5>
-                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-                                    vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis
-                                    in faucibus.
-
-                                    <div class="media mt-3">
-                                        <a class="pr-3" href="#">
-                                            <img src="assets/images/users/avatar-4.jpg" class="avatar-sm rounded-circle" alt="Generic placeholder image">
-                                        </a>
-                                        <div class="media-body">
-                                            <h5 class="mt-0">Kathleen Thomas</h5>
-                                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-                                            vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
-                                            felis in faucibus.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="text-center mt-2">
-                                <a href="javascript:void(0);" class="text-danger">Load more </a>
-                            </div>
-                    </div> <!-- end card-body-->
-                </div>
-                <!-- end card-->
             </div> <!-- end col -->
 
             <div class="col-md-4">
@@ -182,21 +142,10 @@
                                 </div>
                             @endforeach
                         @else
-                            <span class="h6">No additional documents for this task</span>
+                            <span class="h6">No document was attached for this task</span>
                         @endif
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Progress</h5>
-                        <div class="mt-3 chartjs-chart" style="height: 320px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                            <canvas id="line-chart-example" width="216" class="chartjs-render-monitor" style="display: block; width: 216px; height: 320px;" height="320"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <!-- end card-->
-
 
             </div>
         </div>

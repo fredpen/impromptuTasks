@@ -1,5 +1,9 @@
 @extends('layouts.base')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
+@endsection
+
 @section('content')
     <div id="full_width_container">
         <div class="jumbotron jumbotron-fluid bg-secondary text-white p-3">
@@ -30,21 +34,26 @@
         <div class="row justify-content-center mt-3">
 
             @foreach ($tasks as $task)
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card">
-                        <div class="card-header">{{ $task->name}}</div>
+                        <a class="text-xs-center text-muted" href="{{ route('project.usershow', $task->id) }}">
+                            <div class="card-title text-white p-2 bg-primary d-flex justify-content-between">
+                                <h4> {{ ucwords($task->name) }} </h4>
+                            </div>
 
-                        <div class="card-body">
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
+                            @php
+                                $subTaskString = "";
+                                foreach ($task->subtasks as $subtask) {
+                                    $subTaskString = $subTaskString . $subtask->name . ", ";
+                                }
+                            @endphp
+                            <p class="p-2 card-text">{{ ucwords(str_limit($subTaskString, 100)) }}
+                                <a href="{{ route("project.usershow", $task->id) }}">see available Tasks</a>
+                            </p>
 
-                            You are logged in!
-                        </div>
-                    </div>
-            </div>
+                        </a>
+                    </div> <!-- end card-->
+                </div> <!-- end col-->
             @endforeach
 
         </div>

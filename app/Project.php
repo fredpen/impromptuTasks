@@ -36,6 +36,12 @@ class Project extends Model
         return $this->hasMany(Projectphoto::class);
     }
 
+    public function taskMasters()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id');

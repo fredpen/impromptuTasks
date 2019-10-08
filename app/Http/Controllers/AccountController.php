@@ -23,7 +23,7 @@ class AccountController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-    private function _validate($request)
+    private function validateTaskMaster($request)
     {
         return $request->validate(
             [
@@ -34,7 +34,23 @@ class AccountController extends Controller
                 'title' => 'required',
                 'name' => 'required',
                 'bio' => 'required',
-                'address' => 'required'
+                'address' => 'required',
+                'linkedln' => 'min:0'
+            ]
+        );
+    }
+
+    private function validateTaskGiver($request)
+    {
+        return $request->validate(
+            [
+                'country_id' => 'required',
+                "region_id" => 'required',
+                'city_id' => 'required',
+                'address' => 'required',
+                'name' => 'required',
+                'address' => 'required',
+                'linkedln' => 'min:0'
             ]
         );
     }
@@ -57,9 +73,10 @@ class AccountController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+        // return $user;
         if (!$user->isActive()) return redirect()->action('AccountController@edit', $id)->with('message', 'Kindly Complete your profile to have full access');
 
-        if ($user->isTaskGiver()) return view('taskGiver.shomessw', compact('user'));
+        if ($user->isTaskGiver()) return view('taskGiver.show', compact('user'));
 
         $skill_ids = $user->fetchskillsId();
         return view('taskMaster.show', compact('user', 'skill_ids'));
@@ -94,9 +111,8 @@ class AccountController extends Controller
     {
         if (Auth::id() != $id) abort('403'); //policy check
         $user = User::findOrFail($id);
-        $validatedData = $this->_validate($request);
+        $validatedData = ($user->role_id == 1) ? $this->validateTaskGiver($request) : $this->validateTaskMaster($request); //validate request inputs
         $validatedData['isActive'] = 1;
-        $validatedData['linkedln'] = $request->linkedln;
         $user->update($validatedData);
 
         if ($request->skills) $user->skills()->sync($request->skills);  //update user skills

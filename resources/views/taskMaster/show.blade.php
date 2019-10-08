@@ -31,19 +31,22 @@
                                 </div>
                             </div> <!-- end col-->
 
-                            <div class="col-sm-4">
-                                <div class="text-center mt-sm-0 mt-3 text-sm-right">
-                                    <a href="{{ route('account.edit', $user->id) }}" class="btn btn-light">
-                                        <i class="mdi mdi-account-edit mr-1"></i> Edit Profile
-                                    </a>
+                            @if (Auth::id() == $user->id)
+                                <div class="col-sm-4">
+                                    <div class="text-center mt-sm-0 mt-3 text-sm-right">
+                                        <a href="{{ route('account.edit', $user->id) }}" class="btn btn-light">
+                                            <i class="mdi mdi-account-edit mr-1"></i> Edit Profile
+                                        </a>
 
-                                    <a href="{{ route('notifications') }}" class="btn btn-light">
-                                        <i class="mdi mdi-news-edit mr-1"></i> Messages
-                                    </a>
-                                </div>
-                            </div> <!-- end col-->
+                                        <a href="{{ route('notifications') }}" class="btn btn-light">
+                                            <i class="mdi mdi-news-edit mr-1"></i> Messages
+                                        </a>
+                                    </div>
+                                </div> <!-- end col-->
+                            @endif
+
+
                         </div> <!-- end row -->
-
                     </div> <!-- end card-body/ profile-user-box-->
                 </div><!--end profile/ card -->
             </div> <!-- end col-->
