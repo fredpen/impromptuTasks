@@ -64,6 +64,9 @@ class Project extends Model
         if ($action == 'posted') return $this->owner->notify(new projectPosted);
         if ($action == 'deleted') return $this->owner->notify(new ProjectCancelled);
         if ($action == 'completed') return $this->owner->notify(new projectCompleted);
+        if ($action == 'applied') {
+            return $this->owner->notify(new projectCompleted);
+        }
     }
 
     public function updateStatus($action)
@@ -73,6 +76,12 @@ class Project extends Model
         if ($action == 'posted') return $this->update(['status' => $action, 'posted_on' => $dateTime]);
         if ($action == 'deleted') return $this->update(['status' => $action]);
         if ($action == 'completed') return $this->update(['status' => $action, 'completed_on' => $dateTime]);
+    }
+
+    public function hasApplied($id)
+    {
+        if (ProjectUser::where(['project_id' => $id, 'user_id' => Auth::id()])->first()) return "1";
+        return "0";
     }
 }
 

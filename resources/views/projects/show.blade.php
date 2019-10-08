@@ -102,8 +102,13 @@
 
                         </div>
 
+
                         <div class="d-flex flex-row-reverse mt-5 mb-1">
-                            <a href="{{route('project.apply', $project->id)}}" class="btn btn-md btn-primary">Apply to Task</a>
+                            @if ($project->hasApplied($project->id))
+                                <button type="button" class="btn btn-secondary">You have applied for this task</button>
+                            @else
+                                <a href="{{route('project.apply', $project->id)}}" class="btn btn-md btn-primary">Apply to Task</a>
+                            @endif
                         </div>
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->

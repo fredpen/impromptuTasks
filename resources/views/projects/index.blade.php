@@ -4,19 +4,20 @@
   @if (session('message'))
         @include('partials.notifs')
     @endif
-    
+
     <div class="container">
         <div class="row justify-content-center mt-3">
             <div class="col-sm-12 mb-3">
 
-                @if (count($projects))
-                    <div class="page-title text-left w-100">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
-                            <li class="breadcrumb-item active">{{$projects[0]->task->name}}</li>
-                        </ol>
-                    </div>
+                {{-- breadcrumbs --}}
+                <div class="page-title text-left w-100">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
+                        <li class="breadcrumb-item active">{{$taskName}}</li>
+                    </ol>
+                </div>
 
+                @if (count($projects))
                     <h5 class=" mb-3 card-header">{{count($projects)}} Task{{count($projects) > 1 ? "s" : ""}} </h5>
                     <div class="row">
                         @foreach ($projects as $project)

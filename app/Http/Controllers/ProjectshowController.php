@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Project;
 use App\User;
 use App\ProjectUser;
+use App\Tasks;
 
 class ProjectshowController extends Controller
 {
@@ -28,11 +29,15 @@ class ProjectshowController extends Controller
     public function apply($id)
     {
         Auth::user()->appliedProjects()->attach($id);
+        // $project->notifyOwner('applied');
         return back()->with("message", $this->message);
     }
 
+
+
     public function show($id)
     {
+        $taskName = Tasks::findOrFail($id)->name;
         if (Auth::user()) { //show task masters if its a task giver
             if (Auth::user()->isTaskGiver()) {
                 $taskMaster = User::where()->get();
@@ -44,6 +49,6 @@ class ProjectshowController extends Controller
             ['task_id', '=', $id],
             ['status', '=', 'posted']
         ])->get();
-        return view('projects.index', compact('projects'));
+        return view('projects.index', compact('projects', 'taskName'));
     }
 }
