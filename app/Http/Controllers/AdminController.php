@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\City;
-use App\Country;
 use Illuminate\Http\Request;
 
-class CityController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param [object] $request [request object from the form]
-     *
-     * @return [array] $cities
+     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $cities = City::where('region_id', $request->region_id)->orderBy('name', 'desc')->get(['id', 'name']);
-        return $cities;
+        return view('admin.index');
     }
 
     /**
@@ -42,20 +37,13 @@ class CityController extends Controller
         //
     }
 
-
-    public function showAjax(Request $request)
-    {
-        $resultArray = City::where(['region_id' => $request->value])->get(['id', 'name']);
-        return $resultArray;
-    }
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\City  $city
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(City $city)
+    public function show($id)
     {
         //
     }
@@ -63,10 +51,10 @@ class CityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\City  $city
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(City $city)
+    public function edit($id)
     {
         //
     }
@@ -75,10 +63,10 @@ class CityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\City  $city
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -86,10 +74,10 @@ class CityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\City  $city
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(City $city)
+    public function destroy($id)
     {
         //
     }

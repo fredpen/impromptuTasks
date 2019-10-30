@@ -9,15 +9,18 @@
         <div class="row justify-content-center mt-3">
             <div class="col-sm-12 mb-3">
 
-                {{-- breadcrumbs --}}
-                <div class="page-title text-left w-100">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
-                        <li class="breadcrumb-item active">{{$taskName}}</li>
-                    </ol>
-                </div>
+              
 
                 @if (count($projects))
+
+                    {{-- breadcrumbs --}}
+                    <div class="page-title text-left w-100">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
+                            <li class="breadcrumb-item active">{{$taskName}}</li>
+                        </ol>
+                    </div>
+
                     <h5 class=" mb-3 card-header">{{count($projects)}} Task{{count($projects) > 1 ? "s" : ""}} </h5>
                     <div class="row">
                         @foreach ($projects as $project)
@@ -36,7 +39,6 @@
                                                 <p class="d-block m-2">Model: <span class="mb-0 h6 text-primary">{{$project->model}}</spam> </p>
                                                 <p class="d-block m-2">Proposed start date: <span class="mb-0 text-primary h6">{{$project->start_date}}</spam></p>
                                                 <p class="d-block m-2">Category: <span class="mb-0 text-primary h6">{{$project->task->name}}</span> </p>
-                                                {{-- <p class="d-block m-2">Status: <span class="mb-0 text-primary h6">{{$project->task->name}}</span> </p> --}}
                                             </div>
                                         </div>
 
@@ -44,7 +46,7 @@
                                             <div class="form-group row mt-2 mb-0">
                                                 <div class="col-md-6">
                                                     <button type="submit" class="btn btn-sm btn-primary">
-                                                        <a class="text-white" href="{{ route('projects.show', $project->id) }} ">Apply to this Task</a>
+                                                        <a class="text-white" href="{{ route('projects.show', $project->id) }} ">Apply to Task</a>
                                                     </button>
                                                 </div>
                                             </div>

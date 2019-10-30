@@ -126,7 +126,27 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  @if ($task->subTasks->count() > 0)  @if ($task->subTasks->count() > 0)
+
+                                        @foreach ($task->subTasks as $subTask)
+                                            <li class="list-group-item">
+                                                <a href="{{ route('tasks.show', $task->id) }}">{{ $subTask->name }}</a>
+                                            </li>
+                                        @endforeach
+
+                                    @else
+                                        <span class="h6 text-primary">There is no subtasks asscoiated with this task yet</span>
+                                    @endif
+
+                                        @foreach ($task->subTasks as $subTask)
+                                            <li class="list-group-item">
+                                                <a href="{{ route('tasks.show', $task->id) }}">{{ $subTask->name }}</a>
+                                            </li>
+                                        @endforeach
+
+                                    @else
+                                        <span class="h6 text-primary">There is no subtasks asscoiated with this task yet</span>
+                                    @endif
         </div> --}}
 
         @if ($tasks->count() > 0)
@@ -144,11 +164,12 @@
 
                             <div id="cardCollpase{{$task->id}}" class="collapse pt-3">
                                 <ul class="list-group text-capitalize">
+                                    
                                     @if ($task->subTasks->count() > 0)
 
                                         @foreach ($task->subTasks as $subTask)
                                             <li class="list-group-item">
-                                                <a href="{{ route('tasks.show', $task->id) }}">{{ $subTask->name }}, </a>
+                                                <a href="{{ route('tasks.show', $task->id) }}">{{ $subTask->name }}</a>
                                             </li>
                                         @endforeach
 
@@ -166,9 +187,7 @@
     </div>
 
     <div class="row justify-content-center my-4">
-        <div class="col-6">
-            {{ $tasks->onEachSide(5)->links() }}
-        </div>
+        {{ $tasks->onEachSide(5)->links() }}
     </div>
 @endsection
 

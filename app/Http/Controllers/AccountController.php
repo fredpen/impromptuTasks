@@ -43,15 +43,14 @@ class AccountController extends Controller
     private function validateTaskGiver($request)
     {
         return $request->validate(
-            [
+            array(
                 'country_id' => 'required',
                 "region_id" => 'required',
                 'city_id' => 'required',
                 'address' => 'required',
                 'name' => 'required',
-                'address' => 'required',
                 'linkedln' => 'min:0'
-            ]
+            )
         );
     }
 
@@ -73,7 +72,6 @@ class AccountController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        // return $user;
         if (!$user->isActive()) return redirect()->action('AccountController@edit', $id)->with('message', 'Kindly Complete your profile to have full access');
 
         if ($user->isTaskGiver()) return view('taskGiver.show', compact('user'));

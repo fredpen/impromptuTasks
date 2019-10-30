@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
 use App\SubTask;
 use App\Tasks;
 use Illuminate\Http\Request;
@@ -10,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Country;
 use App\Region;
 use App\City;
+use App\Project;
+
 
 class ProjectController extends Controller
 {
@@ -48,6 +49,9 @@ class ProjectController extends Controller
 
     /**
      * Show the form for creating a new resource.
+        
+        
+        
      *
      * @return \Illuminate\Http\Response
      */
@@ -57,7 +61,7 @@ class ProjectController extends Controller
         $projects = Project::where([
             ['user_id', '=', Auth::id()],
             ['status', '!=', 'deleted']
-            ])->get();
+        ])->get();
         $tasks = Tasks::pluck('name', 'id');
         return view('projects.create', compact('projects', 'tasks'));
     }

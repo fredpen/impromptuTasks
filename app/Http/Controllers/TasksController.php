@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Tasks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Project;
 
 class TasksController extends Controller
 {
@@ -34,7 +33,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks =  Tasks::all();
+        $tasks =  Tasks::with("subTasks:id,task_id,name")->paginate(20);
         return view('admin.tasks.index', compact('tasks'));
     }
 

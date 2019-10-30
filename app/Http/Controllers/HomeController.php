@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
+use App\Region;
 use Illuminate\Http\Request;
 use App\Tasks;
 

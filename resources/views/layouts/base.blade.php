@@ -14,7 +14,7 @@
     <!-- App css -->
     <link rel="stylesheet" href="{{ asset('css/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-    @yield('styles')
+    @yield('styles') 
 
 </head>
 
@@ -64,7 +64,7 @@
                                             @if (count(Auth::user()->unreadNotifications))
                                                 <div class="slimscroll" style="max-height: 230px;">
                                                     @foreach (Auth::user()->unreadNotifications as $notification)
-                                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                                        <a href="{{ route('notifications') }}" class="dropdown-item notify-item">
                                                             <div class="notify-icon bg-primary">
                                                                 <i class="mdi mdi-comment-account-outline"></i>
                                                             </div>
@@ -116,7 +116,7 @@
                                             </span>
                                         @else
                                             <span class="account-user-avatar">
-                                                <img src="{{ asset('images/basic.jpg') }}" alt="{{Auth::User()->name}}" class="rounded-circle">
+                                                <img src="{{ Auth::User()->imageurl ? asset('images/'.Auth::User()->imageurl)  : asset('images/basic.jpg') }}" alt="{{Auth::User()->name}}" class="rounded-circle">
                                             </span>
                                             <span>
                                                 <span class="account-user-name">{{ Auth::User()->name }} </span>
@@ -141,6 +141,10 @@
                                             <a href="{{ route('account.show', Auth::User()->id) }}" class="dropdown-item notify-item">
                                                 <i class="mdi mdi-account-circle mr-1"></i>
                                                 <span>My Profile</span>
+                                            </a>
+                                            <a href="{{ route('notifications') }}" class="dropdown-item notify-item">
+                                                <i class="mdi mdi-bell-ring mr-1"></i>
+                                                <span>My Messages</span>
                                             </a>
                                             <a href="{{ route('logout') }}" class="dropdown-item notify-item"
                                                 onclick="event.preventDefault();

@@ -1,7 +1,13 @@
 @extends('layouts.base')
 @section('scripts')
     <script src="{{ asset('js/form.js') }}"></script>
-    <script>var project_id = {{ $project-> id}};</script>
+    <script>
+        var project_id = {{ $project-> id}};
+        function submitResume() 
+        {
+            $('#resume').submit();
+        }
+    </script>
 @endsection
 
 @section('content')
@@ -16,16 +22,7 @@
                 <!-- project card -->
                 <div class="card d-block">
                     <div class="card-body">
-                        <div class="dropdown float-right">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                <i class="dripicons-dots-3"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-142px, 20px, 0px);">
-                                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Apply</a>
-                                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-delete mr-1"></i>Report Task</a>
-                                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-email-outline mr-1"></i>Share</a>
-                            </div>
-                        </div>
+                        
                         <!-- project title-->
                         <h3 class="mt-0">{{ ucfirst($project->title)}}</h3>
                         <span class="h6 text-dark">Posted On: {{$project->posted_on}}</span>
@@ -103,19 +100,13 @@
                         </div>
 
 
-                        <div class="d-flex flex-row-reverse mt-5 mb-1">
-                            @if ($project->hasApplied($project->id))
-                                <button type="button" class="btn btn-secondary">You have applied for this task</button>
-                            @else
-                                <a href="{{route('project.apply', $project->id)}}" class="btn btn-md btn-primary">Apply to Task</a>
-                            @endif
-                        </div>
+                       
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
             </div> <!-- end col -->
 
             <div class="col-md-4">
-                  <div class="card">
+                <div class="card">
                     <div class="card-body">
                         <h5 class="card-title mb-3">Files</h5>
 
@@ -126,11 +117,7 @@
                                         <div class="row align-items-center">
                                             <div class="col-auto">
                                                 <div class="avatar-sm">
-                                                    <span class="avatar-title rounded">
-                                                        {{-- {{ $ext = explode($photo->url, ".") }} --}}
-                                                        {{-- {{$photo->url}} --}}
-                                                        .ZIP
-                                                    </span>
+                                                    <span class="avatar-title rounded"><i class="dripicons-download"></i>
                                                 </div>
                                             </div>
                                             <div class="col pl-0">
@@ -139,7 +126,7 @@
                                             <div class="col-auto">
                                                 <!-- Button -->
                                                 <a href="{{ asset('images/' . $photo->url) }}" download class="btn btn-link btn-lg text-muted">
-                                                    <i class="dripicons-download"></i>
+
                                                 </a>
                                             </div>
                                         </div>
@@ -152,8 +139,33 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Cover letter</h5>
+                            <div class="p-0">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-12">
+                                        {!! Form::open(['action' => ['ProjectshowController@apply', $project->id ], 'method' => 'POST', 'id' => 'resume']) !!}
+                                            <textarea name="resume" data-toggle="maxlength" class="mb-3 form-control" data-threshold="1000" maxlength="1000" rows="10" placeholder="Say why this task should be assigned to you in few words as possible"></textarea>
+                                            {!! Form::hidden('project_id', $project->id) !!}
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-2 mb-1">
+                        @if ($project->hasApplied())
+                            <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
+                        @else
+                            <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 @endsection
+
 

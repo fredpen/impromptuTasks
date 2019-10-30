@@ -204,7 +204,7 @@
 @section('scripts')
 <script src="{{ asset('js/dropzone.js') }}"></script>
 <script>
-
+    var role_id = {{$user->role_id}};
 
     Dropzone.autoDiscover = false;
     var dropzone = new Dropzone('#myAwesomeDropzone', {

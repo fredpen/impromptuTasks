@@ -22,9 +22,13 @@ class CreateProjectsTable extends Migration
                 $table->integer('num_of_taskMaster')->index()->nullable()->default(1);
                 $table->float('budget')->nullable();
                 $table->string('status')->default('created')->nullable()->index(); //created, posted, ongoing, completed, cancelled
-                // $table->timestamp('posted_on')->nullable();
-                $table->string('start_date')->nullable();
-                $table->timestamp('completed_on')->nullable();
+
+                $table->date('posted_on')->nullable();
+                $table->date('started_on')->nullable();
+                $table->date('completed_on')->nullable();
+                $table->date('cancelled_on')->nullable();
+                $table->date('deleted_on')->nullable();
+
                 $table->longText('description')->nullable();
                 $table->longText('title')->nullable();
                 $table->integer('task_id')->nullable();

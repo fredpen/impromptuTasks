@@ -65,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function appliedProjects()
     {
-        return $this->belongsToMany(Project::class);
+        return $this->belongsToMany(ProjectUser::class, 'project_apllieduser', 'user_id', 'project_id');
     }
 
     public function skills()

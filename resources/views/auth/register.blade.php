@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="agreementBox">
+                            <input type="checkbox" name="agreementBox" class="custom-control-input" id="agreementBox">
                             <label class="custom-control-label" for="customCheck1">Yes, I understand and agree to the <a href="#">ImpromptuTasks Terms of service</a> and <a href="#">Privacy policy</a> </label>
                         </div>
 

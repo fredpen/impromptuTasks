@@ -3,9 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+
 
 class ProjectAppllication extends Notification
 {
@@ -42,8 +43,8 @@ class ProjectAppllication extends Notification
     {
         return (new MailMessage)
             ->greeting('Hi ' . Auth::user()->name . ",")
-            ->line('This is to notify you that your new project is live, We will contact you when a Task master takes up your task. ')
-            ->action('impromptuTasks', route('home'))
+            ->line('This is to notify you that your application is successful, We will contact you soonest. ')
+            ->action('ImpromptuTasks', route('home'))
             ->line('Thanks for using impromptuTasks!');
     }
 
@@ -56,8 +57,8 @@ class ProjectAppllication extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => "Your Project has been Deleted",
-            'subject' => 'This is to notify you that one of your project has been deleted '
+            'title' => "Successful Application",
+            'subject' => 'This is to notify you that your application is successful '
         ];
     }
 }

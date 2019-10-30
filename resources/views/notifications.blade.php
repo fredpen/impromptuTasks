@@ -29,7 +29,7 @@
                                             <div class="timeline-alt pb-0">
                                                 @if (count($allNotifications))
                                                     @foreach ($allNotifications  as $notification)
-                                                        <div class="timeline-item">
+                                                        <div class="timeline-item">update
                                                             <i class="dripicons-inbox bg-info-lighten text-info timeline-icon"></i>
                                                             <div class="timeline-item-info">
                                                                 <span href="#" class="text-secondary font-weight-bold mb-1 d-block">{{ $notification->data['title'] }} </span>
@@ -40,6 +40,17 @@
                                                             </div>
                                                         </div>
                                                     @endforeach
+                                                @else
+                                                    <div class="timeline-item">
+                                                        <i class="dripicons-mail bg-info-lighten text-info timeline-icon"></i>
+                                                        <div class="timeline-item-info">
+                                                            <span href="#" class="text-primary font-weight-bold mb-1 d-block">You do not have any Notification at the moment </span>
+                                                            <small> bravo !!! </small>
+                                                            <p class="mb-0 pb-2">
+                                                                <small class="text-muted"> a second ago  </small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 @endif
                                             </div>
                                         </div>

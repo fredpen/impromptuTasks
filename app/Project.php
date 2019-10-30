@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\projectCompleted;
 use App\Notifications\ProjectCancelled;
 use App\Notifications\ProjectPosted;
+use App\Notifications\ProjectAppllication;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Project extends Model
 {
@@ -38,7 +41,7 @@ class Project extends Model
 
     public function taskMasters()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'project_apllieduser')->withPivot('resume');
     }
 
 
@@ -65,23 +68,32 @@ class Project extends Model
         if ($action == 'deleted') return $this->owner->notify(new ProjectCancelled);
         if ($action == 'completed') return $this->owner->notify(new projectCompleted);
         if ($action == 'applied') {
-            return $this->owner->notify(new projectCompleted);
+            return Auth::user()->notify(new ProjectAppllication);
         }
     }
 
     public function updateStatus($action)
     {
-        $dateTime = date("Y-m-d");
+        $dateTime = Carbon::now();
         if ($action == 'created') return $this->update(['status' => $action]);
         if ($action == 'posted') return $this->update(['status' => $action, 'posted_on' => $dateTime]);
         if ($action == 'deleted') return $this->update(['status' => $action]);
         if ($action == 'completed') return $this->update(['status' => $action, 'completed_on' => $dateTime]);
     }
 
-    public function hasApplied($id)
+    public function hasApplied()
     {
-        if (ProjectUser::where(['project_id' => $id, 'user_id' => Auth::id()])->first()) return "1";
+        if (ProjectUser::where(['project_id' => $this->id, 'user_id' => Auth::id()])->first()) return "1";
         return "0";
+    }
+
+    public function hasBeenAssigned($user_id)
+    {
+        $project = DB::table('project_assigneduser')->where([
+            'project_id' => $this->id,
+            'user_id' => $user_id
+        ])->get();
+        return count($project) ? 1 : 0;
     }
 }
 

@@ -34,26 +34,39 @@
         <div class="row justify-content-center mt-3">
 
             @foreach ($tasks as $task)
-                <div class="col-md-4">
-                    <div class="card">
-                        <a class="text-xs-center text-muted" href="{{ route('project.usershow', $task->id) }}">
-                            <div class="card-title text-white p-2 bg-primary d-flex justify-content-between">
-                                <h4> {{ ucwords($task->name) }} </h4>
-                            </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="card d-block">
+                        <div class="card-body" style="height:178px">
+                            <!-- project title-->
+                            <h4 class="mt-0">
+                                <a href="{{ route('project.usershow', $task->id) }}" class="text-title text-primary">{{ ucwords($task->name) }}</a>
+                            </h4>
+                            <div class="badge badge-success mb-3"></div>
 
                             @php
                                 $subTaskString = "";
-                                foreach ($task->subtasks as $subtask) {
+                                foreach ($task->subTasks as $subtask) {
                                     $subTaskString = $subTaskString . $subtask->name . ", ";
                                 }
                             @endphp
-                            <p class="p-2 card-text">{{ ucwords(str_limit($subTaskString, 100)) }}
-                                <a href="{{ route("project.usershow", $task->id) }}">see available Tasks</a>
+                            <p class="text-muted font-13 mb-3"><a href="{{ route('project.usershow', $task->id) }}" class="font-weight-bold text-muted">{{ ucwords(str_limit($subTaskString, 100)) }}</a>
                             </p>
 
-                        </a>
-                    </div> <!-- end card-->
-                </div> <!-- end col-->
+                            <!-- project detail-->
+                            <p class="mb-1">
+                                <span class="pr-2 text-nowrap mb-2 d-inline-block">
+                                    <i class="mdi mdi-format-list-bulleted-type text-muted"></i>
+                                    <b>{{ count($task->subTasks) }}</b> Sub Tasks
+                                </span>
+                                <span class="text-nowrap mb-2 d-inline-block">
+                                    <i class="mdi mdi-comment-multiple-outline text-muted"></i>
+                                    <b>741</b> Task Master
+                                </span>
+                            </p>
+                        </div> 
+                    </div> 
+                </div>
             @endforeach
 
         </div>

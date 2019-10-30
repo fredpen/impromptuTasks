@@ -62,7 +62,7 @@
                                     <a href="{{ route('users.index') }}">All users</a>
                                 </li>
                                   <li>
-                                    <a href="{{ route('roles.index') }}">Manage Roles</a>
+                                    {{-- <a href="{{ route('roles.index') }}">Manage Roles</a> --}}
                                 </li>
                             </ul>
                         </li>
@@ -123,28 +123,22 @@
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
-                                    <a href="layouts-horizontal.html">All Projects</a>
+                                    <a href="{{ route('project.all') }}">All Projects</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-light-sidenav.html">On going Project</a>
+                                    <a href="{{ route('project.ongoing') }}">On going Project</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-collapsed.html">Completed Projectes</a>
+                                    <a href="{{ route('project.completed') }}">Completed Projects</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-collapsed.html">Unattended Projects</a>
+                                    <a href="{{ route('project.cancelled') }}">Cancelled Projects</a>
                                 </li>
                                 <li>
-                                    <a href="javascript: void(0);" class="right-bar-toggle">Uncompleted Projects</a>
+                                    <a href="{{ route('project.posted') }}">Posted Projects</a>
                                 </li>
                                 <li>
-                                    <a href="layouts-collapsed.html">Admin Cancelled</a>
-                                </li>
-                                <li>
-                                    <a href="layouts-collapsed.html">Task Master Cancelled</a>
-                                </li>
-                                <li>
-                                    <a href="layouts-collapsed.html">Task Giver Cancelled</a>
+                                    <a href="{{ route('project.created') }}">Created Projects</a>
                                 </li>
                             </ul>
                         </li>
