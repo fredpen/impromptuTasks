@@ -13,7 +13,6 @@
 */
 
 
-
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -23,6 +22,7 @@ Route::get('/welcome', 'HomeController@welcome')->name('welcome'); // redirect a
 // routes for outside users interacting with projects
 Route::get('/projects/task/{task}/show', 'ProjectshowController@show')->name('project.usershow'); // task show view for users
 Route::post('/projects/{project}/apply', 'ProjectshowController@apply')->name('project.apply'); // task show view for users
+Route::get('/project/{projectAssignedUser}/accept', 'ProjectshowController@accept')->name('project.accept');
 
 
 Route::resources([
@@ -49,17 +49,16 @@ Route::group(
 Route::group(
     ['middleware' => ['auth', 'isAdmin'] ], function () {
         Route::get('/admin', 'AdminController@index')->name('admin.home');
-
-        Route::get('/admin/projects/all', 'AdminProjectController@all')->name('project.all');
-        Route::get('/admin/projects/ongoing', 'AdminProjectController@ongoing')->name('project.ongoing');
-        Route::get('/admin/projects/completed', 'AdminProjectController@completed')->name('project.completed');
-        Route::get('/admin/projects/posted', 'AdminProjectController@posted')->name('project.posted');
-        Route::get('/admin/projects/created', 'AdminProjectController@created')->name('project.created');
-        Route::get('/admin/projects/cancelled', 'AdminProjectController@cancelled')->name('project.cancelled');
+        Route::get('/admin/projects/all', 'AdminProjectController@showallProjects')->name('project.all');
+        Route::get('/admin/projects/ongoing', 'AdminProjectController@showongoingProjects')->name('project.ongoing');
+        Route::get('/admin/projects/completed', 'AdminProjectController@showcompletedProjects')->name('project.completed');
+        Route::get('/admin/projects/posted', 'AdminProjectController@showpostedProjects')->name('project.posted');
+        Route::get('/admin/projects/created', 'AdminProjectController@showcreatedProjects')->name('project.created');
+        Route::get('/admin/projects/cancelled', 'AdminProjectController@showcancelledProjects')->name('project.cancelled');
         Route::get('/admin/projects/{project_id}/adminShow', 'AdminProjectController@adminShow')->name('project.adminShow');
         Route::post('/admin/project/assign', 'AdminProjectController@assign')->name('project.assign');
         Route::post('/admin/project/reassign', 'AdminProjectController@reassign')->name('project.reassign');
-        Route::get('/project/{project_id}/accept', 'AdminProjectController@accept')->name('project.accept');
+        
 
         Route::resources([
             'admin/users' => 'AdminUsersController',
@@ -68,3 +67,10 @@ Route::group(
         ]);
     }
 );
+
+
+Route::name('project.')->group(function () {
+    Route::get('projectstatus/{project}/completed', 'ProjectStatusController@completed')->name('complete');
+    Route::get('projectstatus/{project}/live', 'ProjectStatusController@live')->name('live');
+    Route::get('projectstatus/{project}/cancelled', 'ProjectStatusController@cancelled')->name('cancel');
+});

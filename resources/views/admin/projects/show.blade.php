@@ -11,67 +11,62 @@
         {{-- assign task --}}
         @if ($project->status == "posted" || $project->status == "completed" || $project->status == "ongoing")
             <div class="col-md-12">
-                <div class="card-text">
-                    <div class="table-responsive-sm">
-                        <table class="table table-bordered table-centered mb-0">
-                            <thead class="thead-dark">
-                                <tr class="h6 text-uppercase">
-                                    <th> Task Master Profile</th>
-                                    <th> Resume </th>
-                                    <th> Applied on</th>
-                                    <th> Profile Image</th>
-                                    <th> Ratings 1 - 10 </th>
-                                    <th> Assign </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($project->taskMasters->count() > 0)
-                                    @foreach ($project->taskMasters as $taskMaster)
-                                        <tr>
-                                            <td class=""><a target="_blank" href="{{ route('account.show', $taskMaster->id) }}">{{ $taskMaster->name }}'s Profile</a></td>
-                                            <td class="">{{ ucfirst($taskMaster->pivot->resume) }} </td>
-                                            <td class="">{{ $taskMaster->created_at }}</td>     
-                                            <td class=""> 
-                                                <span class="account-user-avatar">
-                                                    <img src="{{$taskMaster->imageurl ? asset('images/'.$taskMaster->imageurl)  : asset('images/basic.jpg')  }}" alt="{{$taskMaster->name}}" class="rounded-circle" style="max-width: 50px">
-                                                </span>
-                                            </td>
-                                            <td class=""> {{ $taskMaster->ratings }} </td>
-                                            <td class="h6"> 
-                                                @if ($project->hasBeenAssigned($taskMaster->id))
-                                                    {!! Form::open(['method' => 'POST', 'action' => 'AdminProjectController@reassign']) !!}
-                                                        {!! Form::hidden('user_id', $taskMaster->id) !!}
-                                                        {!! Form::hidden('project_id', $project->id) !!}
-                                                        {!! Form::submit('Withdraw Task ', ['class' => 'btn btn-danger']) !!}
-                                                    {!! Form::close() !!}
-                                                @else
-                                                    {!! Form::open(['method' => 'POST', 'action' => 'AdminProjectController@assign']) !!}
-                                                        {!! Form::hidden('user_id', $taskMaster->id) !!}
-                                                        {!! Form::hidden('project_id', $project->id) !!}
-                                                        {!! Form::submit('Assign to '. $taskMaster->name, ['class' => 'btn btn-primary']) !!}
-                                                    {!! Form::close() !!}
-                                                @endif
-                                            </td>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div class="table-responsive-sm">
+                                <table class="table table-bordered table-centered mb-0">
+                                    <thead class="thead-dark">
+                                        <tr class="h6 text-uppercase">
+                                            <th> Task Master Profile</th>
+                                            <th> Resume </th>
+                                            <th> Applied on</th>
+                                            <th> Profile Image</th>
+                                            <th> Ratings 1 - 10 </th>
+                                            <th> Assign </th>
                                         </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                        @if ($project->taskMasters->count() > 0)
+                                            @foreach ($project->taskMasters as $taskMaster)
+                                                <tr>
+                                                    <td class=""><a target="_blank" href="{{ route('account.show', $taskMaster->id) }}">{{ $taskMaster->name }}'s Profile</a></td>
+                                                    <td class="">{{ ucfirst($taskMaster->pivot->resume) }} </td>
+                                                    <td class="">{{ $taskMaster->created_at }}</td>     
+                                                    <td class=""> 
+                                                        <span class="account-user-avatar">
+                                                            <img src="{{$taskMaster->imageurl ? asset('images/'.$taskMaster->imageurl)  : asset('images/basic.jpg')  }}" alt="{{$taskMaster->name}}" class="rounded-circle" style="max-width: 50px">
+                                                        </span>
+                                                    </td>
+                                                    <td class=""> {{ $taskMaster->ratings }} </td>
+                                                    <td class="h6"> 
+                                                        @if ($project->hasBeenAssigned($taskMaster->id))
+                                                            {!! Form::open(['method' => 'POST', 'action' => 'AdminProjectController@reassign']) !!}
+                                                                {!! Form::hidden('user_id', $taskMaster->id) !!}
+                                                                {!! Form::hidden('project_id', $project->id) !!}
+                                                                {!! Form::submit('Withdraw Task ', ['class' => 'btn btn-danger']) !!}
+                                                            {!! Form::close() !!}
+                                                        @else
+                                                            {!! Form::open(['method' => 'POST', 'action' => 'AdminProjectController@assign']) !!}
+                                                                {!! Form::hidden('user_id', $taskMaster->id) !!}
+                                                                {!! Form::hidden('project_id', $project->id) !!}
+                                                                {!! Form::submit('Assign to '. $taskMaster->name, ['class' => 'btn btn-primary']) !!}
+                                                            {!! Form::close() !!}
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         @endif
 
-        <div class="col-sm-12 mt-5">
-            <div class="card-body">
-                <div class="toll-free-box text-center text-primary">
-                    <h4 class="page-title">PROJECT DETAILS</h4>
-                </div>
-            </div>
-        </div> 
-
-        
-        <div class="col-md-8">
+        <div class="col-md-8 mt-5">
             <!-- project card -->
 
             <div class="card d-block">
@@ -154,8 +149,8 @@
             </div> <!-- end card-->
         </div> <!-- end col -->
 
-        <div class="col-md-4">
-                <div class="card">
+        <div class="col-md-4 mt-5">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Files</h5>
 
@@ -188,6 +183,14 @@
                 </div>
             </div>
 
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Action Corner </h5>
+                    <a href="{{ route('project.cancelled', $project->id) }}" class="text-white mb-2 btn btn-danger">Cancel Task</a><br>
+                    <a href="{{ route('project.live', $project->id) }}" class="text-white mb-2 btn btn-success">Mark Task started</a><br>
+                    <a href="{{ route('project.complete', $project->id) }}" class="text-white mb-2 btn btn-primary">Mark Task completed</a><br>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

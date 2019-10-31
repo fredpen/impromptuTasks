@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Country;
 use App\Region;
 use App\City;
+use App\Notifications\ProjectCancelled;
+use App\Notifications\projectCreated;
+use App\Notifications\ProjectPosted;
 use App\Project;
 
 
@@ -24,7 +27,14 @@ class ProjectController extends Controller
         'not sure' => 'not sure'
     ];
 
-
+    public function hasBeenAssigned($user_id)
+    {
+        $project = DB::table('project_assigneduser')->where([
+            'project_id' => $this->id,
+            'user_id' => $user_id
+        ])->get();
+        return count($project) ? 1 : 0;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -42,19 +52,13 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+        // return $project;
+        // return $project;
     {
         $projects = Project::where(['status' => 'posted'])->get();
         return view('projects.index', compact('projects'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-        
-        
-        
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         if (!Auth::user()->isActive()) return redirect()->action('AccountController@edit', Auth::id())->with('message', 'Kindly Complete your profile to have full access');
@@ -80,8 +84,8 @@ class ProjectController extends Controller
         );
         $validatedData['user_id'] = Auth::id();
         $project = Project::create($validatedData);
-        $project->updateStatus('created');
-        $project->notifyOwner('created');
+        $project->markCreate();
+        $project->owner->notify(new projectCreated);
         return redirect()->action('ProjectController@edit', ['id' => $project->id]);
     }
 
@@ -122,13 +126,14 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(Project $project)
     {
         $this->authorize('edit', $project);
-        $project->updateStatus($request->status);
-        $project->notifyOwner($request->status);
+        $project->posted();
+        $project->owner->notify(new ProjectPosted);
         return redirect()->action('ProjectController@create');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -139,8 +144,8 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $this->authorize('edit', $project);
-        $project->updateStatus('deleted');
-        $project->notifyOwner('deleted');
+        $project->cancelled();
+        $project->owner->notify(new ProjectCancelled);
         return redirect()->action('ProjectController@create');
     }
 
@@ -153,10 +158,7 @@ class ProjectController extends Controller
         if ($request->field == 'task_id') return SubTask::where(['task_id' => $request->value])->get(['id', 'name']);
         if ($request->field == 'country_id') return Region::where(['country_id' => $request->value])->get(['id', 'name']);
         if ($request->field == 'region_id') return City::where(['region_id' => $request->value])->get(['id', 'name']);
-
-
     }
-
 
 
 }

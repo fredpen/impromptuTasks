@@ -3,20 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Notifications\projectCreated;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\projectCompleted;
-use App\Notifications\ProjectCancelled;
-use App\Notifications\ProjectPosted;
-use App\Notifications\ProjectAppllication;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class Project extends Model
 {
     protected $guarded = [];
+    protected $timeNow;
     protected $with = ['task:id,name', 'subtask:id,name', 'owner:id,name', 'country:id,name', 'region:id,name', 'city:id,name', 'photos:url,project_id'];
 
+    public function __construct()
+    {
+        $this->timeNow = Carbon::now();
+    }
 
     public function task()
     {
@@ -61,26 +61,6 @@ class Project extends Model
     }
 
 
-    public function notifyOwner($action)
-    {
-        if ($action == 'created') return Auth::user()->notify(new projectCreated);
-        if ($action == 'posted') return $this->owner->notify(new projectPosted);
-        if ($action == 'deleted') return $this->owner->notify(new ProjectCancelled);
-        if ($action == 'completed') return $this->owner->notify(new projectCompleted);
-        if ($action == 'applied') {
-            return Auth::user()->notify(new ProjectAppllication);
-        }
-    }
-
-    public function updateStatus($action)
-    {
-        $dateTime = Carbon::now();
-        if ($action == 'created') return $this->update(['status' => $action]);
-        if ($action == 'posted') return $this->update(['status' => $action, 'posted_on' => $dateTime]);
-        if ($action == 'deleted') return $this->update(['status' => $action]);
-        if ($action == 'completed') return $this->update(['status' => $action, 'completed_on' => $dateTime]);
-    }
-
     public function hasApplied()
     {
         if (ProjectUser::where(['project_id' => $this->id, 'user_id' => Auth::id()])->first()) return "1";
@@ -95,6 +75,32 @@ class Project extends Model
         ])->get();
         return count($project) ? 1 : 0;
     }
+
+    public function completed()
+    {
+        return $this->update(['status' => 'completed']);
+    }
+
+    public function cancelled()
+    {
+        return $this->update(['status' => 'deleted', 'cancelled_on' => $this->timeNow]);
+    }
+
+    public function live()
+    {
+        return $this->update(['status' => 'live']);
+    }
+
+    public function markCreate()
+    {
+        return $this->update(['status' => 'created']);
+    }
+
+    public function posted()
+    {
+        return $this->update(['status' => 'posted', 'posted_on' => $this->timeNow]);
+    }
+
 }
 
 

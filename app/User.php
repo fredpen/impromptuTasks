@@ -114,4 +114,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->isActive;
     }
 
+    public function hasApplied()
+    {
+        if (ProjectUser::where(['project_id' => $this->id, 'user_id' => $this->id])->first()) return "1";
+        return "0";
+    }
 }

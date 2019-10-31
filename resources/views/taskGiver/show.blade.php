@@ -24,7 +24,7 @@
                                             </li> --}}
                                             <li class="list-inline-item">
                                                 <h5 class="mb-1"> {{ $user->orders_out ? $user->orders_out : 0 }} </h5>
-                                                <p class="mb-0 font-13 text-white-50">Number of Tasks Completed</p>
+                                                <p class="mb-0 font-13 text-white-50">Number of Projects</p>
                                             </li>
                                         </ul>
                                     </div> <!-- end media-body-->

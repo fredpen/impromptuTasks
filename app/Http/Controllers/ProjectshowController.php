@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\ProjectAppllication;
 use Illuminate\Support\Facades\Auth;
 use App\Project;
+use App\ProjectAssignedUser;
 use App\Tasks;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,19 +15,17 @@ class ProjectshowController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('apply');
+        $this->middleware('auth')->only(['apply', 'accept']);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+   
 
-    private $message = 'Your application has been sent, we will contact you through your mail and message box when the task owner maskes a decison.';
+    private $applyMessage = 'Your application has been sent, we will contact you through your mail and message box when the task owner maskes a decison.';
+    private $acceptMessage = "Thanks for accepting the Task, one of our agents will contact you shortly, You can track the progress of all your Task in your here";
 
     public function apply(Project $project, Request $request)
     {
@@ -35,11 +35,16 @@ class ProjectshowController extends Controller
             'resume' => $request->resume,
             'updated_at' => Carbon::now()
         ]);
-        $project->notifyOwner('applied');
-        return back()->with("message", $this->message);
+        $project->owner->notify(new ProjectAppllication);
+        return back()->with("message", $this->applyMessage);
     }
 
 
+    public function accept(ProjectAssignedUser $projectAssignedUser) 
+    {
+        $projectAssignedUser->update(['status' => 'accepted']);
+        return redirect()->action('AccountController@show', $projectAssignedUser->user_id)->with("message", $this->acceptMessage);
+    }
 
     public function show(Tasks $task)
     {

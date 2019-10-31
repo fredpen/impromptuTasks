@@ -156,7 +156,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center mt-2 mb-1">
-                        @if ($project->hasApplied())
+                        @if (Auth::check() && Auth::user()->hasApplied())
                             <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
                         @else
                             <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>

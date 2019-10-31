@@ -1,6 +1,16 @@
 @extends('layouts.base')
 
 @section('content')
+
+    @if (session('message'))
+        <div class="container">
+            <div class="alert alert-success text-secondary h5 w-100 m-0">
+                <strong><i class="mr-2 mdi mdi-heart-outline"></i> </strong>   {{ session('message') }}
+            </div>
+        </div>
+    @endif
+
+
     <div class="container">
         <div class="row mt-3">
             <div class="col-sm-12">

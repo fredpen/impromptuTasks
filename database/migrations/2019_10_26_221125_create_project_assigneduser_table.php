@@ -17,6 +17,7 @@ class CreateProjectAssigneduserTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('project_id')->index();
             $table->unsignedBigInteger('user_id')->index();
+            $table->string('status')->index()->default('assigned');
             $table->timestamps();
         });
     }
