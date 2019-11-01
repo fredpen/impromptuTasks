@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// use App\Notifications\ProjectAssignment;
-
 use App\Notifications\ProjectAssignment;
 use App\Project;
 use App\ProjectAssignedUser;
@@ -73,8 +71,7 @@ class AdminProjectController extends Controller
 
     public function assign(Request $request)
     {
-        $validatedData = $this->validator($request);
-        $projectassignedUser = ProjectAssignedUser::firstOrCreate($validatedData);
+        $projectassignedUser = ProjectAssignedUser::firstOrCreate($this->validator($request));
         $user = User::findOrFail($request->user_id);
         $user->notify(new ProjectAssignment($projectassignedUser->id));
         return back();

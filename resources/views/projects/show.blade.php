@@ -1,19 +1,14 @@
 @extends('layouts.base')
-@section('scripts')
-    <script src="{{ asset('js/form.js') }}"></script>
-    <script>
-        var project_id = {{ $project-> id}};
-        function submitResume() 
-        {
-            $('#resume').submit();
-        }
-    </script>
-@endsection
 
 @section('content')
     @if (session('message'))
         @include('partials.notifs')
     @endif
+
+    @if ($errors->any())
+        @include('partials.errorBag')
+    @endif
+
 
 
     <div class="container">
@@ -148,6 +143,7 @@
                                         {!! Form::open(['action' => ['ProjectshowController@apply', $project->id ], 'method' => 'POST', 'id' => 'resume']) !!}
                                             <textarea name="resume" data-toggle="maxlength" class="mb-3 form-control" data-threshold="1000" maxlength="1000" rows="10" placeholder="Say why this task should be assigned to you in few words as possible"></textarea>
                                             {!! Form::hidden('project_id', $project->id) !!}
+                                            {!! Form::hidden('user_id', Auth::id()) !!}
                                         {!! Form::close() !!}
                                     </div>
                                 </div>
@@ -156,10 +152,19 @@
                     </div>
 
                     <div class="d-flex justify-content-center mt-2 mb-1">
-                        @if (Auth::check() && Auth::user()->hasApplied())
-                            <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
-                        @else
+                        @auth
+                            @if (Auth::user()->hasApplied($project->id))
+                                <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
+                            @elseif($project->hasBeenAssigned)
+                                <button type="button" class="btn btn-lg btn-secondary">You have been assigned to this task</button>
+                            @else
+                                <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
+                            @endif
+                        @else 
                             <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
+                        @endauth
+                        @if ($project->hasBeenAssigned(Auth::id()))
+                            <button type="button" class="btn btn-lg btn-secondary">You have been assigned to this task</button>
                         @endif
                     </div>
                 </div>
@@ -169,3 +174,13 @@
 @endsection
 
 
+@section('scripts')
+    <script src="{{ asset('js/form.js') }}"></script>
+    <script>
+        var project_id = {{ $project-> id}};
+        function submitResume() 
+        {
+            $('#resume').submit();
+        }
+    </script>
+@endsection

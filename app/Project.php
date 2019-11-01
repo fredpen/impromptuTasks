@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -61,19 +60,13 @@ class Project extends Model
     }
 
 
-    public function hasApplied()
-    {
-        if (ProjectUser::where(['project_id' => $this->id, 'user_id' => Auth::id()])->first()) return "1";
-        return "0";
-    }
-
     public function hasBeenAssigned($user_id)
     {
         $project = DB::table('project_assigneduser')->where([
             'project_id' => $this->id,
             'user_id' => $user_id
         ])->get();
-        return count($project) ? 1 : 0;
+        return count($project) > 0;
     }
 
     public function completed()

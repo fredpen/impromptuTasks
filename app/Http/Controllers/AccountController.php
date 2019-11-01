@@ -136,4 +136,10 @@ class AccountController extends Controller
         $user->unreadNotifications->markAsRead();
         return view('notifications', compact('unreadNotifications', 'allNotifications'));
     }
+
+    public function myTasks()
+    {
+        $projects = [];
+        return view('taskMaster.myTask', compact('projects'));
+    }
 }

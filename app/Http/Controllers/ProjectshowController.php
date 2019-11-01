@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Notifications\ProjectAppllication;
 use Illuminate\Support\Facades\Auth;
 use App\Project;
+use App\ProjectAppliedUser;
 use App\ProjectAssignedUser;
 use App\Tasks;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProjectshowController extends Controller
 {
@@ -24,18 +23,25 @@ class ProjectshowController extends Controller
      */
    
 
-    private $applyMessage = 'Your application has been sent, we will contact you through your mail and message box when the task owner maskes a decison.';
-    private $acceptMessage = "Thanks for accepting the Task, one of our agents will contact you shortly, You can track the progress of all your Task in your here";
+    private $applyMessage = 'Your application has been sent, we will contact you through your 
+                            mail and message box when the task owner maskes a decison.';
+    private $acceptMessage = "Thanks for accepting the Task, one of our agents will contact you shortly, 
+                            You can track the progress of all your Task in your here";
 
-    public function apply(Project $project, Request $request)
+    private function _validate($request)
     {
-        DB::table('project_apllieduser')->insert([
-            'user_id' => Auth::id(), 
-            'project_id' => $request->project_id, 
-            'resume' => $request->resume,
-            'updated_at' => Carbon::now()
+        return $request->validate([
+            'user_id' => 'required|numeric',
+            'project_id' => 'required|numeric',
+            'resume' => 'required'
         ]);
-        $project->owner->notify(new ProjectAppllication);
+    }
+
+
+    public function apply(Request $request)
+    {
+        ProjectAppliedUser::firstOrCreate($this->_validate($request));
+        Auth::user()->notify(new ProjectAppllication);
         return back()->with("message", $this->applyMessage);
     }
 

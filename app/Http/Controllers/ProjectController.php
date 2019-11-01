@@ -27,14 +27,6 @@ class ProjectController extends Controller
         'not sure' => 'not sure'
     ];
 
-    public function hasBeenAssigned($user_id)
-    {
-        $project = DB::table('project_assigneduser')->where([
-            'project_id' => $this->id,
-            'user_id' => $user_id
-        ])->get();
-        return count($project) ? 1 : 0;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -52,8 +44,6 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-        // return $project;
-        // return $project;
     {
         $projects = Project::where(['status' => 'posted'])->get();
         return view('projects.index', compact('projects'));

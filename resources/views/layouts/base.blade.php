@@ -41,11 +41,9 @@
                                     <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" id="topbar-notifydrop" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="dripicons-bell noti-icon"></i>
                                         <span class="noti-icon-badge"></span>
-                                        @auth
-                                            @if (Auth::user()->unreadNotifications)
-                                                {{count(Auth::user()->unreadNotifications)}}
-                                            @endif
-                                        @endauth
+                                        @if (Auth::check() && Auth::user()->unreadNotifications)
+                                            {{count(Auth::user()->unreadNotifications)}}
+                                        @endif
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg" aria-labelledby="topbar-notifydrop">
 
@@ -325,12 +323,18 @@
                                             </div>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('projects.create') }}" id="topnav-layouts" role="button">
-                                                <span class="text-nowrap text-white bg-danger px-2 py-1">Post Task</span>
-                                            </a>
+                                            @if (Auth::check() && Auth::user()->isTaskMaster())
+                                                <a class="nav-link" href="{{ route('myTasks') }}" id="topnav-layouts" role="button">
+                                                    <span class="text-nowrap text-white bg-danger px-2 py-1">My Tasks</span>
+                                                </a>
+                                            @else
+                                                <a class="nav-link" href="{{ route('projects.create') }}" id="topnav-layouts" role="button">
+                                                    <span class="text-nowrap text-white bg-danger px-2 py-1">Post Task</span>
+                                                </a>
+                                            @endif
                                         </li>
 
-                                        @if (Auth::id() && Auth::user()->role_id === 0)
+                                        @if (Auth::check() && Auth::user()->role_id === 0)
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{{ route('admin.home') }}" id="topnav-layouts" role="button">
                                                     <span class="text-white bg-danger px-2 py-1">Admin</span>
