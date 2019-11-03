@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="text-center">
                         <h6 class="m-0 font-weight-light cta-box-title">Ready to earn? </h6>
-                        <button type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#fredTaskMode">Get started</button>
+                        <button type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#fredTaskMode">Start Applying</button>
                     </div>
                 </div>
             </div>

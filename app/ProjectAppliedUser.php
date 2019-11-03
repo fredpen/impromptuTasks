@@ -8,5 +8,5 @@ class ProjectAppliedUser extends Model
 {
     protected $guarded = [];
     protected $table = 'project_apllieduser';
-    
+
 }

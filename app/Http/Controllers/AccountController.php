@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\ProjectAppliedUser;
 use App\Tasks;
 use App\User;
 use Illuminate\Http\Request;
@@ -139,6 +140,11 @@ class AccountController extends Controller
 
     public function myTasks()
     {
+
+        // $ProjectAppliedUser = ProjectAppliedUser::where('user_id', Auth::id())->get();
+        // return Auth::user();
+        $ProjectAppliedUser = Auth::user()->appliedProjects;
+        return $ProjectAppliedUser;
         $projects = [];
         return view('taskMaster.myTask', compact('projects'));
     }

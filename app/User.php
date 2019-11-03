@@ -63,10 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(City::class);
     }
 
-    public function appliedProjects()
-    {
-        return $this->belongsToMany(ProjectUser::class, 'project_apllieduser', 'user_id', 'project_id');
-    }
+   
 
     public function skills()
     {
@@ -119,4 +116,15 @@ class User extends Authenticatable implements MustVerifyEmail
         $hasApplied = ProjectUser::where(['project_id' => $project_id, 'user_id' => $this->id])->first();
         return $hasApplied ? 1 : 0;
     }
+
+    public function appliedProjects()
+    {
+        return $this->belongsToMany(Project::class, 'project_assigneduser');
+    }
+
+    public function assignedProjects()
+    {
+        return $this->belongsToMany(ProjectAssignedUser::class, 'project_assigneduser');
+    }
+
 }

@@ -106,7 +106,6 @@ class ProjectController extends Controller
         if ($project->country) $regions = Region::where('country_id', $project->country_id)->get(['id', 'name']);
         if ($project->region) $cities = City::where('region_id', $project->region_id)->get(['id', 'name']);
         return view('projects.edit', compact('regions', 'cities', 'project', 'tasks', 'countries', 'duration'));
-
     }
 
     /**
