@@ -16,9 +16,11 @@ class CreateSubTasksTable extends Migration
         Schema::create(
             'sub_tasks', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->integer('task_id');
+                $table->unsignedBigInteger('task_id');
                 $table->text('name');
                 $table->timestamps();
+
+                // $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
             }
         );
     }

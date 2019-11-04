@@ -24,15 +24,15 @@
 
     <div class="row">
         <div class="col-sm-12 mb-3">
-            @if (count($projects))
-                <h5 class="card-header">{{count($projects)}} Task{{count($projects) > 1 ? "s" : ""}} found</h5>
+            @if (count($appliedProjects))
+                <h5 class="card-header">{{count($appliedProjects)}} Task{{count($appliedProjects) > 1 ? "s" : ""}} found</h5>
             @else
                 <h5 class="card-header">You do not have any task at the moment, Start applying</h5>
             @endif
         </div>
 
-        @if (count($projects))
-            @foreach ($projects as $project)
+        @if (count($appliedProjects))
+            @foreach ($appliedProjects as $project)
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title mb-3">task history</h4>

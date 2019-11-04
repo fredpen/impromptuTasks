@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
         Schema::create(
             'projects', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->integer('user_id')->index();
+                $table->unsignedBigInteger('user_id')->index();
                 $table->string('model')->index();
                 $table->integer('num_of_taskMaster')->index()->nullable()->default(1);
                 $table->float('budget')->nullable();
@@ -31,14 +31,16 @@ class CreateProjectsTable extends Migration
 
                 $table->longText('description')->nullable();
                 $table->longText('title')->nullable();
-                $table->integer('task_id')->nullable();
-                $table->integer('sub_task_id')->nullable();
-                $table->integer('country_id')->nullable();
-                $table->integer('region_id')->nullable();
-                $table->integer('city_id')->nullable();
+                $table->unsignedBigInteger('task_id')->nullable();
+                $table->unsignedBigInteger('sub_task_id')->nullable();
+                $table->unsignedBigInteger('country_id')->nullable();
+                $table->unsignedBigInteger('region_id')->nullable();
+                $table->unsignedBigInteger('city_id')->nullable();
                 $table->longText('location')->nullable();
                 $table->string('duration')->nullable();
                 $table->timestamps();
+
+                // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             }
         );
     }

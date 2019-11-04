@@ -155,7 +155,7 @@
                         @auth
                             @if (Auth::user()->hasApplied($project->id))
                                 <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
-                            @elseif($project->hasBeenAssigned)
+                            @elseif($project->hasBeenAssigned(Auth::id()))
                                 <button type="button" class="btn btn-lg btn-secondary">You have been assigned to this task</button>
                             @else
                                 <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>

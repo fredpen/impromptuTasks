@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\DB;
 class Project extends Model
 {
     protected $guarded = [];
-    protected $timeNow;
     protected $with = ['task:id,name', 'subtask:id,name', 'owner:id,name', 'country:id,name', 'region:id,name', 'city:id,name', 'photos:url,project_id'];
 
-    public function __construct()
+    public function timeNow()
     {
-        $this->timeNow = Carbon::now();
+        return Carbon::now();
     }
 
     public function task()
@@ -76,7 +75,7 @@ class Project extends Model
 
     public function cancelled()
     {
-        return $this->update(['status' => 'deleted', 'cancelled_on' => $this->timeNow]);
+        return $this->update(['status' => 'deleted', 'cancelled_on' => $this->timeNow()]);
     }
 
     public function live()
@@ -91,7 +90,7 @@ class Project extends Model
 
     public function posted()
     {
-        return $this->update(['status' => 'posted', 'posted_on' => $this->timeNow]);
+        return $this->update(['status' => 'posted', 'posted_on' => $this->timeNow()]);
     }
 
 }

@@ -70,11 +70,9 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate(
-            ['model' => 'required', 'task_id' => 'required']
+            ['model' => 'required', 'task_id' => 'required', 'user_id' => 'required']
         );
-        $validatedData['user_id'] = Auth::id();
         $project = Project::create($validatedData);
-        $project->markCreate();
         $project->owner->notify(new projectCreated);
         return redirect()->action('ProjectController@edit', ['id' => $project->id]);
     }

@@ -16,14 +16,14 @@ class CreateUsersTable extends Migration
         Schema::create(
             'users', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->integer('role_id')->nullable()->index();
+                $table->unsignedBigInteger('role_id')->nullable()->index();
                 $table->integer('isActive')->index()->default(0); // 0 = incomreg 1 = accountactive 2 = accountdeactivate
                 $table->string('name');
                 $table->string('title')->nullable();
                 $table->string('phone_number')->unique();
-                $table->integer('country_id')->nullable();
-                $table->integer('region_id')->nullable();
-                $table->integer('city_id')->nullable();
+                $table->unsignedBigInteger('country_id')->nullable();
+                $table->unsignedBigInteger('region_id')->nullable();
+                $table->unsignedBigInteger('city_id')->nullable();
                 $table->longText('address')->nullable();
                 $table->string('revenue')->nullable();
                 $table->integer('orders_out')->nullable();

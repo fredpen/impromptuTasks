@@ -70,10 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(SubTask::class, 'user_sub_task');
     }
 
-    public function projects()
-    {
-        return $this->hasMany(Project::class);
-    }
+   
 
     public function fetchskillsId()
     {
@@ -117,14 +114,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $hasApplied ? 1 : 0;
     }
 
-    public function appliedProjects()
+    public function appliedProjects() //applied projects
     {
-        return $this->belongsToMany(Project::class, 'project_assigneduser');
+        return $this->belongsToMany(Project::class, 'project_apllieduser');
     }
 
-    public function assignedProjects()
+    public function assignedProjects() //assigned projects
     {
-        return $this->belongsToMany(ProjectAssignedUser::class, 'project_assigneduser');
+        return $this->belongsToMany(Project::class, 'project_assigneduser')->withPivot('status');
     }
 
+    public function projects() //created projects
+    {
+        return $this->hasMany(Project::class);
+    }
 }

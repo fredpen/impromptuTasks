@@ -14,7 +14,7 @@ class ProjectshowController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only(['apply', 'accept']);
+        $this->middleware(['auth', 'verified', 'isActive'])->only(['apply', 'accept']);
     }
     /**
      * Display a listing of the resource.
@@ -56,8 +56,7 @@ class ProjectshowController extends Controller
     {
         $taskName = $task->name;
         if (Auth::user() && Auth::user()->isTaskGiver()) { //show task masters if its a task giver
-                // $taskMaster = User::where()->get();
-                // return "list if freelancers";
+                return "list if freelancers";
         }
 
         $projects = Project::where([ //show task that are posted

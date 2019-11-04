@@ -30,6 +30,8 @@
                                 <input type="radio" id="onsite" name="model" class="custom-control-input" value="onsite">
                                 <label class="custom-control-label" for="onsite">OnSite</label>
                             </div>
+
+                            {!! Form::hidden('user_id', Auth::id()) !!}
                         </div>
 
                         <div class="col-12 mb-3">

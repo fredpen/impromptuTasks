@@ -140,12 +140,8 @@ class AccountController extends Controller
 
     public function myTasks()
     {
-
-        // $ProjectAppliedUser = ProjectAppliedUser::where('user_id', Auth::id())->get();
-        // return Auth::user();
-        $ProjectAppliedUser = Auth::user()->appliedProjects;
-        return $ProjectAppliedUser;
-        $projects = [];
-        return view('taskMaster.myTask', compact('projects'));
+        $assignedProjects = Auth::user()->assignedProjects;
+        $appliedProjects = Auth::user()->appliedProjects;
+        return view('taskMaster.myTask', compact('assignedProjects', 'appliedProjects'));
     }
 }

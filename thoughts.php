@@ -32,3 +32,5 @@ I have successfully create a task< There are two things to move on too first wou
 
 
     php artisan migrate:refresh --path=/database/migrations/2019_07_21_191541_create_projects_table.php
+
+    develop the list of freelancer based on the task id that a task giver click on 
