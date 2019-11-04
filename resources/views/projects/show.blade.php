@@ -136,7 +136,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title mb-3">Cover letter</h5>
+                        <h5 class="card-title mb-3">Resume</h5>
                             <div class="p-0">
                                 <div class="row align-items-center">
                                     <div class="col-sm-12">

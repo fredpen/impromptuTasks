@@ -56,7 +56,7 @@ Route::group(
         Route::get('/admin/projects/posted', 'AdminProjectController@showpostedProjects')->name('project.posted');
         Route::get('/admin/projects/created', 'AdminProjectController@showcreatedProjects')->name('project.created');
         Route::get('/admin/projects/cancelled', 'AdminProjectController@showcancelledProjects')->name('project.cancelled');
-        Route::get('/admin/projects/{project_id}/adminShow', 'AdminProjectController@adminShow')->name('project.adminShow');
+        Route::get('/admin/projects/{project}/adminShow', 'AdminProjectController@adminShow')->name('project.adminShow');
         Route::post('/admin/project/assign', 'AdminProjectController@assign')->name('project.assign');
         Route::post('/admin/project/reassign', 'AdminProjectController@reassign')->name('project.reassign');
         
@@ -74,4 +74,5 @@ Route::name('project.')->group(function () {
     Route::get('projectstatus/{project}/completed', 'ProjectStatusController@completed')->name('complete');
     Route::get('projectstatus/{project}/live', 'ProjectStatusController@live')->name('live');
     Route::get('projectstatus/{project}/cancelled', 'ProjectStatusController@cancelled')->name('cancel');
+    // Route::get('projectstatus/{project}/posted', 'ProjectStatusController@posted')->name('posted');
 });

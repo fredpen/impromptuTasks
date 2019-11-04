@@ -29,4 +29,10 @@ class ProjectStatusController extends Controller
         $project->live(['status' => 'live']);
         return back()->with('message', 'Project status has been updated');
     }
+
+    public function posted(Project $project)
+    {
+        $project->posted(['status' => 'posted']);
+        return back()->with('message', 'Project status has been updated');
+    }
 }

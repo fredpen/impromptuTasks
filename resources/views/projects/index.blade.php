@@ -45,7 +45,7 @@
                                         <div class="col-12">
                                             <div class="form-group row mt-2 mb-0">
                                                 <div class="col-md-6">
-                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                    <button type="submit" class="btn btn-primary">
                                                         <a class="text-white" href="{{ route('projects.show', $project->id) }} ">Apply to Task</a>
                                                     </button>
                                                 </div>

@@ -189,6 +189,7 @@
                     <a href="{{ route('project.cancelled', $project->id) }}" class="text-white mb-2 btn btn-danger">Cancel Task</a><br>
                     <a href="{{ route('project.live', $project->id) }}" class="text-white mb-2 btn btn-success">Mark Task started</a><br>
                     <a href="{{ route('project.complete', $project->id) }}" class="text-white mb-2 btn btn-primary">Mark Task completed</a><br>
+                    <a href="{{ route('project.posted', $project->id) }}" class="text-white mb-2 btn btn-primary">Re-post Task</a><br>
                 </div>
             </div>
         </div>

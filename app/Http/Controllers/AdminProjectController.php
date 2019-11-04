@@ -28,7 +28,7 @@ class AdminProjectController extends Controller
     
     public function showallProjects()
     {
-        $projects = Project::latest()->paginate(10);
+        $projects = Project::latest()->paginate(20);
         return view('admin.projects.all', compact('projects'));
     }
 
@@ -62,9 +62,8 @@ class AdminProjectController extends Controller
         return view('admin.projects.ongoing', compact('projects'));
     }
 
-    public function adminShow($id)
+    public function adminShow(Project $project)
     {
-        $project = Project::where('id', $id)->with('taskMasters')->first();
         return view('admin.projects.show', compact('project'));
     }
 
