@@ -32,7 +32,7 @@
                                         </div>
 
                                         <a class="h5 d-block mb-1 mt-0" href="{{ route('projects.show', $project->id) }} ">{{ucfirst($project->title)}}</a>
-                                        <p  class="mb-0">{{str_limit($project->description, 100) }} <a href="{{ route('projects.show', $project->id) }} ">more</a></p>
+                                        <p  class="mb-0">{{str_limit($project->description, 90) }} <a href="{{ route('projects.show', $project->id) }} ">more</a></p>
 
                                         <div class="row">
                                             <div class="col-sm-4 col-md-4 col-lg-12">

@@ -22,6 +22,8 @@ class AccountController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+        $this->middleware(['isActive'])->only('show');
+
     }
 
     private function validateTaskMaster($request)
@@ -73,7 +75,6 @@ class AccountController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        if (!$user->isActive()) return redirect()->action('AccountController@edit', $id)->with('message', 'Kindly Complete your profile to have full access');
 
         if ($user->isTaskGiver()) return view('taskGiver.show', compact('user'));
 

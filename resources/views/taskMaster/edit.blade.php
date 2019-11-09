@@ -5,7 +5,7 @@
         @include('partials.errorBag')
     @endif
 
-     @if (session('message'))
+    @if (session('message'))
         @include('partials.notifs')
     @endif
 
@@ -22,7 +22,7 @@
 
    <div class="container">
         <div class="row mt-3">
-
+            
             <div class="col-sm-12">
                 <!-- Profile -->
                 <div class="card bg-primary">

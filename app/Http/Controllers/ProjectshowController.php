@@ -61,7 +61,7 @@ class ProjectshowController extends Controller
 
         $projects = Project::where([ //show task that are posted
             ['task_id', '=', $task->id],
-            ['status', '=', 'posted']
+            ['status', '=', 'Draft']
         ])->get();
         return view('projects.index', compact('projects', 'taskName'));
     }

@@ -1,8 +1,7 @@
 {
-    "workbench.colorTheme": "Quiet Light",
+    "workbench.colorTheme": "Atom One Dark",
     "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
-    "editor.lineHeight": 27,
-    "editor.suggestFontSize": 10,
-    "editor.fontSize": 13
+    "editor.lineHeight": 35,
+    "editor.suggestFontSize": 10
 }

@@ -18,7 +18,7 @@ class Active
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        if (!$user->isActive())  return redirect()->action('AccountController@edit', $request->user_id)->with("message", $this->message);
+        if (!$user->isActive())  return redirect()->action('AccountController@edit', $user->id)->with("message", $this->message);
         if ($user->status() === 2)  abort('402'); //incomplete reg
         if ($user->status() === 4)  abort('401'); //your account has been deactivated
         return $next($request);    }

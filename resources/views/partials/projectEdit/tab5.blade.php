@@ -79,50 +79,67 @@
     </div>
 </div>
 
-<div class="tab-pane" id="basictab5">
+<div class="tab-pane mb-3" id="basictab5">
     <div class="row d-flex flex-wrap justify-content-between">
 
-        <div class="card widget-flat col-md-5">
+        <div class="card widget-flat col-md-4">
             <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                 <div class="col-sm-12 mb-3">
                     {!! Form::label('country_id', ' Country', ['class' => 'd-block mt-0 h4']) !!}
-                    <span class="d-block h6 text-muted">Select country</span>
-                        <div class="d-block">
+                    <div class="d-block">
                         <button id="countryModalButton" type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#countryModal">{{$project->country ? $project->country->name : "Select Country"}}</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card widget-flat col-md-6">
+        <div class="card widget-flat col-md-4">
             <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                 <div class="col-sm-12 mb-3">
                     {!! Form::label('region_id', ' Region/State', ['class' => 'd-block mt-0 h4']) !!}
-                    <span class="d-block h6 text-muted">Select region</span>
-                        <div class="d-block">
+                    <div class="d-block">
                         <button id="regionModalButton" type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#regionModal">{{$project->region ? $project->region->name : "Select Region"}}</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card widget-flat col-md-5">
+        <div class="card widget-flat col-md-3">
             <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                 <div class="col-sm-12 mb-3">
                     {!! Form::label('city_id', 'City', ['class' => 'd-block mt-0 h4']) !!}
-                    <span class="d-block h6 text-muted">I want my task done </span>
-                        <div class="d-block">
-                        <button id="cityModalButton" type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#cityModal">{{$project->city ? $project->city->name : "Select City"}}</button>
+                    <div class="d-block">
+                        <button 
+                            id="cityModalButton" 
+                            type="button" class="mt-2 btn btn-sm btn-light btn-rounded" 
+                            data-toggle="modal" 
+                            data-target="#cityModal">{{$project->city ? $project->city->name : "Select City"}}
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-         <div class="card widget-flat col-md-6">
+         <div class="card widget-flat col-md-12">
             <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                 <div class="col-sm-12 mb-3">
                     {!! Form::label('location', 'Street Level Address', ['class' => 'd-block mt-0 h4']) !!}
-                    <textarea onfocusout="updateProject(this, 'location')" id="location" data-toggle="maxlength" class="mb-3 form-control" data-threshold="400" maxlength="400" rows="2" placeholder="No 10, Kano Steet, Waec">{{$project->location}}</textarea>
+                    <input 
+                        onfocusout="updateProject(this, 'location')"
+                        id="location"
+                        data-toggle="maxlength"
+                        class="mb-3 form-control"
+                        data-threshold="400"
+                        maxlength="400"
+                        rows="2"
+                        value="{{$project->location}}"
+                        placeholder="No 10, Kano Steet, Waec"
+                    >
+                    <h6 class="text d-block mt-2">Sample: </h6>
+                    <ul class="text-muted h6 mb-3">
+                        <li>Do not put city, state and country in the street level address box</li>
+                        <li>No 10, Kano Steet, Waec, Yaba</li>
+                    </ul>
                 </div>
             </div>
         </div>

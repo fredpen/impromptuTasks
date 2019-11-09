@@ -18,6 +18,13 @@
         </div>
     </div>
 
+    <div class="page-title-right">
+        <ol class="breadcrumb my-1 p-0">
+            <li class="breadcrumb-item h5"><a href="{{ route('projects.create') }}">My Projects</a></li>
+            <li class="text-capitalize breadcrumb-item active h5"> {{$project->title }} </li>
+        </ol>
+    </div>
+
     <div class="row justify-content-center align-items-center mx-0">
         <div class="col-md-12 mt-2">
             <div id="basicwizard">
@@ -34,7 +41,7 @@
                     @if ($project->model == "onsite")
                     <li class="nav-item">
                         <a href="#basictab5" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                            <i class="mdi mdi-account-circle mr-1"></i>
+                            <i class="mdi mdi-home-city mr-1"></i>
                             <span class="d-none d-sm-inline">Location</span>
                         </a>
                     </li>
@@ -42,20 +49,20 @@
 
                     <li class="nav-item">
                         <a href="#basictab2" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                            <i class="mdi mdi-account-star-outline"></i>
+                            <i class=" mdi mdi-square-edit-outline mr-1"></i>
                             <span class="d-none d-sm-inline">Description</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#basictab3" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                            <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>
-                            <span class="d-none d-sm-inline">Timeline </span>
+                            <i class="mdi mdi-credit-card mr-1"></i>
+                            <span class="d-none d-sm-inline">Payment </span>
 
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#basictab4" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                            <i class="mdi mdi-account-circle mr-1"></i>
+                            <i class=" mdi mdi-cloud-upload mr-1"></i>
                             <span class="d-none d-sm-inline">Files</span>
                         </a>
                     </li>
@@ -66,7 +73,7 @@
                     @include('partials.projectEdit.tab1')
 
                     @if ($project->model == "onsite")
-                        @include('partials.projectEdit.tab5')
+                        @include('partials.projectEdit.tab5') 
                     @endif
 
                     @include('partials.projectEdit.tab2')
@@ -82,7 +89,12 @@
                                 {!! Form::open(['method' => 'PUT', 'action' => ['ProjectController@update', $project->id], 'id' => 'postForm']) !!}
                                     {!! Form::hidden('status', 'posted') !!}
                                 {!! Form::close() !!}
-                                <button onclick="postProject(this, '{{$project->model}}')" type="submit" class="d-block mx-auto btn btn-primary">  {{ __('Post Task') }} </button>
+                                <button 
+                                    type="submit" 
+                                    onclick="postProject(this, '{{$project->model}}')" 
+                                    class="d-block mx-auto btn btn-primary">
+                                    {{ ($project->status == 'Draft') ? 'Post Task' : 'Update Task'}} 
+                                </button>
                             </div>
 
                             <div class="col-sm-6">

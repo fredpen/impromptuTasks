@@ -20,8 +20,8 @@ class CreateProjectAssigneduserTable extends Migration
             $table->string('status')->index()->default('assigned');
             $table->timestamps();
 
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -153,19 +153,17 @@
 
                     <div class="d-flex justify-content-center mt-2 mb-1">
                         @auth
-                            @if (Auth::user()->hasApplied($project->id))
+                            @if ($project->hasBeenAssigned(Auth::id()))
+                                <button title="The task has been assigned to you " type="button" class="btn btn-lg btn-secondary">Task assigned to you</button>
+                            @elseif(Auth::user()->hasApplied($project->id))
                                 <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
-                            @elseif($project->hasBeenAssigned(Auth::id()))
-                                <button type="button" class="btn btn-lg btn-secondary">You have been assigned to this task</button>
                             @else
                                 <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
                             @endif
                         @else 
                             <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
                         @endauth
-                        @if ($project->hasBeenAssigned(Auth::id()))
-                            <button type="button" class="btn btn-lg btn-secondary">You have been assigned to this task</button>
-                        @endif
+                      
                     </div>
                 </div>
             </div>

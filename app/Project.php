@@ -85,7 +85,7 @@ class Project extends Model
 
     public function markCreate()
     {
-        return $this->update(['status' => 'created']);
+        return $this->update(['status' => 'Draft']);
     }
 
     public function posted()

@@ -1,8 +1,5 @@
 @extends('layouts.admin')
 
-
-
-
 @section('content')
     @include('partials.jumbotron', ['pageTitle' => ' project('.$project->id . ')'])
 
@@ -185,11 +182,11 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">Action Corner </h5>
-                    <a href="{{ route('project.cancelled', $project->id) }}" class="text-white mb-2 btn btn-danger">Cancel Task</a><br>
+                    <h5 class="card-title mb-3">Project status : <strong class="h4 text-uppercase text-dark">{{ $project->status }}</strong> </h5>
+                    <a href="{{ route('project.post', $project->id) }}" class="text-white mb-2 btn btn-primary">Re-post Task</a><br>
+                    <a href="{{ route('project.cancel', $project->id) }}" class="text-white mb-2 btn btn-danger">Cancel Task</a><br>
                     <a href="{{ route('project.live', $project->id) }}" class="text-white mb-2 btn btn-success">Mark Task started</a><br>
                     <a href="{{ route('project.complete', $project->id) }}" class="text-white mb-2 btn btn-primary">Mark Task completed</a><br>
-                    <a href="{{ route('project.posted', $project->id) }}" class="text-white mb-2 btn btn-primary">Re-post Task</a><br>
                 </div>
             </div>
         </div>

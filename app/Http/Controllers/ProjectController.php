@@ -118,7 +118,7 @@ class ProjectController extends Controller
         $this->authorize('edit', $project);
         $project->posted();
         $project->owner->notify(new ProjectPosted);
-        return redirect()->action('ProjectController@create');
+        return redirect()->action('ProjectController@create')->with('message', 'Task has been posted successfully. We will contact you shortly');
     }
 
 

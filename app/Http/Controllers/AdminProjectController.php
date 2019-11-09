@@ -40,7 +40,7 @@ class AdminProjectController extends Controller
 
     public function showcancelledProjects()
     {
-        $projects = Project::where('status', 'cancelled')->paginate(20);
+        $projects = Project::where('status', 'deleted')->paginate(20);
         return view('admin.projects.cancelled', compact('projects'));
     }
 

@@ -99,14 +99,21 @@ function updateSubtask(target, field) {
     return $("#fredSubCategoryModal").modal('toggle');
 }
 
+function updateExperience(target, field) {
+    // $('#fredSubTaskSelectionModalButton').text($('#sub_task_id :selected').text());
+    updateProject(target, field);
+    // return $("#fredSubCategoryModal").modal('toggle');
+}
+
 function updateProject(target, field) {
+    
     let value = $(target).val();
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         method: 'PUT',
         url: '/project/ajax/' + project_id,
         data: {value: value, field:field},
-        success: function(response){
+        success: function (response) {
             if (field == "region_id") {
                 $('#city_id').append('<option value="0">Select City</option>')
                 for (var i = response.length - 1; i >= 0; i--) {

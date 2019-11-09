@@ -69,10 +69,10 @@ Route::group(
     }
 );
 
-
+// route group for chnaging status of projects
 Route::name('project.')->group(function () {
     Route::get('projectstatus/{project}/completed', 'ProjectStatusController@completed')->name('complete');
     Route::get('projectstatus/{project}/live', 'ProjectStatusController@live')->name('live');
     Route::get('projectstatus/{project}/cancelled', 'ProjectStatusController@cancelled')->name('cancel');
-    // Route::get('projectstatus/{project}/posted', 'ProjectStatusController@posted')->name('posted');
+    Route::get('projectstatus/{project}/posted', 'ProjectStatusController@posted')->name('post');
 });
