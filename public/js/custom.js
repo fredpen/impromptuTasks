@@ -100,9 +100,13 @@ function updateSubtask(target, field) {
 }
 
 function updateExperience(target, field) {
-    // $('#fredSubTaskSelectionModalButton').text($('#sub_task_id :selected').text());
+    $('#fredExperienceModalButton').text($('#experience :selected').text());
     updateProject(target, field);
-    // return $("#fredSubCategoryModal").modal('toggle');
+    return $("#fredExperienceModal").modal('toggle');
+}
+
+function updateBudget(target, field) {
+    return updateProject(target, field);
 }
 
 function updateProject(target, field) {

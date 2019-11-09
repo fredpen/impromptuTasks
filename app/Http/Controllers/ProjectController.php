@@ -27,6 +27,14 @@ class ProjectController extends Controller
         'not sure' => 'not sure'
     ];
 
+    protected $expertise = [
+        'Beginner' => 'Average',
+        'Experienced' => 'Experienced',
+        'Expert' => 'Expert',
+        'veteran' => 'Veteran'
+    ];
+
+
     /**
      * Display a listing of the resource.
      *
@@ -49,9 +57,11 @@ class ProjectController extends Controller
         return view('projects.index', compact('projects'));
     }
 
-    public function create()
+    public function create() 
     {
-        if (!Auth::user()->isActive()) return redirect()->action('AccountController@edit', Auth::id())->with('message', 'Kindly Complete your profile to have full access');
+        if (!Auth::user()->isActive()) return redirect()->action(
+            'AccountController@edit', Auth::id())->with('message', 'Kindly Complete your profile to have full access'
+        );
         $projects = Project::where([
             ['user_id', '=', Auth::id()],
             ['status', '!=', 'deleted']
@@ -99,11 +109,12 @@ class ProjectController extends Controller
         $this->authorize('edit', $project);
         $regions = $cities = 0;
         $duration = $this->durationArray;
+        $expertise = $this->expertise;
         $countries = Country::all(['name', 'id']);
         $tasks = Tasks::with('subTasks')->get(['id', 'name']);
         if ($project->country) $regions = Region::where('country_id', $project->country_id)->get(['id', 'name']);
         if ($project->region) $cities = City::where('region_id', $project->region_id)->get(['id', 'name']);
-        return view('projects.edit', compact('regions', 'cities', 'project', 'tasks', 'countries', 'duration'));
+        return view('projects.edit', compact('regions', 'cities', 'project', 'tasks', 'countries', 'duration', 'expertise'));
     }
 
     /**

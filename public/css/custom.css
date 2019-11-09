@@ -6,6 +6,10 @@
     font-family: 'Pacifico', cursive;
 }
 
+.h-170 {
+  height: 170px;
+}
+
 #full_width_container {
     max-width: 100%;
     max-width: 100%;

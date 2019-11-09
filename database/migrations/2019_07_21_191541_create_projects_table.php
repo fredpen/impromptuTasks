@@ -20,7 +20,7 @@ class CreateProjectsTable extends Migration
                 $table->unsignedBigInteger('user_id')->index();
                 $table->string('model')->index();
                 $table->integer('num_of_taskMaster')->index()->nullable()->default(1);
-                $table->float('budget')->nullable();
+                $table->string('budget')->nullable();
                 $table->string('status')->default('Draft')->nullable()->index(); //created, posted, ongoing, completed, cancelled
                 $table->float('amount_paid')->default(0)->nullable()->index();
                 $table->string('experience')->nullable()->index();
