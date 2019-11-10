@@ -18,6 +18,7 @@ class CreateUsersSubtasksTable extends Migration
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('sub_task_id');
                 $table->unsignedBigInteger('user_id');
+                $table->unsignedBigInteger('task_id');
                 $table->timestamps();
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                 $table->foreign('sub_task_id')->references('id')->on('sub_tasks') ->onDelete('cascade');

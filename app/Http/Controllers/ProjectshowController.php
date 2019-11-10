@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Project;
 use App\ProjectAppliedUser;
 use App\ProjectAssignedUser;
+use App\SubTask;
 use App\Tasks;
+use App\UserSubtasks;
 use Illuminate\Http\Request;
 
 class ProjectshowController extends Controller
@@ -56,12 +58,16 @@ class ProjectshowController extends Controller
     {
         $taskName = $task->name;
         if (Auth::user() && Auth::user()->isTaskGiver()) { //show task masters if its a task giver
+                $subtask_ids = SubTask::where('task_id', $task->id)->get('id');
+                return $subtask_ids;
+                $users = UserSubtasks::where('sub_task_id', 3)->get();
+                return $users;
                 return "list if freelancers";
         }
 
         $projects = Project::where([ //show task that are posted
             ['task_id', '=', $task->id],
-            ['status', '=', 'Draft']
+            ['status', '=', 'posted']
         ])->get();
         return view('projects.index', compact('projects', 'taskName'));
     }
