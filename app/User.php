@@ -63,14 +63,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(City::class);
     }
 
-   
-
     public function skills()
     {
         return $this->belongsToMany(SubTask::class, 'user_sub_task');
     }
-
-   
 
     public function fetchskillsId()
     {
@@ -128,4 +124,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Project::class);
     }
+
+
 }

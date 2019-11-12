@@ -27,6 +27,11 @@ class Tasks extends Model
         return $this->hasMany(SubTask::class, 'task_id');
     }
 
+    public function masters()
+    {
+        return $this->belongsToMany(User::class, 'user_tasks', 'task_id', 'user_id');
+    }
+
     public function storeTasks($taskString)
     {
         if (strpos($taskString, ",") === false) return $this::create(['name' => $taskString]);

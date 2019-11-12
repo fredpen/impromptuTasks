@@ -18,6 +18,12 @@ class SubTask extends Model
         return $this->belongsToMany(User::class, 'user_subtask');
     }
 
+
+    public function task()
+    {
+        return $this->belongsTo(Tasks::class);
+    }
+
     public function storeSubtasks($subTaskString, $taskId)
     {
         if (strpos($subTaskString, ",") === false) return $this::create(['task_id' => $taskId, 'name' => $subTaskString]);

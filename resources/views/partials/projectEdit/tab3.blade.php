@@ -7,7 +7,11 @@
             </div>
             <div class="modal-body">
                 <div class="col-12 my-3">
-                    <select onchange="updateExperience(this, 'experience')" id="experience" name="experience" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                    <select onchange="updateExperience(this, 'experience')" 
+                        id="experience" 
+                        name="experience" 
+                        class="form-control select2 select2-hidden-accessible form-control" 
+                        data-toggle="select2">
                         <option>Kindly Make a Selection</option>
                         @foreach ($expertise as $expert)
                             <option {{ $project->experience  == $expert ?  "selected" : "" }} value="{{$expert}}">{{$expert}}</option>
@@ -25,8 +29,6 @@
 
 
 <div class="tab-pane" id="basictab3">
-   
-
     <div class="row">
         <div class="d-flex flex-wrap w-100 justify-content-between">
 

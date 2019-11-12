@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Country;
-use App\SubTask;
 use App\Tasks;
 use App\User;
-use App\UserSubtasks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -116,21 +114,7 @@ class AccountController extends Controller
         $validatedData['isActive'] = 1;
         $user->update($validatedData);
 
-        if ($request->skills) {
-            // return $request->skills;
-            $user->skills()->delete();
-            foreach ($request->skills as $skill) {
-                $task = SubTask::findOrFail($skill);
-                $user_sub_task = new UserSubtasks();
-                $user_sub_task->create([
-                    'sub_task_id' => $id,
-                    'user_id' => Auth::id(),
-                    'task_id' => $task->id
-                ]);
-            }
-            // return $request->skills;
-            // $user->skills()->sync($request->skills);  //update user skills
-        }
+        if ($request->skills) $user->skills()->sync($request->skills);  //update user skills
         return redirect()->action('AccountController@show', $id)->with("message", "Profile updated Successfully");
     }
 
