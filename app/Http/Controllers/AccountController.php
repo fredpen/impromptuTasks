@@ -74,11 +74,12 @@ class AccountController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-
         if ($user->isTaskGiver()) return view('taskGiver.show', compact('user'));
 
         $skill_ids = $user->fetchskillsId();
-        return view('taskMaster.show', compact('user', 'skill_ids'));
+        $assignedProjects = $user->assignedProjects->take(5);
+        $appliedProjects = $user->appliedProjects->take(5);
+        return view('taskMaster.show', compact('user', 'skill_ids', 'appliedProjects', 'assignedProjects'));
     }
 
     /**

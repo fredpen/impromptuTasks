@@ -4,18 +4,23 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-7 mt-3">
+            <div class="col-lg-10 mt-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"> <a href="{{route('home')}}">Home</a></li>
+                    <li class="breadcrumb-item">Notifications</li>
+                </ol>
+
                 <div class="card">
                     <div class="card-body">
                         <ul class="nav nav-tabs nav-bordered mb-3">
                             <li class="nav-item">
                                 <a href="#home-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                    <span class="d-lg-block">All notifications </span>
+                                    <span class="d-lg-block">All  </span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#profile-b1" data-toggle="tab" aria-expanded="true" class="nav-link active">
-                                    <span class="d-lg-block">Unread notifications {{count($unreadNotifications) ? " (" . count($unreadNotifications) . ")" : ""}}</span>
+                                    <span class="d-lg-block">Unread  {{count($unreadNotifications) ? " (" . count($unreadNotifications) . ")" : ""}}</span>
                                 </a>
                             </li>
                         </ul>
@@ -29,7 +34,7 @@
                                             <div class="timeline-alt pb-0">
                                                 @if (count($allNotifications))
                                                     @foreach ($allNotifications  as $notification)
-                                                        <div class="timeline-item">update
+                                                        <div class="timeline-item"> update
                                                             <i class="dripicons-inbox bg-info-lighten text-info timeline-icon"></i>
                                                             <div class="timeline-item-info">
                                                                 <span href="#" class="text-secondary font-weight-bold mb-1 d-block">{{ $notification->data['title'] }} </span>

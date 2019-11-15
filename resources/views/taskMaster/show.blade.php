@@ -133,60 +133,71 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="header-title mb-3">Ongoing Task history</h5>
+                        <h5 class="header-title mb-3">Task history</h5>
 
-                        <div class="table-responsive">
-                            <table class="table table-hover table-centered mb-0">
-                                <thead>
-                                    <tr>
-                                        <th> Task </th>
-                                        <th>started on</th>
-                                        <th>Status</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>ASOS Ridley High Waist</td>
-                                        <td>$79.49</td>
-                                        <td><span class="badge badge-primary">82 Pcs</span></td>
-                                        <td>$6,518.18</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Marco Lightweight Shirt</td>
-                                        <td>$128.50</td>
-                                        <td><span class="badge badge-primary">37 Pcs</span></td>
-                                        <td>$4,754.50</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Half Sleeve Shirt</td>
-                                        <td>$39.99</td>
-                                        <td><span class="badge badge-primary">64 Pcs</span></td>
-                                        <td>$2,559.36</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lightweight Jacket</td>
-                                        <td>$20.00</td>
-                                        <td><span class="badge badge-primary">184 Pcs</span></td>
-                                        <td>$3,680.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Marco Shoes</td>
-                                        <td>$28.49</td>
-                                        <td><span class="badge badge-primary">69 Pcs</span></td>
-                                        <td>$1,965.81</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div> <!-- end table responsive-->
-                    </div> <!-- end col-->
-                </div> <!-- end row-->
+                        @if (count($assignedProjects)) 
+                            <div class="table-responsive">
+                                <table class="table table-hover table-centered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Task</th>
+                                            <th> Model </th>
+                                            <th>Applied on</th>
+                                            <th>Status</th>
+                                            <th>Budget</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($assignedProjects as $project)
+                                            <tr>
+                                                <td> 
+                                                    <a href="{{ route('projects.show', $project->id) }}">{{Str::limit($project->title, 15)}} </a>
+                                                </td>
+                                                <td>{{ucfirst($project->model)}}</td>
+                                                <td>{{$project->created_at->diffForHumans()}}</td>
+                                                <td><span class="badge badge-success">Assigned</span></td>
+                                                <td>NGN {{$project->budget}}</td>
+                                                
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
 
+                        @if (count($appliedProjects)) 
+                            <div class="table-responsive">
+                                <table class="table table-hover table-centered mb-0">
+                                    <tbody>
+                                        @foreach ($appliedProjects as $project)
+                                            <tr>
+                                                <td> 
+                                                    <a href="{{ route('projects.show', $project->id) }}">{{Str::limit($project->title, 15)}} </a>
+                                                </td>
+                                                <td>{{ucfirst($project->model)}}</td>
+                                                <td>{{$project->created_at->diffForHumans()}}</td>
+                                                <td><span class="badge badge-primary">Applied</span></td>
+                                                <td>NGN {{$project->budget}}</td>
+                                                
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            @if (Auth::id() == $user->id)
+                                <h5>You have not applied to any projects. 
+                                    <a href="{{ route('projects.index') }}">Start applying </a>
+                                </h5>
+                            @else
+                                <h5>Task master {{$user->name}} has not applied to any task
+                                </h5>
+                            @endif
+                        @endif
+                       
+                    </div>
+                </div> 
             </div>
-            <!-- end col -->
-
         </div>
-        <!-- end row -->
-
     </div>
 @endsection

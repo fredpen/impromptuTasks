@@ -8,8 +8,6 @@ use App\Project;
 use App\ProjectAppliedUser;
 use App\ProjectAssignedUser;
 use App\Tasks;
-use App\UserSubtasks;
-use App\UserTasks;
 use Illuminate\Http\Request;
 
 class ProjectshowController extends Controller
@@ -59,12 +57,6 @@ class ProjectshowController extends Controller
         $taskName = $task->name;
         if (Auth::user() && Auth::user()->isTaskGiver()) { //show task masters if its a task giver
             $task = Tasks::where('id', $task->id)->with('masters')->get();
-            
-            // foreach ($task[0]->masters as $master) {
-            //     // return $master;
-            //     return ($master->name);
-            // }
-            // return $masters;
             return view('taskMaster.index', compact('task', 'taskName'));
         }
 

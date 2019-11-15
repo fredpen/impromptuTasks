@@ -16,7 +16,7 @@
                                 <thead class="thead-dark">
                                     <tr class="h6 text-uppercase">
                                         <th> Project Creator </th>
-                                        <th> Project Title </th>
+                                        <th title="click to see full details"> Project Detail </th>
                                         <th> Status</th>
                                         <th> Created on</th>
                                         <th> Updated on</th>
@@ -27,7 +27,7 @@
                                     @foreach ($projects as $project)
                                         <tr>
                                             <td class="h6"><a href="{{ route('account.show', (int)$project->owner['id']) }}">{{ $project->owner['name'] }}</a></td>
-                                            <td class="h6"><a  href="{{ route('project.adminShow', $project->id) }}">{{ $project->title }}</a></td>
+                                            <td title="click to see full details" class="h6"><a  href="{{ route('project.adminShow', $project->id) }}">{{ $project->title }}</a></td>
                                             <td class="h6"> {{ $project->status }} </td>
                                             <td class="h6"> {{ $project->updated_at->diffForHumans() }}</td>
                                             <td class="h6"> {{ $project->created_at->diffForHumans() }}</td>

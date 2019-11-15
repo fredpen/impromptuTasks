@@ -9,10 +9,21 @@
         @include('partials.errorBag')
     @endif
 
-
-
     <div class="container">
         <div class="row mt-3">
+
+             {{-- breadcrumbs --}}
+             <div class="col-sm-12">
+                <div class="page-title text-left w-100">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
+                        <li class="breadcrumb-item active"><a href="{{route('projects.index')}}">All Tasks</a></li>
+                        <li class="breadcrumb-item active"><a href="{{route('projects.index')}}">{{ Str::limit($project->title, 15)}}</a></li>
+                    </ol>
+                </div>
+             </div>
+           
+
             <div class="col-md-8">
                 <!-- project card -->
                 <div class="card d-block">
@@ -153,16 +164,17 @@
 
                     <div class="d-flex justify-content-center mt-2 mb-1">
                         @auth
-                            @if ($project->hasBeenAssigned(Auth::id()))
-                                <button title="The task has been assigned to you " type="button" class="btn btn-lg btn-secondary">Task assigned to you</button>
-                            @elseif(Auth::user()->hasApplied($project->id))
-                                <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
-                            @else
-                                <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
+                            @if (!Auth::user()->isTaskGiver())
+                                @if ($project->hasBeenAssigned(Auth::id()))
+                                    <button title="The task has been assigned to you " type="button" class="btn btn-lg btn-secondary">Task assigned to you</button>
+                                @elseif(Auth::user()->hasApplied($project->id))
+                                    <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
+                                @else
+                                    <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
+                                @endif
                             @endif
-                        @else 
-                            <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
                         @endauth
+                       
                       
                     </div>
                 </div>

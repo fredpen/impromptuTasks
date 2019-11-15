@@ -10,9 +10,5 @@ class UserTasks extends Model
     
     protected $table = 'user_tasks';
 
-    // public function masters()
-    // {
-    //     return $this-
-    // }
-
+  
 }
