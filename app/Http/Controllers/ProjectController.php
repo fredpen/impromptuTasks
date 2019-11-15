@@ -62,6 +62,11 @@ class ProjectController extends Controller
         if (!Auth::user()->isActive()) return redirect()->action(
             'AccountController@edit', Auth::id())->with('message', 'Kindly Complete your profile to have full access'
         );
+
+        if (Auth::user()->isTaskMaster()) return redirect()->action(
+            'AccountController@myTasks')->with('message', 'Task Masters can not post Tasks. To post tasks, create a Task Giver account or swap your current Account'
+        );
+
         $projects = Project::where([
             ['user_id', '=', Auth::id()],
             ['status', '!=', 'deleted']

@@ -68,11 +68,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(SubTask::class, 'user_sub_task');
     }
 
+    public function jobs()
+    {
+        return $this->belongsToMany(Tasks::class, 'user_tasks', 'user_id', 'task_id');
+    }
+
     public function fetchskillsId()
     {
         $skillsObject = $this->skills;
         $skillsArray = json_decode(json_encode($skillsObject), true) ;
         return array_column($skillsArray, 'id');
+    }
+
+    public function fetchJobsId()
+    {
+        $jobsObject = $this->jobs;
+        $jobsArray = json_decode(json_encode($jobsObject), true) ;
+        return array_column($jobsArray, 'id');
     }
 
     public function isTaskMaster()

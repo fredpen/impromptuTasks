@@ -75,17 +75,17 @@
                         <hr>
 
                         <div class="text-left">
-                            <p class="text-muted"><strong>Full Name :</strong> <span class="ml-2"> {{ ucwords($user->name)}} </span></p>
+                            <p class="text-dark"><strong>Full Name :</strong> <span class="text-muted ml-2"> {{ ucwords($user->name)}} </span></p>
 
-                            <p class="text-muted"><strong>Email :</strong> <span class="ml-2"> {{ ucwords($user->email)}} </span></p>
+                            <p class="text-dark"><strong>Email :</strong> <span class="text-muted ml-2"> {{ ucwords($user->email)}} </span></p>
 
-                            <p class="text-muted"><strong>Country :</strong> <span class="ml-2"> {{ ucwords($user->country->name)}} </span></p>
-                            <p class="text-muted"><strong>Region :</strong> <span class="ml-2"> {{ ucwords($user->region->name)}} </span></p>
-                            <p class="text-muted"><strong>City :</strong> <span class="ml-2"> {{ ucwords($user->city->name)}} </span></p>
+                            <p class="text-dark"><strong>Country :</strong> <span class="text-muted ml-2"> {{ ucwords($user->country->name)}} </span></p>
+                            <p class="text-dark"><strong>Region :</strong> <span class="text-muted ml-2"> {{ ucwords($user->region->name)}} </span></p>
+                            <p class="text-dark"><strong>City :</strong> <span class="text-muted ml-2"> {{ ucwords($user->city->name)}} </span></p>
 
 
 
-                            <p class="text-muted mb-0"><strong>Socials :</strong>
+                            <p class="text-dark mb-0"><strong>Socials :</strong>
                                 <a class="d-inline-block ml-2 text-muted" title="" data-placement="top" data-toggle="tooltip" href="{{ $user->linkedln}}" data-original-title="linkedln"><i class="mdi mdi-linkedin"></i></a>
                                 {{-- <a class="d-inline-block ml-2 text-muted" title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title="Twitter"><i class="mdi mdi-twitter"></i></a>
                                 <a class="d-inline-block ml-2 text-muted" title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title="Skype"><i class="mdi mdi-skype"></i></a> --}}
@@ -102,50 +102,45 @@
                         <div class="card tilebox-one">
                             <div class="card-body">
                                 <i class="dripicons-basket float-right text-muted"></i>
-                                <h6 class="text-muted text-uppercase mt-0">Skills</h6>
+                                <h6 class="text-dark text-uppercase mt-0">Skills</h6>
                                 @foreach ($user->skills as $skill)
-                                    <span class="h5 mr-2 text-primary">{{ $skill->name }}</span>
+                                    <span 
+                                         class="mb-2 badge badge-light text-capitalise badge-pill"
+                                        style="font-size:100%">
+                                        {{ $skill->name }}
+                                    </span>
                                 @endforeach
                             </div> <!-- end card-body-->
                         </div> <!--end card-->
                     </div><!-- end col -->
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-12">
                         <div class="card tilebox-one">
                             <div class="card-body">
-                                <i class="dripicons-box float-right text-muted"></i>
-                                <h6 class="text-muted text-uppercase mt-0">Revenue</h6>
-                                <h2 class="m-b-20">$<span>46,782</span></h2>
-                                <span class="badge badge-danger"> -29% </span> <span class="text-muted">From previous period</span>
+                                <i class="dripicons-basket float-right text-muted"></i>
+                                <h6 class="text-dark text-uppercase mt-0">Job interests</h6>
+                                @foreach ($user->jobs as $job)
+                                    <span 
+                                            class="badge badge-light badge-pill text-capitalise"
+                                        style="font-size:100%">
+                                        {{ $job->name }}
+                                    </span>
+                                @endforeach
                             </div> <!-- end card-body-->
                         </div> <!--end card-->
                     </div><!-- end col -->
-
-                    <div class="col-sm-4">
-                        <div class="card tilebox-one">
-                            <div class="card-body">
-                                <i class="dripicons-jewel float-right text-muted"></i>
-                                <h6 class="text-muted text-uppercase mt-0">Product Sold</h6>
-                                <h2 class="m-b-20">1,890</h2>
-                                <span class="badge badge-primary"> +89% </span> <span class="text-muted">Last year</span>
-                            </div> <!-- end card-body-->
-                        </div> <!--end card-->
-                    </div><!-- end col -->
-
                 </div>
-                <!-- end row -->
-
 
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title mb-3">task history</h4>
+                        <h5 class="header-title mb-3">Ongoing Task history</h5>
 
                         <div class="table-responsive">
                             <table class="table table-hover table-centered mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Task </th>
-                                        <th>Rating</th>
+                                        <th> Task </th>
+                                        <th>started on</th>
                                         <th>Status</th>
                                         <th>Amount</th>
                                     </tr>

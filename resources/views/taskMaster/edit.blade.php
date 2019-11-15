@@ -89,6 +89,18 @@
                             </select>
                         </p>
 
+                        <p class="text-muted"><strong><i class="text-danger">*</i> Region/State :</strong>
+                            <select onchange="fetchCities(this)" id="region_id" name="region_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                <option value="{{ $user->region_id ? $user->region_id : 0}}"> {{$user->region_id ? $user->region->name  : "Select Country first" }}</option>
+                            </select>
+                        </p>
+        
+                        <p class="text-muted"><strong><i class="text-danger">*</i> Region/State :</strong>
+                            <select id="city_id" name="city_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                <option value=" {{ $user->region_id ? $user->region_id : 0 }} ">{{$user->city_id ? $user->city->name  : "Select Country first" }}</option>
+                            </select>
+                        </p>
+
                         <hr>
 
                         <p class="text-muted"><strong><i class="text-danger">*</i> Profle Description :</strong>
@@ -115,7 +127,7 @@
 
             <div class="col-md-7">
                 <div class="row">
-                     <div class="col-sm-12">
+                    <div class="col-sm-12">
                         <div class="card tilebox-one">
                             <div class="card-body">
                                 <span class="h6"><i class="text-danger">*</i> Select your area of mastery</span>
@@ -131,7 +143,21 @@
                                 <span class="h6 text-info">* Select at least a skill, only select the skill you have experiene workng in</span>
                             </div> <!-- end card-body-->
                         </div> <!--end card-->
-                    </div><!-- end col -->
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="card tilebox-one">
+                            <div class="card-body">
+                                <span class="h6"><i class="text-danger">*</i> Select jobs you are interested in</span>
+                                <select id="jobs" required name="jobs[]" class="select2 form-control select2-multiple select2-hidden-accessible" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." data-select2-id="5" tabindex="-1" aria-hidden="true" required>
+                                    @foreach ($tasks as $task)
+                                        <option {{ (in_array($task->id, $jobsId) ? 'selected' : '' )}} value="{{ $task->id}}">{{ ucwords($task->name)}} </option>
+                                    @endforeach
+                                </select>
+                                <span class="h6 text-info">* Select at least a service that you would like to be considered for</span>
+                            </div> 
+                        </div>
+                    </div>
 
                     <div class="col-sm-12">
                         <div class="card tilebox-one">
@@ -143,30 +169,7 @@
                         </div> <!--end card-->
                     </div><!-- end col -->
 
-                    <div class="col-sm-6">
-                        <div class="card tilebox-one">
-                            <div class="card-body"><i class="text-danger">*</i>
-                                <i class="dripicons-box float-right text-muted"></i>
-                                <h6 class="text-muted text-uppercase mt-0">Region/State</h6>
-                                <select onchange="fetchCities(this)" id="region_id" name="region_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                                    <option value="{{ $user->region_id ? $user->region_id : 0}}"> {{$user->region_id ? $user->region->name  : "Select Country first" }}</option>
-                                </select>
-                            </div> <!-- end card-body-->
-                        </div> <!--end card-->
-                    </div><!-- end col -->
-
-                    <div class="col-sm-6">
-                        <div class="card tilebox-one">
-                            <div class="card-body">
-                                <i class="dripicons-box float-right text-muted"></i>
-                                <h6 class="text-muted text-uppercase mt-0"><i class="text-danger">*</i> City</h6>
-                                <select id="city_id" name="city_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                                    <option value=" {{ $user->region_id ? $user->region_id : 0 }} ">{{$user->city_id ? $user->city->name  : "Select Country first" }}</option>
-                                </select>
-                            </div> <!-- end card-body-->
-                        </div> <!--end card-->
-                    </div><!-- end col -->
-
+                   
                     {!! Form::close() !!}
 
 

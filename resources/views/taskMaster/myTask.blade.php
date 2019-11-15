@@ -8,6 +8,10 @@
         @include('partials.notifs')
     @endif
 
+    @if (session('message'))
+        @include('partials.notifs')
+    @endif
+
     <div class="row mt-2">
         <div class="col-lg-4">
             <div class="card cta-box bg-primary text-white mt-1">

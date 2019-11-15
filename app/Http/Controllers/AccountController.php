@@ -95,8 +95,9 @@ class AccountController extends Controller
         if ($user->isTaskGiver()) return view('taskGiver.edit', compact('user', 'countries'));
 
         $skill_ids = $user->fetchskillsId();
+        $jobsId = $user->fetchJobsId();
         $tasks = Tasks::get(['id', 'name']);
-        return view('taskMaster.edit', compact('user', 'tasks', 'skill_ids', 'countries'));
+        return view('taskMaster.edit', compact('user', 'tasks', 'skill_ids', 'countries', 'jobsId'));
     }
 
     /**
@@ -115,6 +116,7 @@ class AccountController extends Controller
         $user->update($validatedData);
 
         if ($request->skills) $user->skills()->sync($request->skills);  //update user skills
+        if ($request->jobs) $user->jobs()->sync($request->jobs);  //update user jobs
         return redirect()->action('AccountController@show', $id)->with("message", "Profile updated Successfully");
     }
 
