@@ -18,17 +18,20 @@
         </div>
     </div>
 
-    <div class="page-title-right">
-        <ol class="breadcrumb my-1 p-0">
-            <li class="breadcrumb-item h5"><a href="{{ route('projects.create') }}">My Projects</a></li>
-            <li class="text-capitalize breadcrumb-item active h5"> {{$project->title }} </li>
-        </ol>
-    </div>
+    
 
     <div class="row justify-content-center align-items-center mx-0">
-        <div class="col-md-12 mt-2">
-            <div id="basicwizard">
 
+        <div class="col-md-10 mt-1 mb-3">
+            <div class="page-title-right">
+                <ol class="breadcrumb my-1 p-0">
+                    <li class="breadcrumb-item h5"><a href="{{ route('projects.create') }}">My Projects</a></li>
+                    <li class="text-capitalize breadcrumb-item active h5"> {{$project->title }} </li>
+                </ol>
+            </div>
+
+           
+            <div id="basicwizard">
                 <ul class="nav nav-pills nav-justified form-wizard-header mb-4">
 
                     <li class="nav-item">
@@ -39,12 +42,12 @@
                     </li>
 
                     @if ($project->model == "onsite")
-                    <li class="nav-item">
-                        <a href="#basictab5" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
-                            <i class="mdi mdi-home-city mr-1"></i>
-                            <span class="d-none d-sm-inline">Location</span>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="#basictab5" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
+                                <i class="mdi mdi-home-city mr-1"></i>
+                                <span class="d-none d-sm-inline">Location</span>
+                            </a>
+                        </li>
                     @endif
 
                     <li class="nav-item">
@@ -117,6 +120,7 @@
                 </div>
             </div>
         </div>
+           
     </div>
 </div>
 @endsection

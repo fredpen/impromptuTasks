@@ -71,22 +71,7 @@
                 </div>
             </div>
 
-            <div class="card widget-flat col-md-3 h-170">
-                <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
-                    <div class="col-sm-12 mb-3">
-                        {!! Form::label('experience', 'Task Master Expertise', ['class' => 'd-block mt-0 h4']) !!}
-                        <span class="d-block text-muted h6">Experience most times is directly related to cost</span>
-                        <div class="d-block">
-                            <button 
-                                id="fredExperienceModalButton" 
-                                type="button" class="mt-2 btn btn-sm btn-light btn-rounded"
-                                data-toggle="modal" 
-                                data-target="#fredExperienceModal">{{$project->experience ? $project->experience : "Select level of expertise"}}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+         
         </div>
     </div>
 
