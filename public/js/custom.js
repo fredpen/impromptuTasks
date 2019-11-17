@@ -16,9 +16,12 @@ function postProject(target, model) {
     }
     if ($("#task_title").val().length < 10) return setErrorMess("Task title must be more than 10 characters");
     if ($("#description").val().length < 100) return setErrorMess("Task description must be more than 100 characters");
+    
     if ($("#fredSubTaskSelectionModalButton").text() == "Select a sub task") return setErrorMess("Select a Sub Task");
+    if ($("#fredExperienceModal").text() == "Select level of expertise") return setErrorMess("Select Task master level of experience");
     if ($("#fredTaskDurationModalButton").text() == "Select Task duration") return setErrorMess('Select your Task Duration');
     if ($("#fredDateModalButton").text() == "Select Start Date") return setErrorMess('Select when you would like to start your task');
+    if ($("#budget").val().length < 4) return setErrorMess("Budget can not be less than NGN 1000");
 
 
     $(target).siblings('form').submit();

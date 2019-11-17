@@ -87,22 +87,23 @@
 
 
                     <div class="col-12">
-                        <div class="form-group d-flex">
-                            <div class="col-sm-6 ">
+                        <div class="form-group d-flex flex-wrap">
+                            <div class="col-sm-12 col-md-6 mb-3 ">
                                 {!! Form::open(['method' => 'PUT', 'action' => ['ProjectController@update', $project->id], 'id' => 'postForm']) !!}
                                     {!! Form::hidden('status', 'posted') !!}
                                 {!! Form::close() !!}
                                 <button 
                                     type="submit" 
                                     onclick="postProject(this, '{{$project->model}}')" 
-                                    class="d-block mx-auto btn btn-primary">
+                                    class="d-block mx-auto btn btn-lg btn-primary">
                                     {{ ($project->status == 'Draft') ? 'Post Task' : 'Update Task'}} 
                                 </button>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12 col-md-6">
                                 {!! Form::open(['method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id], 'id' => 'postForm']) !!}
-                                    <button type="submit" class="d-block mx-auto btn btn-danger">  {{ __('Delete Task') }} </button>
+                                    <button type="submit" class="d-block mx-auto  btn-lg btn btn-danger">
+                                    {{ ($project->status == 'Draft') ? 'Delete Task' : 'Cancel Task'}}  </button>
                                 {!! Form::close() !!}
                             </div>
                         </div>
