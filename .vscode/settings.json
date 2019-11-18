@@ -1,9 +1,0 @@
-{
-    "workbench.colorTheme": "Quiet Light",
-    "editor.fontFamily": "Fira Code",
-    "editor.fontLigatures": true,
-    "editor.lineHeight": 35,
-    "editor.suggestFontSize": 10,
-    "html.format.indentHandlebars": true,
-    "html.format.indentInnerHtml": true
-}
