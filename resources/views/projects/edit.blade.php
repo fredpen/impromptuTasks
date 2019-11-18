@@ -26,7 +26,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb my-1 p-0">
                     <li class="breadcrumb-item h5"><a href="{{ route('projects.create') }}">My Projects</a></li>
-                    <li class="text-capitalize breadcrumb-item active h5"> {{$project->title }} </li>
+                    <li class="text-capitalize breadcrumb-item active h5"> {{Str::limit($project->title, 10) }} </li>
                 </ol>
             </div>
 

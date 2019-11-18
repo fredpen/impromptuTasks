@@ -34,6 +34,11 @@ class ProjectController extends Controller
         'veteran' => 'Veteran'
     ];
 
+    protected $metaData = [
+        array('metaname' => 'color', 'metavalue' => 'blue'),
+        array('metaname' => 'size', 'metavalue' => 'big')
+    ];
+
 
     /**
      * Display a listing of the resource.
@@ -114,12 +119,13 @@ class ProjectController extends Controller
         $this->authorize('edit', $project);
         $regions = $cities = 0;
         $duration = $this->durationArray;
+        $metaData = $this->metaData;
         $expertise = $this->expertise;
         $countries = Country::all(['name', 'id']);
         $tasks = Tasks::with('subTasks')->get(['id', 'name']);
         if ($project->country) $regions = Region::where('country_id', $project->country_id)->get(['id', 'name']);
         if ($project->region) $cities = City::where('region_id', $project->region_id)->get(['id', 'name']);
-        return view('projects.edit', compact('regions', 'cities', 'project', 'tasks', 'countries', 'duration', 'expertise'));
+        return view('projects.edit', compact('regions', 'cities', 'project', 'tasks', 'countries', 'duration', 'expertise', 'metaData'));
     }
 
     /**

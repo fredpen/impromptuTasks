@@ -76,3 +76,6 @@ Route::name('project.')->group(function () {
     Route::get('projectstatus/{project}/cancelled', 'ProjectStatusController@cancelled')->name('cancel');
     Route::get('projectstatus/{project}/posted', 'ProjectStatusController@posted')->name('post');
 });
+
+Route::post('/pay', 'RaveController@initialize')->name('pay');
+Route::post('/rave/callback', 'RaveController@callback')->name('callback');
