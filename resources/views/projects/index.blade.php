@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-  @if (session('message'))
+    @if (session('message'))
         @include('partials.notifs')
     @endif
 
@@ -13,15 +13,65 @@
                 <div class="page-title text-left w-100">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
-                        <li class="breadcrumb-item active">All Tasks</li>
+                        <li class="breadcrumb-item active">asas</li>
                     </ol>
                 </div>
-              
 
                 @if (count($projects))
                     <h5 class=" mb-3 card-header">{{count($projects)}} Task{{count($projects) > 1 ? "s" : ""}} </h5>
                     <div class="row">
                         @foreach ($projects as $project)
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="media mt-2">
+                                        <div class="media-body">
+                                            <h5 class="mt-0"> 
+                                                <a class="h5 d-block mb-1 mt-0" href="{{ route('projects.show', $project->id) }} ">{{ucfirst($project->title)}}</a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                    <div class="media-body col-sm-12 mt-3">
+                                        <p class="font-13 text-dark mb-2">
+                                            <span 
+                                                class="mb-2 badge badge-light badge-pill"
+                                                style="font-size:100%">
+                                                {{ $project->model }}
+                                            </span>
+                                            <span 
+                                                class="mb-2 badge badge-light badge-pill"
+                                                style="font-size:100%">
+                                                {{ $project->task->name }}
+                                            </span>
+                                            <span 
+                                                class="mb-2 badge badge-light badge-pill"
+                                                style="font-size:100%">
+                                                {{ $project->subtask->name }}
+                                            </span>
+                                            <span 
+                                                class="mb-2 badge badge-light badge-pill"
+                                                style="font-size:100%">
+                                                {{ $project->subtask->experience }}
+                                            </span>
+                                        </p>
+
+                                        <p  class="mb-0 font-13">{{str_limit($project->description, 90) }} <a href="{{ route('projects.show', $project->id) }} ">more</a></p>
+                                        <hr>
+                                
+                                        <ul class="mb-0 list-inline">
+                                            <li class="list-inline-item mr-3">
+                                                {{-- <h5 class="mb-1"> NGN {{ $master->revenue ?  $master->revenue : "0"}}</h5>
+                                                <p class="mb-0 font-13">Total Revenue</p> --}}
+                                            </li>
+                                            
+                                        </ul>
+                                        <a class="mt-3 btn btn-primary" href="{{ route('projects.show', $project->id) }} ">Apply to Task</a>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-5">
                                 <div class="card widget-flat">
                                     <div class="card-body mt-0" style="position: relative;">
