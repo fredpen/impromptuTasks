@@ -20,6 +20,7 @@
 
     <body data-layout="topnav" style="min-height: 100vh;">
 
+            @include('partials._notifications')
         <!-- Begin page -->
         <div class="wrapper">
 
@@ -38,68 +39,20 @@
                             <ul class="list-unstyled topbar-right-menu float-right mb-0">
                                 <li class="dropdown notification-list">
 
-                                    <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" id="topbar-notifydrop" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle arrow-none" 
+                                        data-toggle="modal" 
+                                        href="#" 
+                                        id="topbar-notifydrop" 
+                                        role="button" 
+                                        data-target="#scrollable-modal" 
+                                        aria-haspopup="true" 
+                                        aria-expanded="false">
                                         <i class="dripicons-bell noti-icon"></i>
                                         <span class="noti-icon-badge"></span>
                                         @if (Auth::check() && Auth::user()->unreadNotifications)
                                             {{count(Auth::user()->unreadNotifications)}}
                                         @endif
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg" aria-labelledby="topbar-notifydrop">
-
-                                        <!-- item-->
-                                        <div class="dropdown-item noti-title">
-                                            <h5 class="m-0">
-                                                <span class="float-right">
-                                                    <a href="{{ route('notifications') }}" class="text-dark">
-                                                        <small>View All</small>
-                                                    </a>
-                                                </span>Notification
-                                            </h5>
-                                        </div>
-
-                                        @auth
-                                            @if (count(Auth::user()->unreadNotifications))
-                                                <div class="slimscroll" style="max-height: 230px;">
-                                                    @foreach (Auth::user()->unreadNotifications as $notification)
-                                                        <a href="{{ route('notifications') }}" class="dropdown-item notify-item">
-                                                            <div class="notify-icon bg-primary">
-                                                                <i class="mdi mdi-comment-account-outline"></i>
-                                                            </div>
-                                                            <p class="notify-details">{{$notification->data['title']}}
-                                                                <small class="text-muted">{{$notification->created_at->diffForHumans()}}</small>
-                                                            </p>
-                                                        </a>
-                                                    @endforeach
-                                                </div>
-                                                {{-- <a href="{{ route('notifications') }}" class="dropdown-item text-center text-primary notify-item notify-all">
-                                                    View All
-                                                </a> --}}
-                                            @else
-                                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                                <div class="notify-icon bg-primary">
-                                                    <i class="mdi mdi-comment-account-outline"></i>
-                                                </div>
-                                                <p class="notify-details">You don't have any new Messages at the moment
-                                                    <small class="text-muted"> a second ago</small>
-                                                </p>
-                                            </a>
-                                            @endif
-                                        @endauth
-
-                                        @guest
-                                            <div class="slimscroll" style="max-height: 230px;">
-                                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                                    <div class="notify-icon bg-primary">
-                                                        <i class="mdi mdi-comment-account-outline"></i>
-                                                    </div>
-                                                    <p class="notify-details">Welcome to Impromptutasks!
-                                                        <small class="text-muted">a second ago</small>
-                                                    </p>
-                                                </a>
-                                            </div>
-                                        @endguest
-                                    </div>
                                 </li>
 
                                 <li class="dropdown notification-list">
@@ -140,10 +93,24 @@
                                                 <i class="mdi mdi-account-circle mr-1"></i>
                                                 <span>My Profile</span>
                                             </a>
-                                            <a href="{{ route('notifications') }}" class="dropdown-item notify-item">
+
+                                            <a class="dropdown-item notify-item" 
+                                                data-toggle="modal" 
+                                                href="#" 
+                                                role="button" 
+                                                data-target="#scrollable-modal" 
+                                                aria-haspopup="true" 
+                                                aria-expanded="false">
                                                 <i class="mdi mdi-bell-ring mr-1"></i>
-                                                <span>My Messages</span>
+                                                <span class="noti-icon-badge"></span>
+                                                <span>My Messages</span>(
+                                                <small class="text-danger">
+                                                    @if (Auth::check() && Auth::user()->unreadNotifications)
+                                                        {{count(Auth::user()->unreadNotifications)}}
+                                                    @endif
+                                                </small>)
                                             </a>
+                                            
                                             <a href="{{ route('logout') }}" class="dropdown-item notify-item"
                                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
@@ -198,24 +165,6 @@
                                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-apps mr-1"></i>Tasks <div class="arrow-down"></div>
                                             </a>
-
-                                                <div class="dropdown-menu" aria-labelledby="topnav-apps">
-                                                    {{-- @foreach (App\Tasks::all() as $task)
-                                                        <div class="dropdown">
-                                                            <a class="dropdown-item dropdown-toggle arrow-none" href="{{ route('project.usershow', $task->id) }}" id="topnav-project" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                {{ ucwords($task->name) }} <div class="arrow-down"></div>
-                                                            </a>
-                                                            <div class="dropdown-menu" aria-labelledby="topnav-project">
-                                                                @foreach ($task->subTasks as $subTask)
-                                                                    <a href="{{ route('project.usershow', $task->id) }}" class="dropdown-item"> {{ ucwords($subTask->name) }} </a>
-                                                                @endforeach
-
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div> --}}
-
-
                                         </li>
 
                                         <li class="nav-item dropdown">

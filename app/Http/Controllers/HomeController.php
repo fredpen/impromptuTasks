@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\City;
-use App\Region;
-use Illuminate\Http\Request;
 use App\Tasks;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -16,6 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+     
         $this->middleware(['auth', 'verified', 'isActive'])->only('welcome');
     }
 
@@ -26,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        // return $user->notfications;
         $tasks = Tasks::with('subtasks:id,name,task_id')->get();
         return view('home', compact('tasks'));
     }
@@ -37,6 +39,7 @@ class HomeController extends Controller
      */
     public function welcome()
     {
+        
         return view('welcome');
     }
 }
