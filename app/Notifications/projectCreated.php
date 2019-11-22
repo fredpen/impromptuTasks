@@ -15,6 +15,8 @@ class projectCreated extends Notification implements ShouldQueue
     use Queueable;
 
     public $user;
+    public $tries = 3;
+    public $onQueue = 'notifs';
 
     /**
      * Create a new notification instance.

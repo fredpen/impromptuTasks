@@ -92,7 +92,9 @@ class ProjectController extends Controller
             ['model' => 'required', 'task_id' => 'required', 'user_id' => 'required']
         );
         $project = Project::create($validatedData);
-        $project->owner->notify(new projectCreated);
+        $project->owner->notify((new projectCreated)
+                        ->delay(now()->addMinutes(1))
+                        ->onQueue('notifs'));
         return redirect()->action('ProjectController@edit', ['id' => $project->id]);
     }
 
