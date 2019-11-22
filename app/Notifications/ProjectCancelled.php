@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
 
-class ProjectCancelled extends Notification
+class ProjectCancelled extends Notification implements ShouldQueue
 {
     /**
      * Create a new notification instance.

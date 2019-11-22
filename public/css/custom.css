@@ -6,8 +6,8 @@
     font-family: 'Pacifico', cursive;
 }
 
-.h-1s70 {
-  height: 170px;
+.badge{
+  font-size: 100%;
 }
 
 #full_width_container {

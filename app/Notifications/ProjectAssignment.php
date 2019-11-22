@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Auth;
 
-class ProjectAssignment extends Notification
+class ProjectAssignment extends Notification implements ShouldQueue
 {
     use Queueable;
     private $project_id;
