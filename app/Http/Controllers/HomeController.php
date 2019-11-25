@@ -27,13 +27,6 @@ class HomeController extends Controller
     public function index()
     {
         $tasks = Tasks::with('subtasks:id,name,task_id')->get();
-        // foreach($tasks as $task) {
-        //     foreach($task->subtasks as $subtasks){
-        //         echo $subtasks->name;
-        //     }
-           
-        // }
-        
         return view('home', compact('tasks'));
     }
 

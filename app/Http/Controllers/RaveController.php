@@ -46,7 +46,7 @@ class RaveController extends Controller
     {
         
         $data = Rave::verifyTransaction(request()->txref);
-        
+        // return "home";
         dd($data);
         // Get the transaction from your DB using the transaction reference (txref)
         // Check if you have previously given value for the transaction. If you have, redirect to your successpage else, continue

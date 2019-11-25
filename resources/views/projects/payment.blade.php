@@ -2,46 +2,22 @@
 
 @section('content')
 <div class="container">
-    <div id="postingModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-dialog">
-            <div class="jq-toast-single jq-icon-danger d-flex" role="alert">
-                <i class="mr-2 mdi mdi-heart-broken-outline" style="font-size: 30px"></i>
-                <span style="right: 0" class="close close-jq-toast-single" data-dismiss="modal" aria-hidden="true">×</span>
-                <div id="postErrMess"></div>
-            </div>
-        </div>
-    </div>
-
     <div class="mt-4 row flex-wrap justify-content-center">
         <div class="d-flex flex-wrap col-sm-12 justify-content-between mb-4">
             
-            <div class="card widget-flat col-md-3">
+            <div class="card widget-flat col-md-3 d-none d-md-block">
                 <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                     <div class="col-sm-12 mb-3">
                         {!! Form::label('budget', 'Budget', ['class' => 'd-block mt-0 h4']) !!}
-                        <span class="d-block text-muted h6 mb-2">Enter the amount you are willing to pay for this service in Naira </span>
+                        <span class="d-block text-muted mb-2">Budget amount for this service in Naira </span>
                         
                         <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
                             <span class="input-group-addon bootstrap-touchspin-prefix input-group-prepend">
-                                <span class="input-group-text">NGN</span>
+                                <span class="d-block input-group-text">NGN {{number_format($project->budget)}}</span>
                             </span>
-                            <input 
-                                onchange="updateBudget()"
-                                type="text"
-                                class="form-control"
-                                data-toggle="input-mask" 
-                                data-mask-format="000,000,000,000,000,000" 
-                                data-reverse="true" 
-                                maxlength="18"
-                                placeholder="200,000"
-                                id="budget"
-                                {{$project->isActive ? '' : 'disabled'}}
-                                value="{{$project->budget}}"
-                                onchange="updateBudget(this, 'budget')"
-                            >
                         </div>
                         <div class="mt-2">
-                            <p class="text-danger">You can not change your budget after a task master has picked up the task</p>
+                            <p class="text-danger">After making the payment, an invoice will be sent to you for your transaction and one of Impromptu Tasks agent will be in contact with you immediately</p>
                         </div>
                     </div>
                 </div>
@@ -54,7 +30,7 @@
                         <img class="my-3" src="{{ asset('images/report.svg') }}" width="180" alt="Generic placeholder image">
                         <br>
 
-                        <button onclick="submitForm('paymentForm')" class="btn btn-sm btn-light btn-rounded">Pay Now<i class="mdi mdi-arrow-right"></i></button>
+                        <button onclick="submitForm('paymentForm')" class="btn btn-md btn-light btn-rounded">Pay NGN {{number_format($project->budget)}}</button>
                     </div>
                 </div>
             </div> 
@@ -106,7 +82,6 @@
     var project_id = {{ $project-> id}};
     function submitForm(element)
     {
-        if ($("#budget").val().length < 4) return setErrorMess("Budget can not be less than NGN 1000");
         return $('#' + element).submit();
     }
 </script>
