@@ -75,6 +75,7 @@ class Project extends Model
 
     public function cancelled()
     {
+        if ($this->status == 'Draft')  return $this->delete();
         return $this->update(['status' => 'deleted', 'cancelled_on' => $this->timeNow()]);
     }
 
@@ -93,7 +94,13 @@ class Project extends Model
         return $this->update(['status' => 'posted', 'posted_on' => $this->timeNow()]);
     }
 
-
+    public function color($color)
+    {
+        if ($color == 'Draft') return "secondary";
+        if ($color == 'posted') return "primary";
+        if ($color == 'completed') return "success";
+        if ($color == 'live') return "secondary";
+    }
 
 }
 

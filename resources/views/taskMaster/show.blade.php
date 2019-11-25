@@ -134,20 +134,19 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="header-title mb-3">Task history</h5>
-
-                        @if (count($assignedProjects)) 
-                            <div class="table-responsive">
-                                <table class="table table-hover table-centered mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Task</th>
-                                            <th> Model </th>
-                                            <th>Applied on</th>
-                                            <th>Status</th>
-                                            <th>Budget</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Task</th>
+                                        <th> Model </th>
+                                        <th>Applied on</th>
+                                        <th>Status</th>
+                                        <th>Budget</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (count($assignedProjects)) 
                                         @foreach ($assignedProjects as $project)
                                             <tr>
                                                 <td> 
@@ -160,15 +159,9 @@
                                                 
                                             </tr>
                                         @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @endif
+                                    @endif
 
-                        @if (count($appliedProjects)) 
-                            <div class="table-responsive">
-                                <table class="table table-hover table-centered mb-0">
-                                    <tbody>
+                                    @if (count($appliedProjects)) 
                                         @foreach ($appliedProjects as $project)
                                             <tr>
                                                 <td> 
@@ -178,23 +171,20 @@
                                                 <td>{{$project->created_at->diffForHumans()}}</td>
                                                 <td><span class="badge badge-primary">Applied</span></td>
                                                 <td>NGN {{$project->budget}}</td>
-                                                
                                             </tr>
                                         @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            @if (Auth::id() == $user->id)
-                                <h5>You have not applied to any projects. 
-                                    <a href="{{ route('projects.index') }}">Start applying </a>
-                                </h5>
-                            @else
-                                <h5>Task master {{$user->name}} has not applied to any task
-                                </h5>
-                            @endif
-                        @endif
-                       
+                                    @else
+                                        @if (Auth::id() == $user->id)
+                                            <h5>You have not applied to any projects. 
+                                                <a href="{{ route('projects.index') }}">Start applying </a>
+                                            </h5>
+                                        @else
+                                            <h5>Task master {{$user->name}} has not applied to any task </h5>
+                                        @endif
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div> 
             </div>

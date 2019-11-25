@@ -71,10 +71,8 @@ class ProjectController extends Controller
             'AccountController@myTasks')->with('message', 'Task Masters can not post Tasks. To post tasks, create a Task Giver account or swap your current Account'
         );
 
-        $projects = Project::where([
-            ['user_id', '=', Auth::id()],
-            ['status', '!=', 'deleted']
-        ])->get();
+        $projects = Project::where([['user_id', '=', Auth::id()], ['status', '!=', 'deleted']])
+                    ->get();
         $tasks = Tasks::pluck('name', 'id');
         return view('projects.create', compact('projects', 'tasks'));
     }
@@ -92,9 +90,7 @@ class ProjectController extends Controller
             ['model' => 'required', 'task_id' => 'required', 'user_id' => 'required']
         );
         $project = Project::create($validatedData);
-        $project->owner->notify((new projectCreated)
-                        ->delay(now()->addMinutes(1))
-                        ->onQueue('notifs'));
+        $project->owner->notify((new projectCreated)->delay(10));
         return redirect()->action('ProjectController@edit', ['id' => $project->id]);
     }
 
@@ -139,8 +135,9 @@ class ProjectController extends Controller
     public function update(Project $project)
     {
         $this->authorize('edit', $project);
+        // if ($project->status != 'posted')
         $project->posted();
-        $project->owner->notify(new ProjectPosted);
+        $project->owner->notify((new ProjectPosted)->delay(10)->onQueue('notifs'));
         return redirect()->action('ProjectController@create')->with('message', 'Task has been posted successfully. We will contact you shortly');
     }
 
@@ -155,7 +152,7 @@ class ProjectController extends Controller
     {
         $this->authorize('edit', $project);
         $project->cancelled();
-        $project->owner->notify(new ProjectCancelled);
+        $project->owner->notify((new ProjectCancelled)->delay(10)  ->onQueue('notifs'));
         return redirect()->action('ProjectController@create');
     }
 

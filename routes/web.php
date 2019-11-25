@@ -79,3 +79,4 @@ Route::name('project.')->group(function () {
 
 Route::post('/pay', 'RaveController@initialize')->name('pay');
 Route::post('/rave/callback', 'RaveController@callback')->name('callback');
+Route::get('/{project}/payment', 'RaveController@payment')->name('payment');

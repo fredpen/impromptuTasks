@@ -99,7 +99,7 @@
                         <div>
                             <h5>Tags:</h5>
                             @foreach ($project->task->subtasks as $subtask)
-                            <a href="{{route("project.usershow", $subtask->id)}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{$subtask->name}}" class="d-inline-block">
+                            <a href="{{route("project.usershow", $subtask->id)}}" data-toggle="tooltip" data-placement="top" data-original-title="{{$subtask->name}}" class="d-inline-block">
                             {{$subtask->name}}</a>
                             @endforeach
 
@@ -170,7 +170,7 @@
                                 @elseif(Auth::user()->hasApplied($project->id))
                                     <button type="button" class="btn btn-lg btn-secondary">You have applied for this task</button>
                                 @else
-                                    <a  style="cursor:pointer" onclick="submitResume()" class="btn btn-lg text-white btn-primary">Apply to Task</a>
+                                    <a onclick="submitForm('resume')" class="pointer btn btn-lg text-white btn-primary">Apply to Task</a>
                                 @endif
                             @endif
                         @endauth
@@ -188,9 +188,5 @@
     <script src="{{ asset('js/form.js') }}"></script>
     <script>
         var project_id = {{ $project-> id}};
-        function submitResume() 
-        {
-            $('#resume').submit();
-        }
     </script>
 @endsection

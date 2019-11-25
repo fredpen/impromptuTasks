@@ -1,5 +1,8 @@
 
-
+ function submitForm(elementID)
+ {
+    return $('#' + elementID).submit();
+ }
 
 function setErrorMess(message){
     let errorDiv = $('#postErrMess');

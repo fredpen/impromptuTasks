@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\Jobs\MarkAllNotificationAsRead;
 use App\Tasks;
 use App\User;
 use Illuminate\Http\Request;
@@ -134,11 +135,8 @@ class AccountController extends Controller
 
     public function notifications()
     {
-        $user =  Auth::user();
-        $allNotifications =  $user->notifications;
-        $unreadNotifications =  $user->unreadNotifications;
-        $user->unreadNotifications->markAsRead();
-        return view('notifications', compact('unreadNotifications', 'allNotifications'));
+        MarkAllNotificationAsRead::dispatch(Auth::user());
+        return view('notifications', ['allNotifications' =>  Auth::user()->notifications]);
     }
 
     public function myTasks()

@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Notifications;
-
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ProjectCancelled extends Notification implements ShouldQueue
 {
+    use Queueable;
+
+    public $tries = 3;
     /**
      * Create a new notification instance.
      *

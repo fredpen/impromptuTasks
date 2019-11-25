@@ -1,6 +1,5 @@
 <div class="tab-pane" id="basictab4">
     <div class="row">
-
         @if ($project->photos->count())
             <div class="card widget-flat col-md-12 mb-2">
                 <div class="card-body mb-3 pb-0 px-0" style="position: relative;">
