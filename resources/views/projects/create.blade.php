@@ -103,11 +103,16 @@
                                             <td>{{$project->created_at->diffForHumans()}}</td>
                                             <td><span class="badge badge-{{$project->color($project->status)}}">{{ucfirst($project->status)}}</span></td>
                                             <td>{{$project->budget}}</td>
+
                                             <td>
                                                 @if ($project->amount_paid)
                                                     <span class="badge badge-secondary">payment-verified </span>
                                                 @else
-                                                    <a href="{{ route('payment', $project->id) }}" class="badge badge-primary pointer"> make Payment </a>
+                                                    @if ($project->status == 'posted')
+                                                        <a href="{{ route('payment', $project->id) }}" class="badge badge-primary pointer"> make Payment </a>
+                                                    @else
+                                                        <span class="badge badge-secondary">Awaiting posting </span>
+                                                    @endif
                                                 @endif
                                             </td>
                                             <td>
