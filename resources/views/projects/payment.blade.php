@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="container">
+    @if (session('message'))
+        @include('partials.notifs')
+    @endif
+
     <div class="mt-4 row flex-wrap justify-content-center">
         <div class="d-flex flex-wrap col-sm-12 justify-content-between mb-4">
             
@@ -56,6 +60,7 @@
                 @endif
                 
                 <input type="hidden" name="payment_method" value="both" /> 
+                 <input type="hidden" name="ref" value="rave_5dde17ce79907" /> 
                 <input type="hidden" name="description" value="{{$project->title}}" /> 
                 <input type="hidden" name="country" value="{{$project->country_id ? $project->country->name : 'NG'}}" /> 
                 <input type="hidden" name="currency" value="NGN" /> 

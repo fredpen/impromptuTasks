@@ -15,6 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('status')->default(0)->nullable()->index();
             $table->string('chargecode');
             $table->string('paymenttype');
             $table->string('chargedamount')->index();

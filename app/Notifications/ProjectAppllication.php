@@ -42,7 +42,7 @@ class ProjectAppllication extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Hi ' . Auth::user()->name . ",")
+            ->greeting('Hi ' . $notifiable->name . ",")
             ->line('This is to notify you that your application is successful, We will contact you soonest. ')
             ->action('ImpromptuTasks', route('home'))
             ->line('Thanks for using impromptuTasks!');

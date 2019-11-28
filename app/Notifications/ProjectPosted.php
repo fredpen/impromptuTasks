@@ -42,7 +42,7 @@ class ProjectPosted extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->greeting('Hi ' . Auth::user()->name . ",")
+                    ->greeting('Hi ' . $notifiable->name . ",")
                     ->line('This is to notify you that your new project is live, We will contact you when a Task master takes up your task. ')
                     ->action('impromptuTasks', route('home'))
                     ->line('Thanks for using impromptuTasks!');

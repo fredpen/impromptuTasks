@@ -2,19 +2,15 @@
 
 namespace App\Notifications;
 
-use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Bus\Queueable;
-
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class projectCreated extends Notification implements ShouldQueue
+class AdminPaymentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $user;
     public $tries = 3;
 
     /**
@@ -24,7 +20,7 @@ class projectCreated extends Notification implements ShouldQueue
      */
     public function __construct()
     {
-        $this->user = Auth::user();
+        //
     }
 
     /**
@@ -35,7 +31,7 @@ class projectCreated extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -47,10 +43,9 @@ class projectCreated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Hi ' . $notifiable->name . ",")
-            ->line('This is to notify you that your new project has been created, Finish the process, Task Master awaits')
-            ->action('impromptuTasks', route('home'))
-            ->line('Thanks for using impromptuTasks!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -62,8 +57,7 @@ class projectCreated extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title' => "Hi, Your Project has been created",
-            'subject' => 'This is to notify you that your new project has been created, Fill the necessary fields and post it, Task Master awaits'
+            //
         ];
     }
 }

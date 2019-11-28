@@ -21,7 +21,6 @@ class ProjectAssignment extends Notification implements ShouldQueue
     public function __construct($project_id)
     {
         $this->project_id = $project_id;
-        $this->user = Auth::user();
     }
 
     /**
