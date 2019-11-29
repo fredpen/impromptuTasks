@@ -44,45 +44,47 @@
                         <h5>Task Overview:</h5>
                         <p class="text-muted mb-2"> {{$project->description}} </p>
 
+                       
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="mb-4">
-                                    <h5>Number of Task master needed</h5>
-                                    <p> {{ ucfirst($project->num_of_taskMaster)}} </p>
+                                <div class="mb-2">
+                                    <h5>Task Model</h5>
+                                    <p> {{ ucfirst($project->model)}} </p>
                                 </div>
                             </div>
+                          
 
                             <div class="col-md-4">
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <h5>Proposed Start Date</h5>
-                                    <p> {{$project->start_date}} </p>
+                                    <p> {{$project->proposed_start_date}} </p>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <h5>Duration</h5>
                                     <p> {{$project->duration}} </p>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <h5>Posted On</h5>
                                     <p> {{$project->posted_on}} </p>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <h5>Budget</h5>
-                                    <p>$15,800</p>
+                                    <p>{{$project->budget}}</p>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
-                                <div class="mb-3">
-                                    <h5>Task Model</h5>
-                                    <p> {{ ucfirst($project->model)}} </p>
+                                <div class="mb-2">
+                                    <h5>No of Task master needed</h5>
+                                    <p> {{ ucfirst($project->num_of_taskMaster)}} </p>
                                 </div>
                             </div>
 
@@ -95,21 +97,9 @@
                                 </div>
                             @endif
                         </div>
-
-                        <div>
-                            <h5>Tags:</h5>
-                            @foreach ($project->task->subtasks as $subtask)
-                            <a href="{{route("project.usershow", $subtask->id)}}" data-toggle="tooltip" data-placement="top" data-original-title="{{$subtask->name}}" class="d-inline-block">
-                            {{$subtask->name}}</a>
-                            @endforeach
-
-                        </div>
-
-
-                       
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col -->
+                    </div>
+                </div> 
+            </div>
 
             <div class="col-md-4">
                 <div class="card">
@@ -147,7 +137,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title mb-3">Resume</h5>
+                        <h5 class="card-title mb-1">Resume</h5>
                             <div class="p-0">
                                 <div class="row align-items-center">
                                     <div class="col-sm-12">

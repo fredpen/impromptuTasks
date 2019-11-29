@@ -58,6 +58,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        $projects = Project::where('status', 'deleted')->get();
         return view('projects.index', compact('projects'));
     }
 
@@ -71,12 +72,11 @@ class ProjectController extends Controller
             'AccountController@myTasks')->with('message', 'Task Masters can not post Tasks. To post tasks, create a Task Giver account or swap your current Account'
         );
 
-        $projects = Project::where([['user_id', '=', Auth::id()], ['status', '!=', 'deleted']])
-                    ->get();
+        $projects = Project::where([['user_id', '=', Auth::id()], ['status', '!=', 'deleted']])->get();
         $tasks = Tasks::pluck('name', 'id');
         return view('projects.create', compact('projects', 'tasks'));
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *

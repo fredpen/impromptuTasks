@@ -19,7 +19,7 @@ class ProjectPolicy
      */
     public function edit(User $user, Project $project)
     {
-        return $user->id === $project->user_id;
+        return $user->id === $project->user_id && ! count($project->isAssigned());
     }
 
     public function before($user)

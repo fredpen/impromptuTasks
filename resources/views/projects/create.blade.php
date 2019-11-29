@@ -133,7 +133,12 @@
                                                 @endif
                                             </td>
                                             <td title="Edit this Task">
-                                                <a class="action-icon" href="{{ route('projects.edit', $project->id) }} "><i class="mdi mdi-pencil text-primary"></i></a>
+                                                @if (count($project->isAssigned()))
+                                                    <span title="The task is in locked mode cos it has already been assigned to a task master" class="badge badge-secondary">Assigned</span>
+                                                @else
+                                                    <a class="action-icon" href="{{ route('projects.edit', $project->id) }} "><i class="mdi mdi-pencil text-primary"></i></a>
+                                                @endif
+                                                
                                             </td>
                                             <td onclick="submitForm('{{$project->id}}')" title="Delete this Task">
                                                 <a class="pointer action-icon"><i class="mdi mdi-delete"></i></a>

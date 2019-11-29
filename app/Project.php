@@ -58,6 +58,10 @@ class Project extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function isAssigned()
+    {
+        return DB::table('project_assigneduser')->where('project_id', $this->id)->get('id');
+    }
 
     public function hasBeenAssigned($user_id)
     {

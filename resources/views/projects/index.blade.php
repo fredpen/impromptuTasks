@@ -12,7 +12,7 @@
                 <div class="page-title text-left w-100">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
-                        <li class="breadcrumb-item active">{{$taskName}}</li>
+                        {{-- <li class="breadcrumb-item active">{{$taskName}}</li> --}}
                     </ol>
                 </div>
 
