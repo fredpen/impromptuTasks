@@ -322,6 +322,7 @@
         </div>
         <script src="{{ asset('js/all.js') }}"></script>
         <script src="{{ asset('js/custom.js') }}"></script>
+        <script src="{{ asset('js/vue.js') }}"></script>
         @yield('scripts')
     </body>
 </html>

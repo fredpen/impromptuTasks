@@ -10,6 +10,7 @@
                     <ul class="list-unstyled">
                         <li>This is happening because of one of the following
                             <ul>
+                                <li>You have not finished creating your profile</li>
                                 <li>You just finished registration and we have not verified your credentials</li>
                                 <li>You violate the <a href="#">Rules and Regulation </a>of impromptuTasks</li>
                             </ul>

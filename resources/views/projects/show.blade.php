@@ -142,7 +142,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-sm-12">
                                         {!! Form::open(['action' => ['ProjectshowController@apply', $project->id ], 'method' => 'POST', 'id' => 'resume']) !!}
-                                            <textarea name="resume" data-toggle="maxlength" class="mb-3 form-control" data-threshold="1000" maxlength="1000" rows="10" placeholder="Say why this task should be assigned to you in few words as possible"></textarea>
+                                            <textarea name="resume" data-toggle="maxlength" class="mb-3 form-control" data-threshold="1000" maxlength="1000" rows="5" placeholder="Say why this task should be assigned to you in few words as possible"></textarea>
                                             {!! Form::hidden('project_id', $project->id) !!}
                                             {!! Form::hidden('user_id', Auth::id()) !!}
                                         {!! Form::close() !!}

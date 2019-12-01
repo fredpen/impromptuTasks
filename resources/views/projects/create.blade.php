@@ -77,45 +77,27 @@
                     <div class="card-body">
                         {{-- <h5 class="header-title mb-3">Task history</h5> --}}
                         <div class="table-responsive">
-                            <table class="table table-hover table-centered mb-0">
-                                <thead class="thead-dar k">
+                            <table class="table table-hosver table-centered mb-0">
+                                <thead class="thead-light">
                                     <tr>
-                                        <th>Task Title / Task Class</th>
-                                        <th> Model </th>
-                                        <th>Created on</th>
+                                        <th>Task Title <hr> Edit / View</th>
+                                        <th class=""> Model </th>
+                                        <th class="">Created on</th>
                                         <th>Status</th>
-                                        <th>Budget(NGN)</th>
+                                        <th class="">Budget(NGN)</th>
                                         <th>Payment</th>
-                                        <th title="Note: Only Task that has been posted can be view in live mode"> Live mode</th>   
-                                        <th>Edit</th>   
                                         <th>Delete</th>   
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($projects as $project)
                                         <tr>
-                                            <td title="{{$project->title}}"> 
+                                            <td  title="{{$project->title}}"> 
                                                 <a class="" href="{{ route('projects.edit', $project->id) }}">
                                                     {{$project->title ? Str::limit($project->title, 50) : $project->task->name}}
                                                 </a>
-                                            </td>
-                                            <td>{{ucfirst($project->model)}}</td>
-                                            <td>{{$project->created_at->diffForHumans()}}</td>
-                                            <td><span class="badge badge-{{$project->color($project->status)}}">{{ucfirst($project->status)}}</span></td>
-                                            <td>{{$project->budget}}</td>
-
-                                            <td>
-                                                @if ($project->amount_paid)
-                                                    <span class="badge badge-secondary">payment-verified </span>
-                                                @else
-                                                    @if ($project->status == 'posted')
-                                                        <a href="{{ route('payment', $project->id) }}" class="badge badge-primary pointer"> make Payment </a>
-                                                    @else
-                                                        <span class="badge badge-secondary">Awaiting posting </span>
-                                                    @endif
-                                                @endif
-                                            </td>
-                                            <td>
+                                                <hr>
+                                                
                                                 @if ($project->status == 'Draft')
                                                     <a 
                                                         title="Your Task is still a Draft, You can view your project in live mode after posting it" 
@@ -131,15 +113,30 @@
                                                         <i class="mdi mdi-eye-circle text-primary"></i>
                                                     </a>
                                                 @endif
-                                            </td>
-                                            <td title="Edit this Task">
+
                                                 @if (count($project->isAssigned()))
                                                     <span title="The task is in locked mode cos it has already been assigned to a task master" class="badge badge-secondary">Assigned</span>
                                                 @else
                                                     <a class="action-icon" href="{{ route('projects.edit', $project->id) }} "><i class="mdi mdi-pencil text-primary"></i></a>
                                                 @endif
-                                                
                                             </td>
+                                            <td class="">{{ucfirst($project->model)}}</td>
+                                            <td class="">{{$project->created_at->diffForHumans()}}</td>
+                                            <td ><span class="badge badge-{{$project->color($project->status)}}">{{ucfirst($project->status)}}</span></td>
+                                            <td class="">{{$project->budget}}</td>
+
+                                            <td>
+                                                @if ($project->amount_paid)
+                                                    <span class="badge badge-secondary">payment-verified </span>
+                                                @else
+                                                    @if ($project->status == 'posted')
+                                                        <a href="{{ route('payment', $project->id) }}" class="badge badge-primary pointer"> make Payment </a>
+                                                    @else
+                                                        <span class="badge badge-secondary">Awaiting posting </span>
+                                                    @endif
+                                                @endif
+                                            </td>
+                                          
                                             <td onclick="submitForm('{{$project->id}}')" title="Delete this Task">
                                                 <a class="pointer action-icon"><i class="mdi mdi-delete"></i></a>
                                             </td>

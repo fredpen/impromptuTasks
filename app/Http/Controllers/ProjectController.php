@@ -47,7 +47,7 @@ class ProjectController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except(['show', 'index']);
+        $this->middleware(['auth', 'verified', 'isActive'])->except(['show', 'index']);
     }
 
 
@@ -64,17 +64,14 @@ class ProjectController extends Controller
 
     public function create() 
     {
-        if (!Auth::user()->isActive()) return redirect()->action(
-            'AccountController@edit', Auth::id())->with('message', 'Kindly Complete your profile to have full access'
-        );
-
         if (Auth::user()->isTaskMaster()) return redirect()->action(
-            'AccountController@myTasks')->with('message', 'Task Masters can not post Tasks. To post tasks, create a Task Giver account or swap your current Account'
+            'AccountController@myTasks')->with('message', 'Task Masters can not post Tasks. To post tasks, create a Task Giver account'
         );
 
-        $projects = Project::where([['user_id', '=', Auth::id()], ['status', '!=', 'deleted']])->get();
-        $tasks = Tasks::pluck('name', 'id');
-        return view('projects.create', compact('projects', 'tasks'));
+        return view('projects.create', [
+            'projects' => Project::where([['user_id', '=', Auth::id()], ['status', '!=', 'deleted']])->get(),
+            'tasks' => Tasks::pluck('name', 'id')
+        ]);
     }
     
     /**

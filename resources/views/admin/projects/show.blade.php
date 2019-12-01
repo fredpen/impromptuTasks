@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    @include('partials.jumbotron', ['pageTitle' => ' project('.$project->id . ')'])
+    {{-- @include('partials.jumbotron', ['pageTitle' => ' project('.$project->id . ')']) --}}
 
     <div class="row mt-3">
 
@@ -63,9 +63,7 @@
             </div>
         @endif
 
-        <div class="col-md-8 mt-5">
-            <!-- project card -->
-
+        <div class="col-md-8 mt-3">
             <div class="card d-block">
                 <div class="card-body">
 
@@ -79,55 +77,53 @@
                         <span class="badge badge-secondary mb-3"> {{$project->model}}</span>
                     </div>
 
-
-
                     <h5>Task Overview:</h5>
                     <p class="text-muted mb-2"> {{$project->description}} </p>
 
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="mb-4">
+                            <div class="mb-2">
                                 <h5>Number of Task master needed</h5>
                                 <p> {{ ucfirst($project->num_of_taskMaster)}} </p>
                             </div>
                         </div>
 
                         <div class="col-md-4">
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <h5>Proposed Start Date</h5>
                                 <p> {{$project->start_date}} </p>
                             </div>
                         </div>
 
                         <div class="col-md-4">
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <h5>Duration</h5>
                                 <p> {{$project->duration}} </p>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <h5>Posted On</h5>
                                 <p> {{$project->posted_on}} </p>
                             </div>
                         </div>
 
                         <div class="col-md-4">
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <h5>Budget</h5>
                                 <p>$15,800</p>
                             </div>
                         </div>
 
                         <div class="col-md-4">
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <h5>Task Model</h5>
                                 <p> {{ ucfirst($project->model)}} </p>
                             </div>
                         </div>
 
                             <div class="col-md-4">
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <h5>Task | Subtask category</h5>
                                 <p> {{ ucfirst($project->task->name)}} | {{ ucfirst($project->subtask->name)}}</p>
                             </div>
@@ -135,7 +131,7 @@
 
                         @if ($project->model == "onsite")
                             <div class="col-md-6">
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <h5>Task Location</h5>
                                     <p> {{ ucfirst($project->location . ", " . $project->city->name . ", " . $project->region->name)}} </p>
                                 </div>
@@ -144,9 +140,9 @@
                     </div>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
-        </div> <!-- end col -->
+        </div>
 
-        <div class="col-md-4 mt-5">
+        <div class="col-md-4 mt-3">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Files</h5>
