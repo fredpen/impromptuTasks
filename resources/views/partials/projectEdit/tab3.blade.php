@@ -106,15 +106,3 @@
     </div>
 </div>
 
-@section('scripts')
-<script>
-     var project_id = {{ $project-> id}};
-    function submitForm(element)
-    {
-        if ($("#budget").val().length < 4) return setErrorMess("Budget can not be less than NGN 1000");
-        return $('#' + element).submit();
-    }
-</script>
-    
-@endsection
-

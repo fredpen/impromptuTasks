@@ -68,11 +68,16 @@ class ProjectController extends Controller
             'AccountController@myTasks')->with('message', 'Task Masters can not post Tasks. To post tasks, create a Task Giver account'
         );
 
+        $projects = Project::where([['user_id', '=', Auth::id()], ['status', '!=', 'deleted']])->get();
+
         return view('projects.create', [
-            'projects' => Project::where([['user_id', '=', Auth::id()], ['status', '!=', 'deleted']])->get(),
+            'draftProjects' => $this->draftProjects($projects),
+            'postedProjects' => $this->postedProjects($projects),
             'tasks' => Tasks::pluck('name', 'id')
         ]);
     }
+
+   
     
     /**
      * Store a newly created resource in storage.
@@ -132,7 +137,6 @@ class ProjectController extends Controller
     public function update(Project $project)
     {
         $this->authorize('edit', $project);
-        // if ($project->status != 'posted')
         $project->posted();
         $project->owner->notify((new ProjectPosted)->delay(10)->onQueue('notifs'));
         return redirect()->action('ProjectController@create')->with('message', 'Task has been posted successfully. We will contact you shortly');
@@ -149,7 +153,7 @@ class ProjectController extends Controller
     {
         $this->authorize('edit', $project);
         $project->cancelled();
-        $project->owner->notify((new ProjectCancelled)->delay(10)  ->onQueue('notifs'));
+        $project->owner->notify((new ProjectCancelled)->delay(10)->onQueue('notifs'));
         return redirect()->action('ProjectController@create');
     }
 
@@ -162,6 +166,27 @@ class ProjectController extends Controller
         if ($request->field == 'task_id') return SubTask::where(['task_id' => $request->value])->get(['id', 'name']);
         if ($request->field == 'country_id') return Region::where(['country_id' => $request->value])->get(['id', 'name']);
         if ($request->field == 'region_id') return City::where(['region_id' => $request->value])->get(['id', 'name']);
+    }
+
+    private function draftProjects($array)
+    {
+        return $array->filter(function($items) {
+            return $items->status == 'Draft';
+        });
+    }
+
+    private function postedProjects($array)
+    {
+        return $array->filter(function($items) {
+            return $items->status == 'posted';
+        });
+    }
+
+    private function notDraftProjects($array)
+    {
+        return $array->filter(function($items) {
+            return $items->status != 'Draft';
+        });
     }
 
 

@@ -54,7 +54,7 @@
             <div class="card cta-box bg-primary text-white mt-1">
                 <div class="card-body">
                     <div class="text-center">
-                        <h6 class="m-0 font-weight-light cta-box-title">Post your task and get <br> task masters assigned to you immediately</h6>
+                        <h6 class="m-0 font-weight-light cta-box-title">Post your task and get <br> task projects assigned to you immediately</h6>
                         <button type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#fredTaskMode">Get started</button>
                     </div>
                 </div>
@@ -62,95 +62,133 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12 mb-3">
-            @if (count($projects))
-                <h5 class="card-header">{{count($projects)}} Task{{count($projects) > 1 ? "s" : ""}} found</h5>
-            @else
-                <h5 class="card-header">You do not have any task at the moment, Get started</h5>
-            @endif
-        </div>
-
+    <div id="root" class="row">
         <div class="col-lg-12">
-            @if (count($projects))
-                <div class="card">
-                    <div class="card-body">
-                        {{-- <h5 class="header-title mb-3">Task history</h5> --}}
-                        <div class="table-responsive">
-                            <table class="table table-hosver table-centered mb-0">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>Task Title <hr> Edit / View</th>
-                                        <th class=""> Model </th>
-                                        <th class="">Created on</th>
-                                        <th>Status</th>
-                                        <th class="">Budget(NGN)</th>
-                                        <th>Payment</th>
-                                        <th>Delete</th>   
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($projects as $project)
-                                        <tr>
-                                            <td  title="{{$project->title}}"> 
-                                                <a class="" href="{{ route('projects.edit', $project->id) }}">
-                                                    {{$project->title ? Str::limit($project->title, 50) : $project->task->name}}
-                                                </a>
-                                                <hr>
-                                                
-                                                @if ($project->status == 'Draft')
-                                                    <a 
-                                                        title="Your Task is still a Draft, You can view your project in live mode after posting it" 
-                                                        class="action-icon">
-                                                        <i class="mdi mdi-eye-circle text-muted"></i>
-                                                    </a>
-                                                @else
-                                                    <a 
-                                                        data-toggle="tooltip" 
-                                                        data-original-title="View this Task as a Task Master would see it"
-                                                        class="action-icon" 
-                                                        href="{{ route('projects.show', $project->id) }}">
-                                                        <i class="mdi mdi-eye-circle text-primary"></i>
-                                                    </a>
-                                                @endif
 
-                                                @if (count($project->isAssigned()))
-                                                    <span title="The task is in locked mode cos it has already been assigned to a task master" class="badge badge-secondary">Assigned</span>
-                                                @else
-                                                    <a class="action-icon" href="{{ route('projects.edit', $project->id) }} "><i class="mdi mdi-pencil text-primary"></i></a>
-                                                @endif
-                                            </td>
-                                            <td class="">{{ucfirst($project->model)}}</td>
-                                            <td class="">{{$project->created_at->diffForHumans()}}</td>
-                                            <td ><span class="badge badge-{{$project->color($project->status)}}">{{ucfirst($project->status)}}</span></td>
-                                            <td class="">{{$project->budget}}</td>
+            <div id="accordion" class="custom-accordion mb-4">
 
-                                            <td>
-                                                @if ($project->amount_paid)
-                                                    <span class="badge badge-secondary">payment-verified </span>
-                                                @else
-                                                    @if ($project->status == 'posted')
-                                                        <a href="{{ route('payment', $project->id) }}" class="badge badge-primary pointer"> make Payment </a>
-                                                    @else
-                                                        <span class="badge badge-secondary">Awaiting posting </span>
-                                                    @endif
-                                                @endif
-                                            </td>
-                                          
-                                            <td onclick="submitForm('{{$project->id}}')" title="Delete this Task">
-                                                <a class="pointer action-icon"><i class="mdi mdi-delete"></i></a>
-                                            </td>
-                                            {!! Form::open(['id' => $project->id, 'method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id]]) !!}
-                                                {!! Form::hidden('project_id', $project->id) !!}
-                                            {!! Form::close() !!}
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="card mb-3">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="m-0">
+                            <a class="custom-accordion-title d-block pt-2 pb-2" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                {{count($draftProjects)}} Draft Project{{(count($draftProjects) > 1) ? "s" : ""}}
+                                <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
+                        @if (count($draftProjects))
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-centered m-0"">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Task Title / Task type</th>
+                                                <th> Model </th>
+                                                <th>Updated </th>
+                                                <th>Budget</th>
+                                                <th>Delete</th>   
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($draftProjects as $project)
+                                                <tr>
+                                                    <td  title="{{$project->title}}"> 
+                                                        <a class="" href="{{ route('projects.edit', $project->id) }}">
+                                                            {{$project->title ? Str::limit($project->title, 50) : $project->task->name}}
+                                                            <i class="mdi mdi-pencil text-primary"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="">{{ucfirst($project->model)}}</td>
+                                                    <td class="">{{$project->updated_at->diffForHumans()}}</td>
+                                                    <td>
+                                                        @if ($project->budget)
+                                                            <span class="badge badge-secondary">{{$project->budget}} </span>
+                                                        @endif
+                                                    </td>
+                                                    
+                                                    <td onclick="submitForm('{{$project->id}}')" title="Delete this Task">
+                                                        <a class="pointer action-icon"><i class="mdi mdi-delete"></i></a>
+                                                    </td>
+
+                                                    {!! Form::open(['id' => $project->id, 'method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id]]) !!}
+                                                        {!! Form::hidden('project_id', $project->id) !!}
+                                                    {!! Form::close() !!}
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @else
+                            <p class="m-4">You do not have any draft projects</p>
+                        @endif
                     </div>
                 </div> 
-            @endif
+
+                <div class="card mb-0">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="m-0">
+                            <a class="custom-accordion-title d-block pt-2 pb-2" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                {{count($postedProjects)}} Posted Project{{(count($postedProjects) > 1) ? "s" : ""}}
+                                <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
+                            </a>
+                        </h5>
+                    </div>
+                    
+                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+                        @foreach ($postedProjects as $project)
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body col-sm-12">
+                                        <h5 class="mt-0"> 
+                                            <a title="Edit Task" class="" href=" {{ route('projects.show', $project->id) }} ">{{ $project->title }} </a>
+
+                                            <div class="h4 m-0 float-right">
+                                                <a class=" my-0 mx-1" href="{{route('projects.edit', $project->id)}}"><i class="mdi mdi-pencil text-primary"></i></a>
+                                                <a class="my-0 mx-1" href="{{route('projects.show', $project->id)}}"><i class="mdi mdi-eye text-primary"></i></a>
+                                                <span onclick="submitForm({{$project->id}})" class="pointer my-0 mx-1"><i class="mdi mdi-delete text-danger"></i></span>
+                                            </div>
+                                            {!! Form::open(['id' => $project->id, 'method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id]]) !!}
+                                                {!! Form::hidden('project_id', $project->id) !!}
+                                            {!! Form::close() !!} 
+
+                                                
+
+                                            <span class="d-block h5"  class=""><i class="mdi mdi-briefcase-account"></i> {{ $project->title }}     </span>
+                                            {{-- <span class="d-block"  class=""><i class="mdi mdi-flag"></i> {{ $project->region->name . ", " . $project->country->name }}     </span> --}}
+                                        </h5>
+                                    </div>
+                                </div>
+
+                                <div class="media-body col-sm-12 mt-3">
+                                    <p class="font-13 text-dark mb-2">
+                                        <span class="mb-2 badge badge-light badge-pill" style="font-size:100%"> {{ $project->experience }} </span>
+                                    </p>
+
+                                    <p class="font-13"> {{ Str::limit($project->description, 300) }}</p>
+                                   
+                            
+                                    <ul class="mb-0 list-inline">
+                                        <li class="list-inline-item mr-3">
+                                            <h5 class="mb-1"> NGN {{ $project->budget ?  $project->budget : "0"}}</h5>
+                                            <p class="mb-0 font-13">Total Budget</p>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <h5 class="mb-1"> {{ $project->num_of_taskMaster ?  $project->num_of_taskMaster : "0"}}</h5>
+                                            <p class="mb-0 font-13">Number of Orders</p>
+                                        </li>
+                                    </ul>
+                                    
+                                    <a href="{{ route('account.show', $project->id) }}" class="mt-3 btn btn-primary">View {{$project->title}}'s Profile</a>
+                                </div>
+                                </div>
+                            </div>
+                            <hr>
+                        @endforeach
+                    </div>
+                </div> 
+            </div> 
         </div>
     </div>
 @endsection
@@ -165,5 +203,6 @@
             }
             $('#taskModelForm').submit();
         }
+
     </script>
 @endsection

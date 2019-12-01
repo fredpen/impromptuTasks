@@ -5,7 +5,7 @@
 @endif
 
 @section('content')
-<div class="container">
+<div class="container"  >
 
     {{-- errorBag --}}
     <div id="postingModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel">
@@ -20,7 +20,7 @@
 
     
 
-    <div class="row justify-content-center align-items-center mx-0">
+    <div id="root" class="row justify-content-center align-items-center mx-0">
 
         <div class="col-md-10 mt-1 mb-3">
             <div class="page-title-right">
@@ -82,7 +82,7 @@
                     @include('partials.projectEdit.tab2')
 
                     @include('partials.projectEdit.tab3')
-
+                  
                     @include('partials.projectEdit.tab4')
 
 
@@ -121,40 +121,41 @@
                 </div>
             </div>
         </div>
-           
+       
     </div>
 </div>
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/form.js') }}"></script>
-<script src="{{ asset('js/dropzone.js') }}"></script>
-<script>
-    var project_id = {{ $project-> id}};
-    var is_onsite = {{$project->model == "onsite" ? 1 : 0}};
+    <script src="{{ asset('js/form.js') }}"></script>
+    <script src="{{ asset('js/dropzone.js') }}"></script>
+    <script>
+        var project_id = {{ $project-> id}};
+        var is_onsite = {{$project->model == "onsite" ? 1 : 0}};
 
-
-    Dropzone.autoDiscover = false;
-    var dropzone = new Dropzone('#myAwesomeDropzone', {
-        parallelUploads: 1,
-        thumbnailHeight: 120,
-        thumbnailWidth: 120,
-        maxFilesize: 1, //1mb
-        maxFiles: 3,
-        filesizeBase: 1000,
-        thumbnail: function (file, dataUrl) {
-            if (file.previewElement) {
-                file.previewElement.classList.remove("dz-file-preview");
-                var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-                for (var i = 0; i < images.length; i++) {
-                    var thumbnailElement = images[i];
-                    thumbnailElement.alt = file.name;
-                    thumbnailElement.src = dataUrl;
+        Dropzone.autoDiscover = false;
+        var dropzone = new Dropzone('#myAwesomeDropzone', {
+            parallelUploads: 1,
+            thumbnailHeight: 120,
+            thumbnailWidth: 120,
+            maxFilesize: 1, //1mb
+            maxFiles: 3,
+            filesizeBase: 1000,
+            thumbnail: function (file, dataUrl) {
+                if (file.previewElement) {
+                    file.previewElement.classList.remove("dz-file-preview");
+                    var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                    for (var i = 0; i < images.length; i++) {
+                        var thumbnailElement = images[i];
+                        thumbnailElement.alt = file.name;
+                        thumbnailElement.src = dataUrl;
+                    }
+                    setTimeout(function () {file.previewElement.classList.add("dz-image-preview"); }, 1);
                 }
-                setTimeout(function () {file.previewElement.classList.add("dz-image-preview"); }, 1);
             }
-        }
-    });
+        });
 
-</script>
+      
+
+    </script>
 @endsection

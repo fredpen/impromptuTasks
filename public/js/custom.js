@@ -1,6 +1,7 @@
 
  function submitForm(elementID)
  {
+    if (elementID == 'paymentForm' && $("#budget").val().length < 4) return setErrorMess("Budget can not be less than NGN 1000");
     return $('#' + elementID).submit();
  }
 
@@ -30,11 +31,10 @@ function postProject(target, model) {
     $(target).siblings('form').submit();
     // window.location.href = "/projects/" + project_id + "/post/true";
 }
-
 function updateTaskModel(target, field) {
     $('#taskModelModalButton').text($('#model :selected').text());
     updateProject(target, field);
-    window.location.reload();
+    // window.location.reload();
 }
 
 function updateCountry(target, field) {
@@ -129,7 +129,11 @@ function updateProject(target, field) {
                 for (var i = response.length - 1; i >= 0; i--) {
                     $('#city_id').append('<option value="' + response[i].id + '">' + response[i].name + '</option>')
                 }
-            }
+            } 
+
+            if (field == "model") {
+                return window.location.reload();
+            } 
 
             if (field == "country_id") {
                 $('#region_id').append('<option value="0">Select Region/State</option>')

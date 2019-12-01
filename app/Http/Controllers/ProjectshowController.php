@@ -54,16 +54,16 @@ class ProjectshowController extends Controller
 
     public function show(Tasks $task)
     {
-        $taskName = $task->name;
         if (Auth::user() && Auth::user()->isTaskGiver()) { //show task masters if its a task giver
-            $task = Tasks::where('id', $task->id)->with('masters')->get();
-            return view('taskMaster.index', compact('task', 'taskName'));
+            return view('taskMaster.index', [
+                'taskName' => $task->name,
+                'task' => Tasks::where('id', $task->id)->with('masters')->get()
+            ]);
         }
 
-        $projects = Project::where([ //show task that are posted
-            ['task_id', '=', $task->id],
-            ['status', '=', 'posted']
-        ])->get();
-        return view('projects.index', compact('projects', 'taskName'));
+        return view('projects.index', [
+            'taskName' => $task->name,
+            'projects' => Project::where([['task_id', '=', $task->id], ['status', '=', 'posted'] ])->get()
+        ]);
     }
 }

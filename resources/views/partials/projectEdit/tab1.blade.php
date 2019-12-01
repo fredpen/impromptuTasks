@@ -63,6 +63,7 @@
                         <option {{$project->model == "onsite" ? "selected" : ""}} value="onsite">Onsite</option>
                         <option {{$project->model == "remote" ? "selected" : ""}} value="remote">Remote</option>
                     </select>
+                
                 </div>
             </div>
             <div class="modal-footer">
@@ -80,7 +81,6 @@
                 <div class="card-body pt-3 pb-0 px-0" style="position: relative;">
                     <div class="col-sm-12 pb-3">
                         {!! Form::label('title', 'Enter the title for your Task', ['class' => 'd-block mt-0 h4']) !!}
-                        {{-- <h6 class="text d-block mt-2">Sample: </h6> --}}
                         <ul class="text-muted h6 mb-3">
                             <li>Experience Plumber needed for a 3 hours job</li>
                             <li>Female French Tutor for a Grade 5 student</li>
