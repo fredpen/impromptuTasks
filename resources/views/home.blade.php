@@ -49,7 +49,7 @@
                                     $subTaskString = $subTaskString . $subtask->name . ", ";
                                 }
                             @endphp
-                            <p class="text-muted font-13 mb-3"><a href="{{ route('project.usershow', $task->id) }}" class="font-weight-bold text-muted">{{ ucwords(str_limit($subTaskString, 100)) }}</a>
+                            <p class="text-muted  mb-3"><a href="{{ route('project.usershow', $task->id) }}" class="font-weight-bold text-muted">{{ ucwords(str_limit($subTaskString, 100)) }}</a>
                             </p>
 
                             <p class="mb-1">

@@ -149,11 +149,11 @@
                                                 <ul class="d-block mb-0 list-inline">
                                                     <li class="list-inline-item mr-3">
                                                         <h5 class="mb-1"> NGN {{ $project->budget ?  $project->budget : "0"}}</h5>
-                                                        <p class="mb-0 font-13">City</p>
+                                                        <p class="mb-0 ">City</p>
                                                     </li>
                                                     <li class="list-inline-item">
                                                         <h5 class="mb-1"> {{ $project->num_of_taskMaster ?  $project->num_of_taskMaster : "0"}}</h5>
-                                                        <p class="mb-0 font-13">Number of Orders</p>
+                                                        <p class="mb-0 ">Number of Orders</p>
                                                     </li>
                                                 </ul>
                                                     <span class="d-block h5">City: {{$project->city->name}} </span>
@@ -170,21 +170,21 @@
                                 </div>
 
                                 <div class="media-body col-sm-12 mt-3">
-                                    <p class="font-13 text-dark mb-2">
+                                    <p class=" text-dark mb-2">
                                         <span class="mb-2 badge badge-light badge-pill" style="font-size:100%"> {{ $project->experience }} </span>
                                     </p>
 
-                                    <p class="font-13"> {{ Str::limit($project->description, 300) }}</p>
+                                    <p class=""> {{ Str::limit($project->description, 300) }}</p>
                                    
                             
                                     <ul class="mb-0 list-inline">
                                         <li class="list-inline-item mr-3">
                                             <h5 class="mb-1"> NGN {{ $project->budget ?  $project->budget : "0"}}</h5>
-                                            <p class="mb-0 font-13">Total Budget</p>
+                                            <p class="mb-0 ">Total Budget</p>
                                         </li>
                                         <li class="list-inline-item">
                                             <h5 class="mb-1"> {{ $project->num_of_taskMaster ?  $project->num_of_taskMaster : "0"}}</h5>
-                                            <p class="mb-0 font-13">Number of Orders</p>
+                                            <p class="mb-0 ">Number of Orders</p>
                                         </li>
                                     </ul>
                                     
@@ -215,10 +215,12 @@
                                     <i class="h3 mdi mdi-fountain-pen-tip"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
-                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-delete mr-1"></i>Delete</a>
-                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-email-outline mr-1"></i>Invite</a>
-                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-exit-to-app mr-1"></i>Leave</a>
+                                    <a href="{{ route('projects.show', $project->id) }}" class="dropdown-item"><i class="mdi mdi-eye mr-1"></i>View</a>
+                                    <a href="{{ route('projects.edit', $project->id) }}" class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
+                                    <span onclick="submitForm('{{$project->id}}')"  class="dropdown-item"><i class="mdi mdi-delete mr-1"></i>delete</span>
+                                    {!! Form::open(['id' => $project->id, 'method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id]]) !!}
+                                        {!! Form::hidden('project_id', $project->id) !!}
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
                             <!-- project title-->
@@ -227,22 +229,24 @@
                             </h4>
                             <div class="badge badge-{{$project->color()}} mb-3">{{$project->status}}</div>
 
-                            <p class="text-muted font-13 mb-3">{{ Str::limit($project->description, 150) }}
+                            <p class="text-muted mb-2">{{ Str::limit($project->description, 150) }}
                                 <a href="{{route('projects.show', $project->id)}}" class="font-weight-bold text-primary">view more</a>
                             </p>
 
                             <!-- project detail-->
                             <p class="mb-1">
                                 <span class="pr-2 text-nowrap mb-2 d-inline-block">
-                                    <b>Budget: </b><i class="mdi mdi-currency-ngn text-muted"></i>{{$project->budget}}
+                                    Budget: <b class="text-dark text-capitalize"><i class="mdi mdi-currency-ngn"></i>{{$project->budget}}</b>
                                 </span>
-
+                                
                                 <span class="text-nowrap mb-2 d-inline-block">
-                                    <b>Model: </b> </i>{{$project->model}}
+                                    Model: <b class="text-dark text-capitalize">{{$project->model}}</b>
                                 </span>
                             </p>
+                            <p class="float-right"><small>updated {{$project->updated_at->diffForHumans()}}</small></p>
                         </div> <!-- end card-body-->
                         <ul class="list-group list-group-flush">
+                                
                             <li class="list-group-item p-3">
                                 @if ($project->amount_paid)
                                     <button type="button" class="btn btn-secondary">Payment verified</button>
