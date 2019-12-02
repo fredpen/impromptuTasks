@@ -98,12 +98,12 @@ class Project extends Model
         return $this->update(['status' => 'posted', 'posted_on' => $this->timeNow()]);
     }
 
-    public function color($color)
+    public function color()
     {
-        if ($color == 'Draft') return "secondary";
-        if ($color == 'posted') return "primary";
-        if ($color == 'completed') return "success";
-        if ($color == 'live') return "secondary";
+        if ($this->status == 'Draft') return "primary";
+        if ($this->status == 'posted') return "secondary";
+        if ($this->status == 'completed') return "success";
+        if ($this->status == 'live') return "secondary";
     }
 
 }

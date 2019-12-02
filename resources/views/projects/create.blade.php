@@ -50,29 +50,22 @@
     </div>
 
     <div class="row mt-2">
-        <div class="col-lg-4">
-            <div class="card cta-box bg-primary text-white mt-1">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h6 class="m-0 font-weight-light cta-box-title">Post your task and get <br> task projects assigned to you immediately</h6>
-                        <button type="button" class="mt-2 btn btn-sm btn-light btn-rounded" data-toggle="modal" data-target="#fredTaskMode">Get started</button>
-                    </div>
-                </div>
-            </div>
+        <div class="col-sm-4">
+            <button data-toggle="modal" data-target="#fredTaskMode" type="button" class="btn btn-danger btn-rounded my-3"><i class="mdi mdi-plus"></i> Create new Task</button>
         </div>
     </div>
 
     <div id="root" class="row">
+       
         <div class="col-lg-12">
-
             <div id="accordion" class="custom-accordion mb-4">
 
                 <div class="card mb-3">
                     <div class="card-header" id="headingOne">
                         <h5 class="m-0">
                             <a class="custom-accordion-title d-block pt-2 pb-2" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                {{count($draftProjects)}} Draft Project{{(count($draftProjects) > 1) ? "s" : ""}}
-                                <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
+                                Your Draft{{(count($draftProjects) > 1) ? "s" : ""}} ({{count($draftProjects)}})
+                                <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i>click to open</span>
                             </a>
                         </h5>
                     </div>
@@ -126,7 +119,7 @@
                     </div>
                 </div> 
 
-                <div class="card mb-0">
+                {{-- <div class="card mb-0">
                     <div class="card-header" id="headingTwo">
                         <h5 class="m-0">
                             <a class="custom-accordion-title d-block pt-2 pb-2" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -142,21 +135,36 @@
                                 <div class="media">
                                     <div class="media-body col-sm-12">
                                         <h5 class="mt-0"> 
-                                            <a title="Edit Task" class="" href=" {{ route('projects.show', $project->id) }} ">{{ $project->title }} </a>
-
                                             <div class="h4 m-0 float-right">
                                                 <a class=" my-0 mx-1" href="{{route('projects.edit', $project->id)}}"><i class="mdi mdi-pencil text-primary"></i></a>
                                                 <a class="my-0 mx-1" href="{{route('projects.show', $project->id)}}"><i class="mdi mdi-eye text-primary"></i></a>
                                                 <span onclick="submitForm({{$project->id}})" class="pointer my-0 mx-1"><i class="mdi mdi-delete text-danger"></i></span>
+                                                {!! Form::open(['id' => $project->id, 'method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id]]) !!}
+                                                    {!! Form::hidden('project_id', $project->id) !!}
+                                                {!! Form::close() !!} 
                                             </div>
-                                            {!! Form::open(['id' => $project->id, 'method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id]]) !!}
-                                                {!! Form::hidden('project_id', $project->id) !!}
-                                            {!! Form::close() !!} 
-
-                                                
-
-                                            <span class="d-block h5"  class=""><i class="mdi mdi-briefcase-account"></i> {{ $project->title }}     </span>
-                                            {{-- <span class="d-block"  class=""><i class="mdi mdi-flag"></i> {{ $project->region->name . ", " . $project->country->name }}     </span> --}}
+                                                    
+                                            <a href=" {{ route('projects.show', $project->id) }} ">{{ $project->title }} </a>
+                                            @if ($project->location)
+                                                <ul class="d-block mb-0 list-inline">
+                                                    <li class="list-inline-item mr-3">
+                                                        <h5 class="mb-1"> NGN {{ $project->budget ?  $project->budget : "0"}}</h5>
+                                                        <p class="mb-0 font-13">City</p>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <h5 class="mb-1"> {{ $project->num_of_taskMaster ?  $project->num_of_taskMaster : "0"}}</h5>
+                                                        <p class="mb-0 font-13">Number of Orders</p>
+                                                    </li>
+                                                </ul>
+                                                    <span class="d-block h5">City: {{$project->city->name}} </span>
+                                                    <span class="d-block h5">Region: {{$project->region->name}} </span>
+                                                    <span class="d-block h5"> {{$project->country->name}}  </span>
+                                                    <div class="d-block h5"><i class="mdi mdi-home"></i> Location:</div>
+                                                    <div>
+                                                            <span class="d-block h5"> {{$project->location . ", " . $project->city->name}} </span>
+                                                            <span class="d-block h5"> {{$project->country->name}}  </span>
+                                                    </div>
+                                            @endif
                                         </h5>
                                     </div>
                                 </div>
@@ -187,9 +195,66 @@
                             <hr>
                         @endforeach
                     </div>
-                </div> 
+                </div>  --}}
             </div> 
         </div>
+
+        <div class="col-sm-12 mb-3 text-dark fade show" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="m-2">{{count($notDraftProjects)}} Posted Project{{(count($notDraftProjects) > 1) ? "s" : ""}}</strong>
+            </div>
+        </div>
+
+        @if (count($notDraftProjects))
+            @foreach ($notDraftProjects as $project)
+                <div class="col-md-6 col-xl-4">
+                    <div class="card d-block">
+                        <div class="card-body">
+                            <div class="dropdown card-widgets">
+                                <a href="#" class="dropdown-toggle arrow-none" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="h3 mdi mdi-fountain-pen-tip"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
+                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-delete mr-1"></i>Delete</a>
+                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-email-outline mr-1"></i>Invite</a>
+                                    <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-exit-to-app mr-1"></i>Leave</a>
+                                </div>
+                            </div>
+                            <!-- project title-->
+                            <h4 class="mt-0">
+                                <a href="{{route('projects.show', $project->id)}}" class="text-title text-primary">{{$project->title}}</a>
+                            </h4>
+                            <div class="badge badge-{{$project->color()}} mb-3">{{$project->status}}</div>
+
+                            <p class="text-muted font-13 mb-3">{{ Str::limit($project->description, 150) }}
+                                <a href="{{route('projects.show', $project->id)}}" class="font-weight-bold text-primary">view more</a>
+                            </p>
+
+                            <!-- project detail-->
+                            <p class="mb-1">
+                                <span class="pr-2 text-nowrap mb-2 d-inline-block">
+                                    <b>Budget: </b><i class="mdi mdi-currency-ngn text-muted"></i>{{$project->budget}}
+                                </span>
+
+                                <span class="text-nowrap mb-2 d-inline-block">
+                                    <b>Model: </b> </i>{{$project->model}}
+                                </span>
+                            </p>
+                        </div> <!-- end card-body-->
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-3">
+                                @if ($project->amount_paid)
+                                    <button type="button" class="btn btn-secondary">Payment verified</button>
+                                @else
+                                    <a class="btn btn-primary" href="{{ route('payment', $project->id) }}">Make payment</a>
+                                @endif
+                            </li>
+                        </ul>
+                    </div>  
+                </div>
+            @endforeach
+        @endif
     </div>
 @endsection
 

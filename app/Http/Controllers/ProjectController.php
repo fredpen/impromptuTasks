@@ -72,7 +72,7 @@ class ProjectController extends Controller
 
         return view('projects.create', [
             'draftProjects' => $this->draftProjects($projects),
-            'postedProjects' => $this->postedProjects($projects),
+            'notDraftProjects' => $this->notDraftProjects($projects),
             'tasks' => Tasks::pluck('name', 'id')
         ]);
     }
@@ -172,13 +172,6 @@ class ProjectController extends Controller
     {
         return $array->filter(function($items) {
             return $items->status == 'Draft';
-        });
-    }
-
-    private function postedProjects($array)
-    {
-        return $array->filter(function($items) {
-            return $items->status == 'posted';
         });
     }
 
