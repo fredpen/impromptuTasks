@@ -31,71 +31,44 @@
                         
                         <!-- project title-->
                         <h3 class="mt-0">{{ ucfirst($project->title)}}</h3>
-                        <span class="h6 text-dark">Posted On: {{$project->posted_on}}</span>
+                        <a href="{{ route('projects.index') }}">{{$project->task->name . " - " . $project->subtask->name}}</a><br>
+                        <span class="h6 text-dark">Updated On: {{$project->posted_on}}</span> 
+                        <hr>
 
-                        <div>
-                            <span class="badge badge-secondary mb-3"> {{$project->task->name}}</span>
-                            <span class="badge badge-secondary mb-3"> {{$project->subtask->name}}</span>
-                            <span class="badge badge-secondary mb-3"> {{$project->model}}</span>
-                        </div>
-
-
-
-                        <h5>Task Overview:</h5>
+                        <h5>Task Overview: </h5>
                         <p class="text-muted mb-2"> {{$project->description}} </p>
+                        <hr>
 
-                       
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="mb-2">
-                                    <h5>Task Model</h5>
-                                    <p> {{ ucfirst($project->model)}} </p>
-                                </div>
-                            </div>
-                          
-
-                            <div class="col-md-4">
-                                <div class="mb-2">
-                                    <h5>Proposed Start Date</h5>
-                                    <p> {{$project->proposed_start_date}} </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="mb-2">
-                                    <h5>Duration</h5>
-                                    <p> {{$project->duration}} </p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-2">
-                                    <h5>Posted On</h5>
-                                    <p> {{$project->posted_on}} </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="mb-2">
-                                    <h5>Budget</h5>
-                                    <p>{{$project->budget}}</p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="mb-2">
-                                    <h5>No of Task master needed</h5>
-                                    <p> {{ ucfirst($project->num_of_taskMaster)}} </p>
-                                </div>
-                            </div>
-
-                            @if ($project->model == "onsite")
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <h5>Task Location</h5>
-                                        <p> {{ ucfirst($project->location . ", " . $project->city->name . ", " . $project->region->name)}} </p>
-                                    </div>
-                                </div>
-                            @endif
+                        <div class="table-responsive-sm">
+                            <table class="table table-striped table-centered mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td style="border:0">Model: <b class="text-dark text-capitalize">{{$project->model}}</b></td>
+                                        <td style="border:0">Budget: <b class="text-dark text-capitalize"><i class="mdi mdi-currency-ngn"></i>{{$project->budget}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:0">Payment: 
+                                            <b class="text-dark text-capitalize">{{$project->amount_paid ? "Payment Verfied" : 'Payment unverified' }}</b></td>
+                                        <td style="border:0">Proposed Start Date: <b class="text-dark text-capitalize">{{$project->proposed_start_date}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:0">Duration: <b class="text-dark text-capitalize">{{$project->duration}}</b></td>
+                                        <td style="border:0">Number ofTask Master needed: <b class="text-dark text-capitalize">{{$project->num_of_taskMaster}}</b></td>
+                                    </tr>
+                                    @if ($project->model == "onsite")
+                                        <tr>
+                                            <td style="border:0">
+                                                Location: <b class="text-dark text-capitalize">{{$project->city->name . ", " . $project->region->name}}</b>
+                                            </td>
+                                            <td style="border:0">
+                                                Address: <b class="text-dark text-capitalize">{{Str_limit($project->location, 10)}}...........</b>
+                                            </td>
+                                        </tr>
+                                        
+                                    @endif
+                                </tbody>
+                            </table>
+                            <p class="pt-3 h5 text-info">Note: Full adress are only shown to Task master after the project has been assigned to them</p>
                         </div>
                     </div>
                 </div> 
@@ -142,7 +115,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-sm-12">
                                         {!! Form::open(['action' => ['ProjectshowController@apply', $project->id ], 'method' => 'POST', 'id' => 'resume']) !!}
-                                            <textarea name="resume" data-toggle="maxlength" class="mb-3 form-control" data-threshold="1000" maxlength="1000" rows="5" placeholder="Say why this task should be assigned to you in few words as possible"></textarea>
+                                            <textarea name="resume" data-toggle="maxlength" class="mb-3 form-control" data-threshold="1000" maxlength="1000" rows="7" placeholder="Say why this task should be assigned to you in few words as possible"></textarea>
                                             {!! Form::hidden('project_id', $project->id) !!}
                                             {!! Form::hidden('user_id', Auth::id()) !!}
                                         {!! Form::close() !!}

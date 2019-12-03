@@ -12,7 +12,7 @@
                 <div class="page-title text-left w-100">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
-                        {{-- <li class="breadcrumb-item active">{{$taskName}}</li> --}}
+                        <li class="breadcrumb-item active">{{$taskName}}</li>
                     </ol>
                 </div>
 
@@ -26,15 +26,25 @@
                                         <p class="h4 mb-3">  {{ucfirst($project->title)}}    
                                             <small class="text-muted h6 d-block">posted {{$project->created_at->diffForHumans()}}</small>
                                         </p> 
-                                        <span>
-                                            <span class=" mb-1 badge badge-light">Est. Budget: NGN {{ $project->budget }}</span>
-                                            <span class=" mb-1 badge badge-light">Model: {{ $project->model }}</span>
-                                            <span class=" mb-1 badge badge-light">Task: {{ $project->task->name }} - {{ $project->subtask->name }}</span>
-                                            <span class=" mb-1 badge badge-light">Level of experience: {{ $project->experience }}</span>
-                                            <span class=" mb-1 badge badge-light">Est. start date: {{ $project->proposed_start_date }}</span>
-                                         </span>
-                                        
-                                       
+                                        <p class="mb-1 text-muted font-14">
+                                            <span class="text-nowrap mb-2 mx-1 d-inline-block">
+                                                Model: <b class="text-dark text-capitalize">{{$project->model}}</b>
+                                            </span>
+
+                                            <span class="pr-2 text-nowrap mb-2 mx-1 d-inline-block">
+                                                Budget: <b class="text-dark text-capitalize"><i class="mdi mdi-currency-ngn"></i>{{$project->budget}}</b>
+                                            </span>
+
+                                            <span class="text-nowrap mb-2 mx-1 d-inline-block">
+                                                Payment: 
+                                                <b class="text-dark text-capitalize">{{$project->amount_paid ? "Payment Verfied" : 'Payment unverified' }}</b>
+                                            </span>
+
+                                            <span class="text-nowrap mb-2 mx-1 d-inline-block">
+                                                Proposed Start Date: <b class="text-dark text-capitalize">{{$project->proposed_start_date}}</b>
+                                            </span>
+                                        </p>
+                                    
                                         <p  class="my-2 text-dark">{{str_limit($project->description, 20000) }}  </p>
                                     </a>
                                 </div>
