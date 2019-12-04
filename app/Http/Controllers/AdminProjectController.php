@@ -17,19 +17,16 @@ class AdminProjectController extends Controller
 
     private function validator($request)
     {
-        return $request->validate(
-            [
-                'project_id' => 'required|numeric',
-                'user_id' => 'required|numeric'
-            ]
-        );
+        return $request->validate([
+            'project_id' => 'required|numeric',
+            'user_id' => 'required|numeric'
+        ]);
     }
 
     
     public function showallProjects()
     {
-        $projects = Project::latest()->paginate(20);
-        return view('admin.projects.all', compact('projects'));
+        return view('admin.projects.all', ['projects' => Project::latest()->paginate(20)]);
     }
 
     public function showcompletedProjects()

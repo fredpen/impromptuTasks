@@ -153,7 +153,7 @@ class ProjectController extends Controller
     {
         $this->authorize('edit', $project);
         $project->cancelled();
-        $project->owner->notify((new ProjectCancelled)->delay(10)->onQueue('notifs'));
+        $project->owner->notify((new ProjectCancelled)->delay(10));
         return redirect()->action('ProjectController@create');
     }
 

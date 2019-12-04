@@ -216,7 +216,9 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="{{ route('projects.show', $project->id) }}" class="dropdown-item"><i class="mdi mdi-eye mr-1"></i>View</a>
-                                    <a href="{{ route('projects.edit', $project->id) }}" class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
+                                    @if (!$project->isAssigned())
+                                        <a href="{{ route('projects.edit', $project->id) }}" class="dropdown-item"><i class="mdi mdi-pencil mr-1"></i>Edit</a>
+                                    @endif
                                     <span onclick="submitForm('{{$project->id}}')"  class="dropdown-item"><i class="mdi mdi-delete mr-1"></i>delete</span>
                                     {!! Form::open(['id' => $project->id, 'method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id]]) !!}
                                         {!! Form::hidden('project_id', $project->id) !!}
@@ -228,6 +230,7 @@
                                 <a href="{{route('projects.show', $project->id)}}" class="text-title text-primary">{{$project->title}}</a>
                             </h4>
                             <div class="badge badge-{{$project->color()}} mb-3">{{$project->status}}</div>
+                            <div class="badge badge-{{$project->color()}} mb-3">{{  ($project->isAssigned()) ? 'Assigned' : 'Unassigned'}}</div>
 
                             <p class="text-muted mb-2">{{ Str::limit($project->description, 150) }}
                                 <a href="{{route('projects.show', $project->id)}}" class="font-weight-bold text-primary">view more</a>

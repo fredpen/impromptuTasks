@@ -136,6 +136,8 @@
                                     <a onclick="submitForm('resume')" class="pointer btn btn-lg text-white btn-primary">Apply to Task</a>
                                 @endif
                             @endif
+                        @else 
+                            <a onclick="submitForm('resume')" class="pointer btn btn-lg text-white btn-primary">Apply to Task</a>
                         @endauth
                        
                       
