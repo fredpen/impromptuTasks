@@ -62,3 +62,4 @@ class ProjectAppllication extends Notification implements ShouldQueue
         ];
     }
 }
+

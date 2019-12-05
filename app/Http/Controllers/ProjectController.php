@@ -115,16 +115,16 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $this->authorize('edit', $project);
-        $regions = $cities = 0;
-        $duration = $this->durationArray;
-        $metaData = $this->metaData;
-        $expertise = $this->expertise;
-        $countries = Country::all(['name', 'id']);
-        $tasks = Tasks::with('subTasks')->get(['id', 'name']);
-        if ($project->country) $regions = Region::where('country_id', $project->country_id)->get(['id', 'name']);
-        if ($project->region) $cities = City::where('region_id', $project->region_id)->get(['id', 'name']);
-        return view('projects.edit', compact('regions', 'cities', 'project', 'tasks', 'countries', 'duration', 'expertise', 'metaData'));
+        return view('projects.edit', [
+            'project' => $project,
+            'metaData' => $this->metaData,
+            'expertise' => $this->expertise,
+            'duration' => $this->durationArray,
+            'countries' => Country::all(['name', 'id']),
+            'tasks' => Tasks::with('subTasks')->get(['id', 'name']),
+            'cities' => ($project->region) ? City::where('region_id', $project->region_id)->get(['id', 'name']) : 0,
+            'regions' => ($project->country) ? Region::where('country_id', $project->country_id)->get(['id', 'name']) : 0
+        ]);
     }
 
     /**
