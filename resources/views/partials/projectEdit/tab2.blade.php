@@ -62,9 +62,15 @@
                 <div class="col-12 my-3">
                     <select onchange="updateTaskMasterNumber(this, 'num_of_taskMaster')" id="num_of_taskMaster" name="num_of_taskMaster" class="form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
                         @for ($i = 1; $i < 10; $i++)
-                            <option {{ $project->num_of_taskMaster ? ($project->num_of_taskMaster == $i ? "selected" : "" ) : ""}} value="{{$i}}">{{ $i == 1 ? $i. ' task master' : $i . ' task masters'}}</option>
+                            <option 
+                                {{ $project->num_of_taskMaster ? ($project->num_of_taskMaster == $i ? "selected" : "" ) : ""}} 
+                                value="{{$i}}">{{ $i}}
+                            </option>
                         @endfor
-                            <option {{ $project->num_of_taskMaster ? ($project->num_of_taskMaster > 10 ? "selected" : "" ) : ""}} value="more than 10">more than 10 Task Masters</option>
+                            <option 
+                                {{ $project->num_of_taskMaster ? ($project->num_of_taskMaster > 10 ? "selected" : "" ) : ""}} 
+                                value="more than 10">more than 10
+                            </option>
                     </select>
                 </div>
             </div>

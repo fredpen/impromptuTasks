@@ -122,7 +122,7 @@ class ProjectController extends Controller
             'expertise' => $this->expertise,
             'duration' => $this->durationArray,
             'countries' => $project->model == 'remote' ? '' : Country::all(['name', 'id']),
-            'tasks' => Tasks::with('subTasks')->get(['id', 'name'])
+            'tasks' => Tasks::with('subTasks:id,name')->get(['id', 'name'])
             // 'cities' => ($project->region) ? City::where('region_id', $project->region_id)->get(['id', 'name']) : 0,
             // 'regions' => ($project->country) ? Region::where('country_id', $project->country_id)->get(['id', 'name']) : 0
         ]);

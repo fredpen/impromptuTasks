@@ -53,7 +53,7 @@
                                     </tr>
                                     <tr>
                                         <td style="border:0">Duration: <b class="text-dark text-capitalize">{{$project->duration}}</b></td>
-                                        <td style="border:0">Number ofTask Master needed: <b class="text-dark text-capitalize">{{$project->num_of_taskMaster}}</b></td>
+                                        <td style="border:0">Number of Task Master needed: <b class="text-dark text-capitalize">{{$project->num_of_taskMaster}}</b></td>
                                     </tr>
                                     @if ($project->model == "onsite")
                                         <tr>
