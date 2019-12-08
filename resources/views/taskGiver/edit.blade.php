@@ -53,13 +53,15 @@
 
                             <div class="col-sm-4">
                                 <div class="text-center mt-sm-0 mt-3 text-sm-right">
-                                    <a href="{{ route('account.show', $user->id) }}" class="btn btn-light">
-                                        <i class="mdi mdi-account-edit mr-1"></i> Show Profile
-                                    </a>
-
                                     <a href="{{ route('notifications') }}" class="btn btn-light">
                                         <i class="mdi mdi-news-edit mr-1"></i> Messages
                                     </a>
+
+                                    <a href="{{ route('account.show', $user->id) }}" class="my-2 btn btn-light">
+                                        <i class="mdi mdi-account-edit mr-1"></i> Show Profile
+                                    </a>
+
+                                   
                                 </div>
                             </div> <!-- end col-->
                         </div> <!-- end row -->
@@ -80,13 +82,17 @@
                         <p class="text-muted"><strong><i class="text-danger">*</i> Full Name :</strong>
                             <input type="text" class="form-control" value="{{ ucwords($user->name) }}" maxlength="30" name="name" data-toggle="maxlength" data-threshold="30" autocomplete="off" id="name" placeholder="Ola Eze Ahmed" required>
                         </p>
-
                         <p class="text-muted"><strong><i class="text-danger">*</i> Country :</strong>
-                            <select onchange="fetchRegions(this)" id="country_id" name="country_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                            <select onchange="preloadRegions('initial', this)" id="country_id" name="country_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
                                 @foreach ($countries as $country)
                                     <option {{$user->country_id ? ($user->country_id == $country->id ? "selected" : "") : ""}} value="{{$country->id}}"> {{$country->name}} </option>
                                 @endforeach
                             </select>
+                            {{-- <select onchange="fetchRegions(this)" id="country_id" name="country_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                @foreach ($countries as $country)
+                                    <option {{$user->country_id ? ($user->country_id == $country->id ? "selected" : "") : ""}} value="{{$country->id}}"> {{$country->name}} </option>
+                                @endforeach
+                            </select> --}}
                         </p>
 
                         <hr>
@@ -181,7 +187,7 @@
 
 
 @section('scripts')
-<script src="{{ asset('js/custom.js') }}"></script>
+
 <script>
     var role_id = {{$user->role_id}};
 

@@ -1,6 +1,21 @@
-function preloadRegions(countryId) {
-    
-}
+// function preloadRegions(countryId) {
+//     $('#city_id, #region_id').html('');
+//     let value = countryId ? countryId : $(target).val();
+
+//     axios.get('/region/show/ajax/' + value).then(function (response) {
+//         // $('#region_id').html('');
+//         console.log(response);
+        
+//         response.forEach(function (region) {
+//             $('#region_id').append('<option value="' + region.id + '">' + region.name + '</option>')
+//         });
+//     }).catch(function (error) {
+//         console.log(error);
+        
+//             return setErrorMess('Kindly select your country again ');
+//         });
+//     }
+// }
 
 
 
@@ -176,12 +191,13 @@ function checkRequiredFields() {
 
 
 function fetchRegions(target) { 
-    let value = $(target).val();
+    $('#city_id, #region_id').html('');
+    let value =  $(target).val();
+
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        method: 'PUT',
+        method: 'GET',
         url: '/region/show/ajax/' + value,
-        data: { value: value},
         success: function (response) {
             $('#region_id').html('');
             $('#city_id').html('');
@@ -197,10 +213,11 @@ function fetchRegions(target) {
 }
 
 function fetchCities(target) {
+
     let value = $(target).val();
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        method: 'PUT',
+        method: 'GET',
         url: '/city/show/ajax/' + value,
         data: { value: value},
         success: function (response) {

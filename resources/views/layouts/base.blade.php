@@ -325,7 +325,7 @@
        
         <script src="{{ asset('js/appcached.js') }}"></script>
         <script src="{{ asset('js/app.js') }}" ></script>
-        
+        <script src="{{ asset('js/custom.js') }}"></script>
         @yield('scripts')
     </body>
 </html>

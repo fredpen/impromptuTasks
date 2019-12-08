@@ -36,8 +36,8 @@ Route::resources([
 
 Route::get('notifications', 'AccountController@notifications')->name('notifications')->middleware('auth'); //for notifications
 Route::get('myTasks', 'AccountController@myTasks')->name('myTasks')->middleware('auth');
-Route::put('region/show/ajax/{id}', 'RegionController@showAjax');//country ajax to show regions
-Route::put('city/show/ajax/{id}', 'CityController@showAjax');//country ajax to show city
+Route::get('region/show/ajax/{id}', 'RegionController@showAjax');//country ajax to show regions
+Route::get('city/show/ajax/{id}', 'CityController@showAjax');//country ajax to show city
 
 Route::group(
     ['middleware' => ['auth', 'verified', 'isActive']], function () {

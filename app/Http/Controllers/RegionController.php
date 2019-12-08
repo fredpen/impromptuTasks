@@ -53,9 +53,9 @@ class RegionController extends Controller
         //
     }
 
-    public function showAjax(Request $request)
+    public function showAjax($countryId)
     {
-        return Region::fetchRegionsWithCountryId($request->value);
+        return Region::fetchRegionsWithCountryId($countryId);
     }
 
     /**

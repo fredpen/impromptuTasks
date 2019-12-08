@@ -127,9 +127,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/custom.js') }}"></script>
     <script>
-        
+        preloadRegions({{ $project->country_id}}); //fetch in the regions
+        preloadCities({{ $project->country_id}}); //fetch in the cities
         var project_id = {{ $project-> id}};
         var is_onsite = {{$project->model == "onsite" ? 1 : 0}};
 

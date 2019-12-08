@@ -42,14 +42,6 @@
                             id="region_id" name="task_id" 
                             class="h5 mt-0 col-sm-7 form-control select2 select2-hidden-accessible form-control" 
                             data-toggle="select2">
-                                
-                            {{-- @if ($project->country)
-                                @foreach ($regions as $region)
-                                    <option {{ $project->region ? ($project->region_id == $region->id ? "selected" : "" ) : ""}} value="{{$region->id}}">{{$region->name}}</option>
-                                @endforeach
-                            @else
-                                <option value="0">Select a country first</option>
-                            @endif --}}
                         </select>
                     </div>
                     
