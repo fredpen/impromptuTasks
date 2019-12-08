@@ -20,7 +20,7 @@
 
     
 
-    <div id="root" class="row justify-content-center align-items-center mx-0">
+    <div  class="row justify-content-center align-items-center mx-0">
 
         <div class="col-md-10 mt-1 mb-3">
             <div class="page-title-right">

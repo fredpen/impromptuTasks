@@ -6,14 +6,16 @@
     <title>Impromptu Tasks</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Redfining how taks is done " name="description" />
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+    
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- App css -->
-    <link rel="stylesheet" href="{{ asset('css/all.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/appcached.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/appburst.css') }}">
+    
     @yield('styles') 
 
 </head>
@@ -22,7 +24,7 @@
 
             @include('partials._notifications')
         <!-- Begin page -->
-        <div class="wrapper">
+        <div  id="root" class="wrapper">
 
             <div class="content-page">
                 <div class="content">
@@ -320,9 +322,10 @@
                 </footer>
             </div>
         </div>
-        <script src="{{ asset('js/all.js') }}"></script>
+       
+        <script src="{{ asset('js/appcached.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}" ></script>
         <script src="{{ asset('js/custom.js') }}"></script>
-        <script src="{{ asset('js/vue.js') }}"></script>
         @yield('scripts')
     </body>
 </html>

@@ -17,8 +17,8 @@
                 <div class="page-title text-left w-100">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
-                        <li class="breadcrumb-item active"><a href="{{route('projects.index')}}">All Tasks</a></li>
-                        <li class="breadcrumb-item active"><a href="{{route('projects.index')}}">{{ Str::limit($project->title, 15)}}</a></li>
+                        <li class="text-capitalize breadcrumb-item active"><a href="{{route('projects.index')}}">{{$project->task->name}}</a></li>
+                        <li class="breadcrumb-item active">{{ Str::limit($project->title, 15)}}</li>
                     </ol>
                 </div>
              </div>
@@ -150,7 +150,6 @@
 
 
 @section('scripts')
-    <script src="{{ asset('js/form.js') }}"></script>
     <script>
         var project_id = {{ $project-> id}};
     </script>

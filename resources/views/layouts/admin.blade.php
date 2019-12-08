@@ -9,8 +9,8 @@
         <link rel="shortcut icon" href="{{asset('images/favicon.ico') }}">
 
         <!-- App css -->
-        <link rel="stylesheet" href="{{ asset('css/all.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/appcached.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/appburst.css') }}">
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -316,7 +316,9 @@
             </div>
         </div>
 
-        <script src="{{ asset('js/all.js') }}"></script>
+        <script src="{{ asset('js/appcached.js') }}"></script>
+        <script src="{{ asset('js/appburst.js') }}"></script>
+        <script src="{{ asset('js/custom.js') }}"></script>
         @yield('scripts')
     </body>
 </html>

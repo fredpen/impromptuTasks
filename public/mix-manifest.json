@@ -1,9 +1,7 @@
 {
-    "/css/all.css": "/css/all.css",
-    "/css/custom.css": "/css/custom.css",
-    "/css/fileupload.css": "/css/fileupload.css",
-    "/js/all.js": "/js/all.js",
-    "/js/form.js": "/js/form.js",
-    "/js/chat.js": "/js/chat.js",
-    "/js/fileupload.js": "/js/fileupload.js"
+    "/css/appcached.css": "/css/appcached.css",
+    "/css/appburst.css": "/css/appburst.css",
+    "/js/appcached.js": "/js/appcached.js",
+    "/js/app.js": "/js/app.js",
+    "/js/custom.js": "/js/custom.js"
 }

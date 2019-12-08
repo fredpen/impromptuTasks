@@ -9,14 +9,16 @@
         <div class="row justify-content-center mt-3">
             <div class="col-sm-12 mb-3">
 
-                <div class="page-title text-left w-100">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
-                        <li class="breadcrumb-item active">{{$taskName}}</li>
-                    </ol>
-                </div>
+                
 
                 @if (count($projects))
+                    <div class="page-title text-left w-100">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
+                            <li class="text-capitalize breadcrumb-item">{{$projects[0]->task->name}}</li>
+                        </ol>
+                    </div>
+
                     <h5 class=" mb-3 card-header">{{count($projects)}} Task{{count($projects) > 1 ? "s" : ""}} </h5>
                     @foreach ($projects as $project)
                         <div class="card">
