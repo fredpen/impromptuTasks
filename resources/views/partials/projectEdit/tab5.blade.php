@@ -29,17 +29,30 @@
                 <h4 class="modal-title" id="primary-header-modalLabel">Select Category</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
+
             <div class="modal-body">
                 <div class="col-12 my-3">
-                    <select onchange="updateRegion(this, 'region_id')" id="region_id" name="task_id" class="h5 mt-0 col-sm-7 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                        @if ($project->country)
-                            @foreach ($regions as $region)
-                                <option {{ $project->region ? ($project->region_id == $region->id ? "selected" : "" ) : ""}} value="{{$region->id}}">{{$region->name}}</option>
-                            @endforeach
-                        @else
-                            <option value="0">Select a country first</option>
-                        @endif
-                    </select>
+                    <button class="d_center btn btn-primary" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Fetcing regions in your country...
+                    </button>
+
+                    <div class="d-none">
+                        <select 
+                            onchange="updateRegion(this, 'region_id')" 
+                            id="region_id" name="task_id" 
+                            class="h5 mt-0 col-sm-7 form-control select2 select2-hidden-accessible form-control" 
+                            data-toggle="select2">
+                                
+                            {{-- @if ($project->country)
+                                @foreach ($regions as $region)
+                                    <option {{ $project->region ? ($project->region_id == $region->id ? "selected" : "" ) : ""}} value="{{$region->id}}">{{$region->name}}</option>
+                                @endforeach
+                            @else
+                                <option value="0">Select a country first</option>
+                            @endif --}}
+                        </select>
+                    </div>
+                    
                 </div>
             </div>
 
@@ -59,14 +72,16 @@
             </div>
             <div class="modal-body">
                 <div class="col-12 my-3">
+                    <div class="spinner-grow avatar-lg text-secondary m-2" role="status"></div>
                     <select onchange="updateCity(this, 'city_id')" id="city_id" name="city_id" class="h5 mt-0 col-sm-7 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                        @if ($project->region)
+                        
+                        {{-- @if ($project->region)
                             @foreach ($cities as $city)
                                 <option {{ $project->city ? ($project->city_id == $city->id ? "selected" : "" ) : ""}} value="{{$city->id}}">{{$city->name}}</option>
                             @endforeach
                         @else
                             <option value="0">Kindly select a region first</option>
-                        @endif
+                        @endif --}}
 
                     </select>
                 </div>

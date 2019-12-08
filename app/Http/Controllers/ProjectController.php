@@ -164,11 +164,11 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $this->authorize('edit', $project);
         $project->update([$request->field => $request->value]);
-        if ($request->field == 'task_id') return SubTask::where(['task_id' => $request->value])->get(['id', 'name']);
-        if ($request->field == 'country_id') return Region::where(['country_id' => $request->value])->get(['id', 'name']);
-        if ($request->field == 'region_id') return City::where(['region_id' => $request->value])->get(['id', 'name']);
+        if ($request->field == 'task_id') return SubTask::fetchSubtasksWithTaskId($request->value);
+        if ($request->field == 'country_id') return Region::fetchRegionsWithCountryId($request->value);
+        if ($request->field == 'region_id') return City::fetchCitiesWithRegionId($request->value);
     }
-
+    
     private function draftProjects($array)
     {
         return $array->filter(function($items) {

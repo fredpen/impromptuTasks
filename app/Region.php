@@ -22,4 +22,9 @@ class Region extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public static function fetchRegionsWithCountryId ($countryId)
+    {
+        return Region::where('country_id', $countryId)->get(['id', 'name']);
+    }
 }

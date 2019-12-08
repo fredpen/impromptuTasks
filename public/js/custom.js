@@ -1,9 +1,5 @@
 
- function submitForm(elementID)
- {
-    if (elementID == 'paymentForm' && $("#budget").val().length < 4) return setErrorMess("Budget can not be less than NGN 1000");
-    return $('#' + elementID).submit();
- }
+
 
 function setErrorMess(message){
     let errorDiv = $('#postErrMess');
@@ -175,7 +171,7 @@ function checkRequiredFields() {
 }
 
 
-function fetchRegions(target) {
+function fetchRegions(target) { 
     let value = $(target).val();
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -215,3 +211,26 @@ function fetchCities(target) {
         }
     });
 }
+
+
+Dropzone.autoDiscover = false;
+var dropzone = new Dropzone('#myAwesomeDropzone', {
+    parallelUploads: 1,
+    thumbnailHeight: 120,
+    thumbnailWidth: 120,
+    maxFilesize: 1, //1mb
+    maxFiles: 1,
+    filesizeBase: 1000,
+    thumbnail: function (file, dataUrl) {
+        if (file.previewElement) {
+            file.previewElement.classList.remove("dz-file-preview");
+            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+            for (var i = 0; i < images.length; i++) {
+                var thumbnailElement = images[i];
+                thumbnailElement.alt = file.name;
+                thumbnailElement.src = dataUrl;
+            }
+            setTimeout(function () {file.previewElement.classList.add("dz-image-preview"); }, 1);
+        }
+    }
+});

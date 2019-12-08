@@ -1,12 +1,15 @@
+
+.d_center{
+    display: block;
+    margin: 0 auto;
+}
+
 .navbar-dark .navbar-nav .nav-link {
     color: #fafbfe;
 }
 
-#fred-logo {
-    font-family: 'Pacifico', cursive;
-}
 
-#full_width_container {
+#full_width_container {  /* for my jumbotron */
     max-width: 100%;
     max-width: 100%;
     color: #184153;

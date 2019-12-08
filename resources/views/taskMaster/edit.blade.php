@@ -205,31 +205,8 @@
 
 
 @section('scripts')
-<script src="{{ asset('js/dropzone.js') }}"></script>
+<script src="{{ asset('js/custom.js') }}"></script>
 <script>
     var role_id = {{$user->role_id}};
-
-    Dropzone.autoDiscover = false;
-    var dropzone = new Dropzone('#myAwesomeDropzone', {
-        parallelUploads: 1,
-        thumbnailHeight: 120,
-        thumbnailWidth: 120,
-        maxFilesize: 1, //1mb
-        maxFiles: 1,
-        filesizeBase: 1000,
-        thumbnail: function (file, dataUrl) {
-            if (file.previewElement) {
-                file.previewElement.classList.remove("dz-file-preview");
-                var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-                for (var i = 0; i < images.length; i++) {
-                    var thumbnailElement = images[i];
-                    thumbnailElement.alt = file.name;
-                    thumbnailElement.src = dataUrl;
-                }
-                setTimeout(function () {file.previewElement.classList.add("dz-image-preview"); }, 1);
-            }
-        }
-    });
-
 </script>
 @endsection

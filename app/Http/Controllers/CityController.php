@@ -45,8 +45,7 @@ class CityController extends Controller
 
     public function showAjax(Request $request)
     {
-        $resultArray = City::where(['region_id' => $request->value])->get(['id', 'name']);
-        return $resultArray;
+        return City::fetchCitiesWithRegionId($request->value);
     }
 
     /**

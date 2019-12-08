@@ -12,5 +12,10 @@ class City extends Model
         return $this->belongsTo(Region::class);
     }
 
+    public static function fetchCitiesWithRegionId ($regionId)
+    {
+        return City::where('region_id', $regionId)->get(['id', 'name']);
+    }
+
 
 }

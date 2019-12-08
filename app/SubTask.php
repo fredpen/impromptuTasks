@@ -32,4 +32,9 @@ class SubTask extends Model
             $this::firstOrcreate(['task_id' => $taskId, 'name' => $subTask]);
         }
     }
+
+    public static function fetchSubtasksWithTaskId ($taskId)
+    {
+        return SubTask::where('task_id', $taskId)->get(['id', 'name']);
+    }
 }
