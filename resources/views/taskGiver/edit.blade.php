@@ -88,11 +88,6 @@
                                     <option {{$user->country_id ? ($user->country_id == $country->id ? "selected" : "") : ""}} value="{{$country->id}}"> {{$country->name}} </option>
                                 @endforeach
                             </select>
-                            {{-- <select onchange="fetchRegions(this)" id="country_id" name="country_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                                @foreach ($countries as $country)
-                                    <option {{$user->country_id ? ($user->country_id == $country->id ? "selected" : "") : ""}} value="{{$country->id}}"> {{$country->name}} </option>
-                                @endforeach
-                            </select> --}}
                         </p>
 
                         <hr>
@@ -133,7 +128,7 @@
                             <div class="card-body"><i class="text-danger">*</i>
                                 <i class="dripicons-box float-right text-muted"></i>
                                 <h6 class="text-muted text-uppercase mt-0">Region/State</h6>
-                                <select onchange="fetchCities(this)" id="region_id" name="region_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                                <select onchange="preloadCities('initial', this)"  id="region_id" name="region_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
                                     <option value="{{ $user->region_id ? $user->region_id : 0}}"> {{$user->region_id ? $user->region->name  : "Select Country first" }}</option>
                                 </select>
                             </div> <!-- end card-body-->

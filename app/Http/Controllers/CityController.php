@@ -43,9 +43,9 @@ class CityController extends Controller
     }
 
 
-    public function showAjax(Request $request)
+    public function showAjax($regionId)
     {
-        return City::fetchCitiesWithRegionId($request->value);
+        return City::fetchCitiesWithRegionId($regionId);
     }
 
     /**

@@ -82,7 +82,7 @@
                         </p>
 
                         <p class="text-muted"><strong><i class="text-danger">*</i> Country :</strong>
-                            <select onchange="fetchRegions(this)" id="country_id" name="country_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                            <select onchange="preloadRegions('initial', this)"  id="country_id" name="country_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
                                 @foreach ($countries as $country)
                                     <option {{$user->country_id ? ($user->country_id == $country->id ? "selected" : "") : ""}} value="{{$country->id}}"> {{$country->name}} </option>
                                 @endforeach
@@ -90,7 +90,7 @@
                         </p>
 
                         <p class="text-muted"><strong><i class="text-danger">*</i> Region/State :</strong>
-                            <select onchange="fetchCities(this)" id="region_id" name="region_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
+                            <select onchange="preloadCities('initial', this)" id="region_id" name="region_id" class="h5 mt-0 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
                                 <option value="{{ $user->region_id ? $user->region_id : 0}}"> {{$user->region_id ? $user->region->name  : "Select Country first" }}</option>
                             </select>
                         </p>
