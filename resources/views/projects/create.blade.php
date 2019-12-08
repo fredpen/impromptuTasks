@@ -227,7 +227,7 @@
                             </div>
                             <!-- project title-->
                             <h4 class="mt-0">
-                                <a href="{{route('projects.show', $project->id)}}" class="text-title text-primary">{{$project->title}}</a>
+                                <a href="{{route('projects.show', $project->id)}}" class="text-title text-primary">{{Str::limit($project->title, 40)}}</a>
                             </h4>
                             <div class="badge badge-{{$project->color()}} mb-3">{{$project->status}}</div>
                             <div class="badge badge-{{$project->color()}} mb-3">{{  ($project->isAssigned()) ? 'Assigned' : 'Unassigned'}}</div>

@@ -127,8 +127,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/form.js') }}"></script>
-    <script src="{{ asset('js/dropzone.js') }}"></script>
     <script>
         var project_id = {{ $project-> id}};
         var is_onsite = {{$project->model == "onsite" ? 1 : 0}};
