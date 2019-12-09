@@ -22,7 +22,7 @@
 
     <div  class="row justify-content-center align-items-center mx-0">
 
-        <div class="col-md-10 mt-1 mb-3">
+        <div class="col-md-12 mt-1 mb-3">
             <div class="page-title-right">
                 <ol class="breadcrumb my-1 p-0">
                     <li class="breadcrumb-item h5"><a href="{{ route('projects.create') }}">My Projects</a></li>
@@ -128,10 +128,10 @@
 
 @section('scripts')
     <script>
-        preloadRegions({{ $project->country_id}}); //fetch in the regions
-        preloadCities({{ $project->country_id}}); //fetch in the cities
-        var project_id = {{ $project-> id}};
-        var is_onsite = {{$project->model == "onsite" ? 1 : 0}};
-
+        var project = <?php echo $project ?>;
+        var project_id = project.id;
+        var is_onsite = project.model == "onsite" ? 1 : 0;
+        if (project.country_id) preloadRegions(project.country_id); //fetch in the regions
+        if (project.region_id) preloadCities(project.region_id); //fetch in the regions
     </script>
 @endsection

@@ -64,18 +64,19 @@
             </div>
             <div class="modal-body">
                 <div class="col-12 my-3">
-                    <div class="spinner-grow avatar-lg text-secondary m-2" role="status"></div>
-                    <select onchange="updateCity(this, 'city_id')" id="city_id" name="city_id" class="h5 mt-0 col-sm-7 form-control select2 select2-hidden-accessible form-control" data-toggle="select2">
-                        
-                        {{-- @if ($project->region)
-                            @foreach ($cities as $city)
-                                <option {{ $project->city ? ($project->city_id == $city->id ? "selected" : "" ) : ""}} value="{{$city->id}}">{{$city->name}}</option>
-                            @endforeach
-                        @else
-                            <option value="0">Kindly select a region first</option>
-                        @endif --}}
+                    <button class="d_center btn btn-primary" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Fetcing cities in your Region...
+                    </button>
 
-                    </select>
+                    <div class="d-none">
+                        <select 
+                            onchange="updateCity(this, 'city_id')" 
+                            id="city_id" 
+                            name="city_id" 
+                            class="h5 mt-0 col-sm-7 form-control select2 select2-hidden-accessible form-control" 
+                            data-toggle="select2">
+                        </select>
+                    </div>
                 </div>
             </div>
 

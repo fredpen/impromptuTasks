@@ -21,7 +21,6 @@ function preloadRegions(countryId, target = null) {
 
 function preloadCities(regionId, target = null) {
     regionId = target ? $(target).val() : regionId; //if there is a second param use that to get country id
-    console.log(regionId);
     
     axios.get('/city/show/ajax/' + regionId).then(function (response) {
         if (target) {
@@ -38,29 +37,6 @@ function preloadCities(regionId, target = null) {
         return setErrorMess('Kindly select your country again ');
     });
 }
-
-
-// function fetchCities(target) {
-
-//     let value = $(target).val();
-//     $.ajax({
-//         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-//         method: 'GET',
-//         url: '/city/show/ajax/' + value,
-//         data: { value: value},
-//         success: function (response) {
-//             $('#city_id').html('');
-
-//             response.forEach(function (city) {
-//                 $('#city_id').append('<option value="' + city.id + '">' + city.name + '</option>')
-//             });
-//         },
-//         error: function (jqXHR, textStatus, errorThrown) {
-//             return setErrorMess('Kindly select your country again ');
-//         }
-//     });
-// }
-
 
 function setErrorMess(message){
     let errorDiv = $('#postErrMess');

@@ -1,24 +1,42 @@
-// function preloadRegions(countryId) {
-//     $('#city_id, #region_id').html('');
-//     let value = countryId ? countryId : $(target).val();
 
-//     axios.get('/region/show/ajax/' + value).then(function (response) {
-//         // $('#region_id').html('');
-//         console.log(response);
+function preloadRegions(countryId, target = null) {
+    countryId = target ? $(target).val() : countryId; //if there is a second param use that to get country id
+    
+    axios.get('/region/show/ajax/' + countryId).then(function (response) {
         
-//         response.forEach(function (region) {
-//             $('#region_id').append('<option value="' + region.id + '">' + region.name + '</option>')
-//         });
-//     }).catch(function (error) {
-//         console.log(error);
-        
-//             return setErrorMess('Kindly select your country again ');
-//         });
-//     }
-// }
+        if (target) {
+            $('#region_id, #city_id').html('');
+        } else {
+            $('#region_id').parent('div').removeClass('d-none');
+            $('#region_id').parent('div').siblings('.d_center').addClass('d-none');
+        }
+        response.data.forEach(function (region) {
+            $('#region_id').append('<option value="' + region.id + '">' + region.name + '</option>')
+        });
+       
+    }).catch(function (error) {
+        return setErrorMess('Kindly select your country again ');
+    });
+}
 
+function preloadCities(regionId, target = null) {
+    regionId = target ? $(target).val() : regionId; //if there is a second param use that to get country id
+    
+    axios.get('/city/show/ajax/' + regionId).then(function (response) {
+        if (target) {
+            $('#city_id').html('');
+        } else {
+            $('#city_id').parent('div').removeClass('d-none');
+            $('#city_id').parent('div').siblings('.d_center').addClass('d-none');
+        }
 
-
+        response.data.forEach(function (city) {
+            $('#city_id').append('<option value="' + city.id + '">' + city.name + '</option>')
+        });
+    }).catch(function (error) {
+        return setErrorMess('Kindly select your country again ');
+    });
+}
 
 function setErrorMess(message){
     let errorDiv = $('#postErrMess');
@@ -190,48 +208,8 @@ function checkRequiredFields() {
 }
 
 
-function fetchRegions(target) { 
-    $('#city_id, #region_id').html('');
-    let value =  $(target).val();
 
-    $.ajax({
-        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        method: 'GET',
-        url: '/region/show/ajax/' + value,
-        success: function (response) {
-            $('#region_id').html('');
-            $('#city_id').html('');
 
-            response.forEach(function (region) {
-                $('#region_id').append('<option value="' + region.id + '">' + region.name + '</option>')
-            });
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            return setErrorMess('Kindly select your country again ');
-        }
-    });
-}
-
-function fetchCities(target) {
-
-    let value = $(target).val();
-    $.ajax({
-        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        method: 'GET',
-        url: '/city/show/ajax/' + value,
-        data: { value: value},
-        success: function (response) {
-            $('#city_id').html('');
-
-            response.forEach(function (city) {
-                $('#city_id').append('<option value="' + city.id + '">' + city.name + '</option>')
-            });
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            return setErrorMess('Kindly select your country again ');
-        }
-    });
-}
 
 
 Dropzone.autoDiscover = false;
