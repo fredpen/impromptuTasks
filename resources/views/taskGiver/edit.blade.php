@@ -184,8 +184,11 @@
 @section('scripts')
 
 <script>
-    var role_id = {{$user->role_id}};
-
+    newDropzone();
+    var user =  <?php echo $user ?>;
+    var role_id = user.role_id;
+    if (user.country_id) preloadRegions(user.country_id); //fetch in the regions
+    if (user.region_id) preloadCities(user.region_id); //fetch in the cities
   
 
 </script>

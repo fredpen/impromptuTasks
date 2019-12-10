@@ -32,8 +32,12 @@
 
             <div class="modal-body">
                 <div class="col-12 my-3">
-                    <button class="d_center btn btn-primary" type="button" disabled="">
-                        <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Fetcing regions in your country...
+                    <button class="d_center btn btn-primary" type="button">
+                        @if ($project->country_id)
+                            <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Fetcing regions in your Country...
+                        @else
+                            <span class="mdi mdi-alert-decagram-outline mr-1" role="status" aria-hidden="true"></span>kindly select your Region first
+                        @endif
                     </button>
 
                     <div class="d-none">
@@ -64,8 +68,12 @@
             </div>
             <div class="modal-body">
                 <div class="col-12 my-3">
-                    <button class="d_center btn btn-primary" type="button" disabled="">
-                        <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Fetcing cities in your Region...
+                    <button class="d_center btn btn-primary" type="button">
+                        @if ($project->region_id)
+                            <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Fetcing cities in your Region...
+                        @else
+                            <span class="mdi mdi-alert-decagram-outline mr-1" role="status" aria-hidden="true"></span>kindly select a region first
+                        @endif
                     </button>
 
                     <div class="d-none">

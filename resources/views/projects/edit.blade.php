@@ -128,6 +128,7 @@
 
 @section('scripts')
     <script>
+        newDropzone();
         var project = <?php echo $project ?>;
         var project_id = project.id;
         var is_onsite = project.model == "onsite" ? 1 : 0;

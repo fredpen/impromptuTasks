@@ -21,7 +21,8 @@
         <!-- Begin page -->
         <div class="wrapper">
 
-            <!-- ========== Left Sidebar Start ========== -->
+            @include('partials._notifications') 
+
             <div class="left-side-menu">
 
                 <div class="slimscroll-menu" id="left-side-menu-container" style="background-color: #212529e8">
@@ -46,15 +47,17 @@
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
-                                    <a href="{{ route('home') }}">App</a>
+                                    <a href="{{ route('home') }}"><i class="mdi mdi-rocket"></i> App</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.home') }}"><i class="mdi mdi-home-city"></i> Admin Home</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-meter"></i>
-                                <span> Users and Roles </span>
+                                <span><i class="mdi mdi-account-heart-outline"></i>  Users and Roles </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
@@ -143,7 +146,7 @@
                             </ul>
                         </li>
 
-                        <li class="side-nav-title side-nav-item mt-1">Components</li>
+                        {{-- <li class="side-nav-title side-nav-item mt-1">Components</li>
 
                         <li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link">
@@ -186,7 +189,7 @@
                                     <a href="ui-dragula.html">Dragula</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                     </ul>
 
                     <div class="clearfix"></div>
@@ -195,103 +198,97 @@
 
             <div class="content-page">
                 <div class="content">
-
-                    <!-- Topbar Start -->
                     <div class="navbar-custom">
-                        <ul class="list-unstyled topbar-right-menu float-right mb-0">
-
+                        <ul class="list-unstyled topbar-right-menu float-right mb-0">   
                             <li class="dropdown notification-list">
-                                <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+
+                                <a class="nav-link dropdown-toggle arrow-none" 
+                                    data-toggle="modal" 
+                                    href="#" 
+                                    id="topbar-notifydrop" 
+                                    role="button" 
+                                    data-target="#scrollable-modal" 
+                                    aria-haspopup="true" 
+                                    aria-expanded="false">
                                     <i class="dripicons-bell noti-icon"></i>
                                     <span class="noti-icon-badge"></span>
+                                    @if (Auth::check() && Auth::user()->unreadNotifications)
+                                        {{count(Auth::user()->unreadNotifications)}}
+                                    @endif
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
-
-                                    <!-- item-->
-                                    <div class="dropdown-item noti-title">
-                                        <h5 class="m-0">
-                                            <span class="float-right">
-                                                <a href="javascript: void(0);" class="text-dark">
-                                                    <small>Clear All</small>
-                                                </a>
-                                            </span>Notification
-                                        </h5>
-                                    </div>
-
-                                    <div class="slimscroll" style="max-height: 230px;">
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon bg-primary">
-                                                <i class="mdi mdi-comment-account-outline"></i>
-                                            </div>
-                                            <p class="notify-details">Caleb Flakelar commented on Admin
-                                                <small class="text-muted">1 min ago</small>
-                                            </p>
-                                        </a>
-                                    </div>
-
-                                    <!-- All-->
-                                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-                                        View All
-                                    </a>
-
-                                </div>
                             </li>
 
-
                             <li class="dropdown notification-list">
-                                    <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                        @guest
-                                            <span class="account-user-avatar">
-                                                <img src="{{ asset('images/basic.jpg') }}" alt="register avatar" class="rounded-circle">
-                                            </span>
-                                            <span>
-                                                <span class="account-user-name">Account</span>
-                                                <span class="account-position">Register/Login</span>
-                                            </span>
-                                        @else
-                                            <span class="account-user-avatar">
-                                                <img src="{{ asset('images/basic.jpg') }}" alt="{{Auth::User()->name}}" class="rounded-circle">
-                                            </span>
-                                            <span>
-                                                <span class="account-user-name">{{ Auth::User()->name }} </span>
-                                                <span class="account-position">Joined {{ Auth::User()->created_at->diffForHumans() }} </span>
-                                            </span>
-                                        @endguest
+                                <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                        
+                                    @guest
+                                        <span class="account-user-avatar">
+                                            <img src="{{ asset('images/basic.jpg') }}" alt="register avatar" class="rounded-circle">
+                                        </span>
+                                        <span>
+                                            <span class="account-user-name">Account</span>
+                                            <span class="account-position">Register/Login</span>
+                                        </span>
+                                    @else
+                                        <span class="account-user-avatar">
+                                            <img src="{{ Auth::User()->imageurl ? asset('images/'.Auth::User()->imageurl)  : asset('images/basic.jpg') }}" alt="{{Auth::User()->name}}" class="rounded-circle">
+                                        </span>
+                                        <span>
+                                            <span class="account-user-name">{{ Auth::User()->name }} </span>
+                                            <span class="account-position">Joined {{ Auth::User()->created_at->diffForHumans() }} </span>
+                                        </span>
+                                    @endguest
 
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
-                                        @guest
-                                            <a href="{{ route('login') }}" class="dropdown-item notify-item">
-                                                <i class="mdi mdi-login mr-1"></i>
-                                                <span>Login</span>
-                                            </a>
-                                            @if (Route::has('register'))
-                                                <a href="{{ route('register') }}" class="dropdown-item notify-item">
-                                                    <i class="mdi mdi-account-circle mr-1"></i>
-                                                    <span>Register</span>
-                                                </a>
-                                            @endif
-                                        @else
-                                            <a href="{{ route('account.edit', Auth::User()->id) }}" class="dropdown-item notify-item">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
+                                    @guest
+                                        <a href="{{ route('login') }}" class="dropdown-item notify-item">
+                                            <i class="mdi mdi-login mr-1"></i>
+                                            <span>Login</span>
+                                        </a>
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}" class="dropdown-item notify-item">
                                                 <i class="mdi mdi-account-circle mr-1"></i>
-                                                <span>My Profile</span>
+                                                <span>Register</span>
                                             </a>
-                                            <a href="{{ route('logout') }}" class="dropdown-item notify-item"
-                                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                                <i class="mdi mdi-login mr-1"></i>
-                                                    {{ __('Logout') }}
-                                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                    @csrf
-                                                </form>
-                                            </a>
-                                        @endguest
-                                    </div>
-                                </li>
+                                        @endif
+                                    @else
+                                        <a href="{{ route('account.show', Auth::User()->id) }}" class="dropdown-item notify-item">
+                                            <i class="mdi mdi-account-circle mr-1"></i>
+                                            <span>My Profile</span>
+                                        </a>
 
+                                        <a class="dropdown-item notify-item" 
+                                            data-toggle="modal" 
+                                            href="#" 
+                                            role="button" 
+                                            data-target="#scrollable-modal" 
+                                            aria-haspopup="true" 
+                                            aria-expanded="false">
+                                            <i class="mdi mdi-bell-ring mr-1"></i>
+                                            <span class="noti-icon-badge"></span>
+                                            <span>My Messages</span>(
+                                            <small class="text-danger">
+                                                @if (Auth::check() && Auth::user()->unreadNotifications)
+                                                    {{count(Auth::user()->unreadNotifications)}}
+                                                @endif
+                                            </small>)
+                                        </a>
+                                        
+                                        <a href="{{ route('logout') }}" class="dropdown-item notify-item"
+                                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                            <i class="mdi mdi-login mr-1"></i>
+                                                {{ __('Logout') }}
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </a>
+                                    @endguest
+                                </div>
+                            </li>
                         </ul>
+                        
                         <button class="button-menu-mobile open-left disable-btn">
                             <i class="mdi mdi-menu"></i>
                         </button>
@@ -307,12 +304,9 @@
                             </form>
                         </div>
                     </div>
-                </div> <!-- content -->
+                </div> 
 
-                 @yield('content')
-
-
-
+                @yield('content')
             </div>
         </div>
 

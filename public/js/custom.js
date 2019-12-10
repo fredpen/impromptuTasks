@@ -13,7 +13,6 @@ function preloadRegions(countryId, target = null) {
         response.data.forEach(function (region) {
             $('#region_id').append('<option value="' + region.id + '">' + region.name + '</option>')
         });
-       
     }).catch(function (error) {
         return setErrorMess('Kindly select your country again ');
     });
@@ -209,27 +208,27 @@ function checkRequiredFields() {
 
 
 
-
-
-
-Dropzone.autoDiscover = false;
-var dropzone = new Dropzone('#myAwesomeDropzone', {
-    parallelUploads: 1,
-    thumbnailHeight: 120,
-    thumbnailWidth: 120,
-    maxFilesize: 1, //1mb
-    maxFiles: 1,
-    filesizeBase: 1000,
-    thumbnail: function (file, dataUrl) {
-        if (file.previewElement) {
-            file.previewElement.classList.remove("dz-file-preview");
-            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-            for (var i = 0; i < images.length; i++) {
-                var thumbnailElement = images[i];
-                thumbnailElement.alt = file.name;
-                thumbnailElement.src = dataUrl;
+function newDropzone(elementId = '#myAwesomeDropzone')
+{
+    Dropzone.autoDiscover = false;
+    var dropzone = new Dropzone(elementId, {
+        parallelUploads: 1,
+        thumbnailHeight: 120,
+        thumbnailWidth: 120,
+        maxFilesize: 1, //1mb
+        maxFiles: 1,
+        filesizeBase: 1000,
+        thumbnail: function (file, dataUrl) {
+            if (file.previewElement) {
+                file.previewElement.classList.remove("dz-file-preview");
+                var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                for (var i = 0; i < images.length; i++) {
+                    var thumbnailElement = images[i];
+                    thumbnailElement.alt = file.name;
+                    thumbnailElement.src = dataUrl;
+                }
+                setTimeout(function () {file.previewElement.classList.add("dz-image-preview"); }, 1);
             }
-            setTimeout(function () {file.previewElement.classList.add("dz-image-preview"); }, 1);
         }
-    }
-});
+    });
+}

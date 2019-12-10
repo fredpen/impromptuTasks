@@ -13,4 +13,9 @@ class Payment extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public static function totalRevenue () 
+    {
+        return Payment::all('chargedamount')->sum('chargedamount');
+    }
+
 }

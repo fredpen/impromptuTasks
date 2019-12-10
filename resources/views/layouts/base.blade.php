@@ -33,6 +33,7 @@
 
                             <!-- LOGO -->
                             <a href="{{ route('home') }}" id="fred-logo" class="topnav-logo">
+                                
                                 <img src="{{ asset('images/basic.jpg') }}" alt="impromptutasks.com" height="16">
                             </a>
 
@@ -59,6 +60,7 @@
 
                                 <li class="dropdown notification-list">
                                     <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                          
                                         @guest
                                             <span class="account-user-avatar">
                                                 <img src="{{ asset('images/basic.jpg') }}" alt="register avatar" class="rounded-circle">
@@ -136,6 +138,7 @@
 
 
                             <div class="app-search">
+                                   
                                 <form>
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search...">
@@ -148,6 +151,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="topnav">
                         <div class="container-fluid">
                             <nav class="navbar navbar-dark navbar-expand-lg topnav-menu">
@@ -179,17 +183,6 @@
                                                         Authenitication <div class="arrow-down"></div>
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="topnav-auth">
-                                                        <a href="pages-login.html" class="dropdown-item">Login</a>
-                                                        <a href="pages-login-2.html" class="dropdown-item">Login 2</a>
-                                                        <a href="pages-register.html" class="dropdown-item">Register</a>
-                                                        <a href="pages-register-2.html" class="dropdown-item">Register 2</a>
-                                                        <a href="pages-logout.html" class="dropdown-item">Logout</a>
-                                                        <a href="pages-logout-2.html" class="dropdown-item">Logout 2</a>
-                                                        <a href="pages-recoverpw.html" class="dropdown-item">Recover Password</a>
-                                                        <a href="pages-recoverpw-2.html" class="dropdown-item">Recover Password 2</a>
-                                                        <a href="pages-lock-screen.html" class="dropdown-item">Lock Screen</a>
-                                                        <a href="pages-lock-screen-2.html" class="dropdown-item">Lock Screen 2</a>
-                                                        <a href="pages-confirm-mail.html" class="dropdown-item">Confirm Mail</a>
                                                         <a href="pages-confirm-mail-2.html" class="dropdown-item">Confirm Mail 2</a>
                                                     </div>
                                                 </div>
@@ -235,11 +228,7 @@
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="topnav-forms">
                                                         <a href="form-elements.html" class="dropdown-item">Basic Elements</a>
-                                                        <a href="form-advanced.html" class="dropdown-item">Form Advanced</a>
-                                                        <a href="form-validation.html" class="dropdown-item">Validation</a>
-                                                        <a href="form-wizard.html" class="dropdown-item">Wizard</a>
-                                                        <a href="form-fileuploads.html" class="dropdown-item">File Uploads</a>
-                                                        <a href="form-editors.html" class="dropdown-item">Editors</a>
+                                                      
                                                     </div>
                                                 </div>
                                                 <div class="dropdown">
@@ -248,9 +237,7 @@
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="topnav-charts">
                                                         <a href="charts-chartjs.html" class="dropdown-item">Chartjs</a>
-                                                        <a href="charts-brite.html" class="dropdown-item">Britecharts</a>
-                                                        <a href="charts-apex-line.html" class="dropdown-item">Apex Charts</a>
-                                                        <a href="charts-sparkline.html" class="dropdown-item">Sparklines</a>
+                                                    
                                                     </div>
                                                 </div>
                                                 <div class="dropdown">
