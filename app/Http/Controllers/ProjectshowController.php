@@ -9,6 +9,7 @@ use App\ProjectAppliedUser;
 use App\ProjectAssignedUser;
 use App\Tasks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectshowController extends Controller
 {
@@ -61,9 +62,10 @@ class ProjectshowController extends Controller
             ]);
         }
 
-        return view('projects.index', [
+        return view('projects.categoryShow', [
             'taskName' => $task->name,
-            'projects' => Project::where([['task_id', '=', $task->id], ['status', '=', 'posted'] ])->get()
+            'projects' => Project::where([['status',  '!=', 'draft'], ['task_id', '=', $task->id]])->paginate(10),  
+            'otherProjects' => Project::where([['status',  '!=', 'draft'], ['task_id', '!=', $task->id]])->limit(5)->get()
         ]);
     }
 }

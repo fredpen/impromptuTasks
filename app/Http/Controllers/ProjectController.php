@@ -58,8 +58,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::where('status', 'posted')->get();
-        return view('projects.index', compact('projects'));
+        return view("projects.index", [
+            'projects' => Project::where('status', '!=', 'draft')->paginate(10),
+        ]);
     }
     
 
