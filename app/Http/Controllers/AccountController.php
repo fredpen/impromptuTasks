@@ -72,15 +72,22 @@ class AccountController extends Controller
      * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $account)
     {
-        $user = User::findOrFail($id);
-        if ($user->isTaskGiver()) return view('taskGiver.show', compact('user'));
+        if ($account->isTaskGiver()) {
+            return view('taskGiver.show', [
+                'user' => $account,
+                'appliedProjects' => $account->projects,
+                'assignedProjects' => []
+            ]);
+        }
 
-        $skill_ids = $user->fetchskillsId();
-        $assignedProjects = $user->assignedProjects->take(5);
-        $appliedProjects = $user->appliedProjects->take(5);
-        return view('taskMaster.show', compact('user', 'skill_ids', 'appliedProjects', 'assignedProjects'));
+        return view('taskMaster.show', [
+            'user' => $account,
+            'skill_ids' =>  $account->fetchskillsId(),
+            'appliedProjects' => $account->assignedProjects->take(5),
+            'assignedProjects' => $account->appliedProjects->take(5)
+        ]);
     }
 
     /**
@@ -138,11 +145,16 @@ class AccountController extends Controller
         MarkAllNotificationAsRead::dispatch(Auth::user());
         return view('notifications', ['allNotifications' =>  Auth::user()->notifications]);
     }
+    /** show 
+     * show alist of all my tasks
+     * @return collection of tasks
+     */
 
     public function myTasks()
     {
-        $assignedProjects = Auth::user()->assignedProjects;
-        $appliedProjects = Auth::user()->appliedProjects;
-        return view('taskMaster.myTask', compact('assignedProjects', 'appliedProjects'));
+        return view('taskMaster.myTask', [
+            'assignedProjects' => Auth::user()->assignedProjects,
+            'appliedProjects' => Auth::user()->appliedProjects
+        ]);
     }
 }

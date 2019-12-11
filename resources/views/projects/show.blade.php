@@ -17,7 +17,7 @@
                 <div class="page-title text-left w-100">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Tasks</a></li>
-                        <li class="text-capitalize breadcrumb-item active"><a href="{{route('projects.index')}}">{{$project->task->name}}</a></li>
+                        <li class="text-capitalize breadcrumb-item active"><a href="{{route('project.usershow', $project->task->id)}}">{{$project->task->name}}</a></li>
                         <li class="breadcrumb-item active">{{ Str::limit($project->title, 15)}}</li>
                     </ol>
                 </div>
@@ -31,7 +31,7 @@
                         
                         <!-- project title-->
                         <h3 class="mt-0">{{ ucfirst($project->title)}}</h3>
-                        <a href="{{ route('projects.index') }}">{{$project->task->name . " - " . $project->subtask->name}}</a><br>
+                        <a href="{{route('project.usershow', $project->task->id)}}">{{$project->task->name . " - " . $project->subtask->name}}</a><br>
                         <span class="h6 text-dark">Updated On: {{$project->posted_on}}</span> 
                         <hr>
 

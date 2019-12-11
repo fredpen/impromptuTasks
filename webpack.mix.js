@@ -9,3 +9,5 @@ mix.scripts(['resources/js/main.js', 'resources/js/axios.js', 'resources/js/vue.
 
 
 
+mix.js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css');
