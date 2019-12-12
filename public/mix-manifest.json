@@ -1,7 +1,6 @@
 {
+    "/js/app.js": "/js/app.js",
     "/css/appcached.css": "/css/appcached.css",
     "/css/appburst.css": "/css/appburst.css",
-    "/js/appcached.js": "/js/appcached.js",
-    "/js/app.js": "/js/app.js",
-    "/js/custom.js": "/js/custom.js"
+    "/js/lib.js": "/js/lib.js"
 }

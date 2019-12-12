@@ -24,7 +24,7 @@
 
             @include('partials._notifications')
         <!-- Begin page -->
-        <div  id="root" class="wrapper">
+        <div  id="app" class="wrapper">
 
             <div class="content-page">
                 <div class="content">
@@ -285,9 +285,7 @@
                             </nav>
                         </div>
                     </div>
-
                     @yield('content')
-
                 </div>
 
                 <!-- Footer Start -->
@@ -310,10 +308,12 @@
             </div>
         </div>
        
-        <script src="{{ asset('js/appcached.js') }}"></script>
-        <script src="{{ asset('js/app.js') }}" ></script>
-        <script src="{{ asset('js/custom.js') }}"></script>
-        @yield('scripts')
+        
     </body>
+    <script src="{{ asset('js/lib.js') }}" ></script>
+    <script src="{{ asset('js/app.js') }}" ></script>
+    
+    
+    @yield('scripts')
 </html>
 

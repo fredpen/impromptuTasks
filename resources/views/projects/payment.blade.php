@@ -75,7 +75,6 @@
 
 
 @section('scripts')
-<script src="{{ asset('js/form.js') }}"></script>
 <script>
     var project_id = {{ $project-> id}};
     function submitForm(element)

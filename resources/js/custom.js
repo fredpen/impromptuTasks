@@ -1,4 +1,11 @@
 
+function submitForm(elementID)
+{
+   if (elementID == 'paymentForm' && $("#budget").val().length < 4) return setErrorMess("Budget can not be less than NGN 1000");
+   return $('#' + elementID).submit();
+}
+
+
 function preloadRegions(countryId, target = null) {
     countryId = target ? $(target).val() : countryId; //if there is a second param use that to get country id
     
@@ -232,3 +239,5 @@ function newDropzone(elementId = '#myAwesomeDropzone')
         }
     });
 }
+
+

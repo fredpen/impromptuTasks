@@ -32,7 +32,6 @@
     <div class="container">
         <div class="row justify-content-center mt-3">
 
-            <hometasks></hometasks>
             @foreach ($tasks as $task)
 
                 <div class="col-md-6 col-xl-4">
