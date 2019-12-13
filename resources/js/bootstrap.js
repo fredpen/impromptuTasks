@@ -1,15 +1,13 @@
 window._ = require('lodash');
-
-
 window.axios = require('axios');
 window.Vue = require('vue');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-try {
+// try {
     // window.Popper = require('popper.js').default;
     // window.$ = window.jQuery = require('jquery');
     // require('bootstrap');
-} catch (error) {}
+// } catch (error) {}
     
 
 /**

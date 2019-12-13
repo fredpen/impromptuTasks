@@ -31677,18 +31677,17 @@ var app = new Vue({
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // try {
+// window.Popper = require('popper.js').default;
+// window.$ = window.jQuery = require('jquery');
+// require('bootstrap');
+// } catch (error) {}
 
-try {// window.Popper = require('popper.js').default;
-  // window.$ = window.jQuery = require('jquery');
-  // require('bootstrap');
-} catch (error) {}
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
  * all outgoing HTTP requests automatically have it attached. This is just
  * a simple convenience so we don't have to attach every token manually.
  */
-
 
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
