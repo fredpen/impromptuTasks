@@ -84,14 +84,8 @@
                                         @guest
                                             <a href="{{ route('login') }}" class="dropdown-item notify-item">
                                                 <i class="mdi mdi-login mr-1"></i>
-                                                <span>Login</span>
+                                                <span>Login/Register</span>
                                             </a>
-                                            @if (Route::has('register'))
-                                                <a href="{{ route('register') }}" class="dropdown-item notify-item">
-                                                    <i class="mdi mdi-account-circle mr-1"></i>
-                                                    <span>Register</span>
-                                                </a>
-                                            @endif
                                         @else
                                             <a href="{{ route('account.show', Auth::User()->id) }}" class="dropdown-item notify-item">
                                                 <i class="mdi mdi-account-circle mr-1"></i>
