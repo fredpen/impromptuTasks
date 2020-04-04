@@ -13,17 +13,17 @@ class ProjectAssignedUser extends Model
 
     public function assignedUser()
     {
-        return $this->belongsToMany(App::User, 'user_id');
+        return $this->belongsToMany(User::class, 'user_id');
     }
 
     public function assignedProject()
     {
-        return $this->belongsToMany(App::Project, 'project_id');
+        return $this->belongsToMany(Project::class, 'project_id');
     }
 
     public function unassignUser()
     {
-        return $this->belongsToMany(App::Project, 'project_id');
+        return $this->belongsToMany(Project::class, 'project_id');
     }
 
     

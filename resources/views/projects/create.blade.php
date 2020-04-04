@@ -190,7 +190,10 @@
 
 @section('scripts')
     <script>
-       
+       function createProject(model, el) {
+           console.log(model + "............." + el);
+           
+       }
        
 
     </script>
