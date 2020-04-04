@@ -101,7 +101,7 @@
                             </div>
 
                             <div class="col-sm-12 col-md-6">
-                                {!! Form::open(['method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id], 'id' => 'postForm']) !!}
+                                {!! Form::open(['method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id], 'id' => 'postFormd']) !!}
                                     <button type="submit" class="d-block mx-auto  btn-lg btn btn-danger">
                                     {{ ($project->status == 'Draft') ? 'Delete Task' : 'Cancel Task'}}  </button>
                                 {!! Form::close() !!}
