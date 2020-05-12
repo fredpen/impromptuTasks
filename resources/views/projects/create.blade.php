@@ -74,7 +74,7 @@
                         @if (count($draftProjects))
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-centered m-0"">
+                                    <table class="table table-hover table-centered m-0">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>Task Title / Task type</th>
@@ -119,84 +119,6 @@
                         @endif
                     </div>
                 </div> 
-
-                {{-- <div class="card mb-0">
-                    <div class="card-header" id="headingTwo">
-                        <h5 class="m-0">
-                            <a class="custom-accordion-title d-block pt-2 pb-2" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                {{count($postedProjects)}} Posted Project{{(count($postedProjects) > 1) ? "s" : ""}}
-                                <span class="float-right"><i class="mdi mdi-chevron-down accordion-arrow"></i></span>
-                            </a>
-                        </h5>
-                    </div>
-                    
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
-                        @foreach ($postedProjects as $project)
-                            <div class="card-body">
-                                <div class="media">
-                                    <div class="media-body col-sm-12">
-                                        <h5 class="mt-0"> 
-                                            <div class="h4 m-0 float-right">
-                                                <a class=" my-0 mx-1" href="{{route('projects.edit', $project->id)}}"><i class="mdi mdi-pencil text-primary"></i></a>
-                                                <a class="my-0 mx-1" href="{{route('projects.show', $project->id)}}"><i class="mdi mdi-eye text-primary"></i></a>
-                                                <span onclick="submitForm({{$project->id}})" class="pointer my-0 mx-1"><i class="mdi mdi-delete text-danger"></i></span>
-                                                {!! Form::open(['id' => $project->id, 'method' => 'DELETE', 'action' => ['ProjectController@destroy', $project->id]]) !!}
-                                                    {!! Form::hidden('project_id', $project->id) !!}
-                                                {!! Form::close() !!} 
-                                            </div>
-                                                    
-                                            <a href=" {{ route('projects.show', $project->id) }} ">{{ $project->title }} </a>
-                                            @if ($project->location)
-                                                <ul class="d-block mb-0 list-inline">
-                                                    <li class="list-inline-item mr-3">
-                                                        <h5 class="mb-1"> NGN {{ $project->budget ?  $project->budget : "0"}}</h5>
-                                                        <p class="mb-0 ">City</p>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <h5 class="mb-1"> {{ $project->num_of_taskMaster ?  $project->num_of_taskMaster : "0"}}</h5>
-                                                        <p class="mb-0 ">Number of Orders</p>
-                                                    </li>
-                                                </ul>
-                                                    <span class="d-block h5">City: {{$project->city->name}} </span>
-                                                    <span class="d-block h5">Region: {{$project->region->name}} </span>
-                                                    <span class="d-block h5"> {{$project->country->name}}  </span>
-                                                    <div class="d-block h5"><i class="mdi mdi-home"></i> Location:</div>
-                                                    <div>
-                                                            <span class="d-block h5"> {{$project->location . ", " . $project->city->name}} </span>
-                                                            <span class="d-block h5"> {{$project->country->name}}  </span>
-                                                    </div>
-                                            @endif
-                                        </h5>
-                                    </div>
-                                </div>
-
-                                <div class="media-body col-sm-12 mt-3">
-                                    <p class=" text-dark mb-2">
-                                        <span class="mb-2 badge badge-light badge-pill" style="font-size:100%"> {{ $project->experience }} </span>
-                                    </p>
-
-                                    <p class=""> {{ Str::limit($project->description, 300) }}</p>
-                                   
-                            
-                                    <ul class="mb-0 list-inline">
-                                        <li class="list-inline-item mr-3">
-                                            <h5 class="mb-1"> NGN {{ $project->budget ?  $project->budget : "0"}}</h5>
-                                            <p class="mb-0 ">Total Budget</p>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <h5 class="mb-1"> {{ $project->num_of_taskMaster ?  $project->num_of_taskMaster : "0"}}</h5>
-                                            <p class="mb-0 ">Number of Orders</p>
-                                        </li>
-                                    </ul>
-                                    
-                                    <a href="{{ route('account.show', $project->id) }}" class="mt-3 btn btn-primary">View {{$project->title}}'s Profile</a>
-                                </div>
-                                </div>
-                            </div>
-                            <hr>
-                        @endforeach
-                    </div>
-                </div>  --}}
             </div> 
         </div>
 
@@ -264,18 +186,16 @@
             @endforeach
         @endif
     </div>
+</div>
 @endsection
 
 @section('scripts')
     <script>
+       function createProject(model, el) {
+           console.log(model + "............." + el);
+           
+       }
        
-        function createProject(target) {
-            let taskModel = $("input[name=" + target + "]:checked").val();
-            if (!taskModel) {
-               return $('#modelFormAlertMessage').removeClass('d-none');
-            }
-            $('#taskModelForm').submit();
-        }
 
     </script>
 @endsection

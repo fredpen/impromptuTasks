@@ -24,7 +24,7 @@
 
             @include('partials._notifications')
         <!-- Begin page -->
-        <div  id="root" class="wrapper">
+        <div  id="app" class="wrapper">
 
             <div class="content-page">
                 <div class="content">
@@ -84,14 +84,8 @@
                                         @guest
                                             <a href="{{ route('login') }}" class="dropdown-item notify-item">
                                                 <i class="mdi mdi-login mr-1"></i>
-                                                <span>Login</span>
+                                                <span>Login/Register</span>
                                             </a>
-                                            @if (Route::has('register'))
-                                                <a href="{{ route('register') }}" class="dropdown-item notify-item">
-                                                    <i class="mdi mdi-account-circle mr-1"></i>
-                                                    <span>Register</span>
-                                                </a>
-                                            @endif
                                         @else
                                             <a href="{{ route('account.show', Auth::User()->id) }}" class="dropdown-item notify-item">
                                                 <i class="mdi mdi-account-circle mr-1"></i>
@@ -285,9 +279,7 @@
                             </nav>
                         </div>
                     </div>
-
                     @yield('content')
-
                 </div>
 
                 <!-- Footer Start -->
@@ -310,10 +302,12 @@
             </div>
         </div>
        
-        <script src="{{ asset('js/appcached.js') }}"></script>
-        <script src="{{ asset('js/app.js') }}" ></script>
-        <script src="{{ asset('js/custom.js') }}"></script>
-        @yield('scripts')
+        
     </body>
+    <script src="{{ asset('js/lib.js') }}" ></script>
+    <script src="{{ asset('js/app.js') }}" ></script>
+    
+    
+    @yield('scripts')
 </html>
 

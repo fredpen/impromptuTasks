@@ -5,7 +5,7 @@
 @endif
 
 @section('content')
-<div class="container"  >
+<div class="container">
 
     {{-- errorBag --}}
     <div id="postingModal" class="modal fade" role="dialog" aria-labelledby="myModalLabel">

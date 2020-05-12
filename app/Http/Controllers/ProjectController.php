@@ -90,6 +90,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         $validatedData = $request->validate(
             ['model' => 'required', 'task_id' => 'required', 'user_id' => 'required']
         );
