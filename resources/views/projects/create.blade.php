@@ -12,6 +12,7 @@
     <div id="fredTaskMode" class="modal fade" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-top">
             {!! Form::open(['method' => 'POST', 'action' => 'ProjectController@store', 'id' => 'taskModelForm']) !!}
+            
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="text-primary modal-title" id="myModalLabel">Post a Task </h4>
@@ -190,7 +191,10 @@
 
 @section('scripts')
     <script>
-       
+       function createProject(model, el) {
+           console.log(model + "............." + el);
+           
+       }
        
 
     </script>

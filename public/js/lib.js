@@ -70,6 +70,8 @@ function postProject(target, model) {
     $(target).siblings('form').submit();
     // window.location.href = "/projects/" + project_id + "/post/true";
 }
+
+
 function updateTaskModel(target, field) {
     $('#taskModelModalButton').text($('#model :selected').text());
     updateProject(target, field);
