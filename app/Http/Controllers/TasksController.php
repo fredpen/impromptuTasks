@@ -2,66 +2,84 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use App\Tasks;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TasksController extends Controller
 {
-    private function _validate($request)
+    protected $task;
+
+    public function __construct(Tasks $task)
     {
-        return $request->validate(
-            ['name' => 'required|min:3|unique:tasks']
-        );
+        $this->task = $task;
     }
 
+    public function taskWithSubTasks()
+    {
+        $tasks =  $this->task->with("subTasks:id,task_id,name")->paginate(20);
+        return $tasks->count() ? ResponseHelper::sendSuccess($tasks) : ResponseHelper::notFound();
+    }
+    
     public function index()
     {
-        $tasks =  Tasks::with("subTasks:id,task_id,name")->paginate(20);
-        return view('admin.tasks.index', compact('tasks'));
+        $tasks =  $this->task->all();
+        return $tasks->count() ? ResponseHelper::sendSuccess($tasks) : ResponseHelper::notFound();
     }
 
-    public function store(Request $request, Tasks $tasks)
+    public function store(Request $request)
     {
         $validatedData = $this->_validate($request);
-        $tasks->storeTasks($validatedData['name']);
-        return back();
+        if ($validatedData->fails()) {
+            return ResponseHelper::badRequest($validatedData->errors()->first());
+        }
+
+        $task = $this->task->create($request->only('name'));
+        return $task ? ResponseHelper::sendSuccess($task) : ResponseHelper::serverError();
     }
 
-    public function show(Tasks $task)
+    public function show($taskId)
     {
-        if (!Auth::user()->isAdmin()) abort('403');
-
-        $sub_tasks = $task->subTasks;
-        return view('admin.tasks.show', compact('task', 'sub_tasks'));
+        $task =  $this->task->where('id', $taskId)->first();
+        if ($task) {
+            $task =  $this->task->where('id', $taskId)->with("subTasks")->first();
+            return ResponseHelper::sendSuccess($task);
+        }
+        return ResponseHelper::notFound();
     }
 
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tasks $task)
+    public function update(Request $request, $taskId)
     {
         $validatedData = $this->_validate($request);
-        $task->update($validatedData);
-        return back();
+        if ($validatedData->fails()) {
+            return ResponseHelper::badRequest($validatedData->errors()->first());
+        }
+
+        $task =  $this->task->where('id', $taskId)->first();
+        if ($task) {
+            $task = $task->update($request->only('name'));
+            return ResponseHelper::sendSuccess($task);
+        }
+        return ResponseHelper::notFound();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tasks $task)
+    public function delete($taskId)
     {
-        $task->subTasks()->delete();
-        $task->delete();
-        return back();
+        $task =  $this->task->where('id', $taskId)->first();
+        if ($task) {
+            $task->subTasks()->delete();
+            $task->delete();
+            return ResponseHelper::sendSuccess([]);
+        }
+        return ResponseHelper::notFound();
+       
+    }
+
+    private function _validate($request)
+    {
+        return Validator::make($request->all(), 
+            ['name' => 'required|min:3|unique:tasks']
+        );
     }
 }

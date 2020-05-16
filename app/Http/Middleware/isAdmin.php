@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\ResponseHelper;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,10 @@ class isAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()->isAdmin()) abort('403');
+        if (!Auth::user()->isAdmin()) 
+        {
+            return ResponseHelper::unAuthorised();
+        }
         return $next($request);
     }
 }

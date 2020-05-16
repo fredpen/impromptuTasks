@@ -3,106 +3,84 @@
 namespace App\Http\Controllers;
 
 use App\SubTask;
-use App\Tasks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Helpers\ResponseHelper;
 
 class SubTaskController extends Controller
 {
-    /**
-     * Retruns array of validated data
-     *
-     * @return $arrayName = array('' => , );
-     */
+    protected $subTask;
+
+    public function __construct(SubTask $subTask)
+    {
+        $this->subTask = $subTask;
+    }
+
+    public function index()
+    {
+        $subTasks =  $this->subTask->all();
+        return $subTasks->count() ? ResponseHelper::sendSuccess($subTasks) : ResponseHelper::notFound();
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $this->_validate($request);
+        if ($validatedData->fails()) {
+            return ResponseHelper::badRequest($validatedData->errors()->first());
+        }
+
+        $subTask =  $this->subTask->where('id', $request->task_id)->first();
+        if ($subTask) {
+            $subTask = $this->subTask->create($request->only(['name', 'task_id']));
+            return ResponseHelper::sendSuccess($subTask);
+        }
+        return ResponseHelper::notFound();
+    }
+
+    public function show($subTaskId)
+    {
+        $subTask =  $this->subTask->where('id', $subTaskId)->first();
+        return $subTask ? ResponseHelper::sendSuccess($subTask) : ResponseHelper::notFound();
+    }
+
+    public function update(Request $request, $subTaskId)
+    {
+        $validatedData = $this->_validateName($request);
+        if ($validatedData->fails()) {
+            return ResponseHelper::badRequest($validatedData->errors()->first());
+        }
+
+        $subTask =  $this->subTask->where('id', $subTaskId)->first();
+        if ($subTask) {
+            $subTask = $subTask->update($request->only('name'));
+            return ResponseHelper::sendSuccess($subTask);
+        }
+        return ResponseHelper::notFound();
+    }
+
+    public function delete($subTaskId)
+    {
+        $subTask =  $this->subTask->where('id', $subTaskId)->first();
+        if ($subTask) {
+            $subTask->delete();
+            return ResponseHelper::sendSuccess([]);
+        }
+        return ResponseHelper::notFound();
+       
+    }
+
     private function _validate($request)
     {
-        return $request->validate(
-            [
-                'name' => ['required', 'unique:sub_tasks'],
-                'task_id' => 'required'
-            ]
-        );
+        return Validator::make($request->all(), [
+            'name' => ['required', 'unique:sub_tasks'],
+            'task_id' => 'required'
+        ]);
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    
+    private function _validateName($request)
     {
-        $subtasks = SubTask::where('task_id', $request->task_id)->get(['id', 'name']);
-        return $subtasks;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-        // }
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, SubTask $subTask)
-    {
-        $subTasks = $this->_validate($request);
-        $subTask->storeSubtasks($request['name'], $subTasks['task_id']);
-        return back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\SubTask  $subTask
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SubTask $subTask)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\SubTask  $subTask
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SubTask $subTask)
-    {
-        // return $subTask;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\SubTask  $subTask
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SubTask $subtask)
-    {
-        $subTask = $this->_validate($request);
-        $subtask->update($subTask);
-        return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\SubTask  $subTask
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SubTask $subtask)
-    {
-        $subtask->delete();
-        return back();
+        return Validator::make($request->all(), [
+            'name' => ['required', 'unique:sub_tasks']
+        ]);
     }
 }

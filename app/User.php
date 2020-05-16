@@ -11,42 +11,20 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var    array
-     * @return array [<description>]
-     */
     public function role()
     {
         return $this->belongsTo('App\Role');
     }
-
 
     public function country()
     {
@@ -57,7 +35,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Region::class);
     }
-
 
     public function city()
     {
@@ -90,26 +67,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isTaskMaster()
     {
-        if ($this->role_id == 2) return true;
-        return false;
+        return $this->role_id == 2 ? true : false;
     }
 
     public function isTaskGiver()
     {
-        if ($this->role_id == 1) return true;
-        return false;
+        return $this->role_id == 1 ? true : false;
     }
 
     public function isAdmin()
     {
-        if ($this->role_id === 0) return true;
-        return false;
+        return $this->role_id === 0 ? true : false;
     }
 
     public function isActive()
     {
-        if ($this->isActive === 1) return true;
-        return false;
+        return $this->isActive === 1 ? true : false;
     }
 
     public function status()
@@ -132,17 +105,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Project::class, 'project_assigneduser')->withPivot('status');
     }
-
-   
-    // public function createdProjects() 
-    // {
-
-    //     return $this->belongsToMany(Project::class, 'project_assigneduser')->withPivot('status');
-    // }
-     /**
-     * project created by the user
-     * @return collection of projects
-     */
+    
     public function projects() //created projects
     {
         return $this->hasMany(Project::class);
