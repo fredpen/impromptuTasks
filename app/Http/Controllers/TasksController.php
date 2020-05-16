@@ -8,16 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     private function _validate($request)
     {
         return $request->validate(
@@ -25,34 +15,12 @@ class TasksController extends Controller
         );
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $tasks =  Tasks::with("subTasks:id,task_id,name")->paginate(20);
         return view('admin.tasks.index', compact('tasks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Tasks $tasks)
     {
         $validatedData = $this->_validate($request);
@@ -60,12 +28,6 @@ class TasksController extends Controller
         return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Tasks $task)
     {
         if (!Auth::user()->isAdmin()) abort('403');

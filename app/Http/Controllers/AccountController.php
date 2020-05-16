@@ -21,7 +21,7 @@ class AccountController extends Controller
 
     public function __construct() 
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth:api', 'verified']);
         $this->middleware(['isActive'])->only('show');
 
     }
@@ -57,21 +57,6 @@ class AccountController extends Controller
         );
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $user
-     * @return \Illuminate\Http\Response
-     */
     public function show(User $account)
     {
         if ($account->isTaskGiver()) {
