@@ -6,9 +6,8 @@
     <title>Impromptu Tasks</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Redfining how taks is done " name="description" />
-    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('images/basic.png') }}">
     
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -22,9 +21,9 @@
 
     <body data-layout="topnav" style="min-height: 100vh;">
 
-            @include('partials._notifications')
+        @include('partials._notifications')
         <!-- Begin page -->
-        <div  id="app" class="wrapper">
+        <div  id="appp" class="wrapper">
 
             <div class="content-page">
                 <div class="content">
@@ -34,7 +33,7 @@
                             <!-- LOGO -->
                             <a href="{{ route('home') }}" id="fred-logo" class="topnav-logo">
                                 
-                                <img src="{{ asset('images/basic.jpg') }}" alt="impromptutasks.com" height="16">
+                                <img title="Home" alt="Home" src="{{ asset('images/basic.png') }}" alt="impromptutasks.com" height="32">
                             </a>
 
 
@@ -152,6 +151,12 @@
 
                                 <div class="collapse navbar-collapse" id="topnav-menu-content">
                                     <ul class="navbar-nav">
+                                        <li class="nav-item ">
+                                            <a class="nav-link dropdown-toggle arrow-none" href="{{ route('projects.index') }}" id="topnav-apps" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Home
+                                            </a>
+                                        </li>
+
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-speedometer mr-1"></i>Tasks <div class="arrow-down"></div>
@@ -159,13 +164,9 @@
                                             <div class="dropdown-menu" aria-labelledby="topnav-dashboards">
                                                 <a href="{{ route('projects.index') }}" class="dropdown-item">All Tasks</a>
                                             </div>
+                                        </li>
 
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-apps mr-1"></i>Tasks <div class="arrow-down"></div>
-                                            </a>
-                                        </li>
+                                        
 
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
