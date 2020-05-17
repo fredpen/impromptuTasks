@@ -82,6 +82,11 @@ class Project extends Model
         if ($this->status == 'Draft')  return $this->delete();
         return $this->update(['status' => 'deleted', 'cancelled_on' => $this->timeNow()]);
     }
+    
+    public function delete()
+    {
+        return $this->update(['status' => 'deleted', 'deleted_on' => $this->timeNow()]);
+    }
 
     public function live()
     {

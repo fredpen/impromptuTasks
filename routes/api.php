@@ -2,8 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-// roles
-Route::get('roles', 'RolesController@index')->name('roles.all');
+// roles durations and other creation details
+Route::group(['name' => 'createOPtions'], function(){
+    Route::get('createOPtions', 'CreateOptionsController@createOPtions')->name('createOPtions');
+    Route::get('roles', 'CreateOptionsController@roles')->name('roles');
+});
+
 
 // auth
 Route::post('/auth/register', 'AuthController@signup')->name('register'); 
@@ -42,10 +46,8 @@ Route::group(['prefix' => 'project', 'name' => 'project'], function() {
     Route::get('all', 'ProjectController@index')->name('all');
     Route::get('user-projects', 'ProjectController@usersProject')->name('usersProject');
     Route::post('store', 'ProjectController@store')->name('store');
-
-    Route::get('/{projectId}/delete', 'ProjectController@delete')->name('delete')->middleware(['auth:api', 'isAdmin']);
     Route::get('/{projectId}/show', 'ProjectController@show')->name('show');
-    
+    Route::get('/{projectId}/delete', 'ProjectController@delete')->name('delete')->middleware(['auth:api', 'isAdmin']);
     Route::post('/{projectId}/update', 'ProjectController@update')->name('update');
 });
 

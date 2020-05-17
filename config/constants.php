@@ -8,6 +8,12 @@ return [
         '02' => 'Task Master',
     ],
 
+    // meta data
+    'metaData' =>  [
+        array('metaname' => 'color', 'metavalue' => 'blue'),
+        array('metaname' => 'size', 'metavalue' => 'big')
+    ],
+
     // status
     'status' => [
         '0' => 'created',

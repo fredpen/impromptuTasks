@@ -10,13 +10,6 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can update the project.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Project  $project
-     * @return mixed
-     */
     public function edit(User $user, Project $project)
     {
         return $user->id === $project->user_id && (!$project->isAssigned());

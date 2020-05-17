@@ -18,28 +18,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
-    protected $durationArray =  [
-        'Few Hours' => 'Few Hours',
-        'A day' => 'A day',
-        'less than a week' => 'less than a week',
-        'less than a month' => 'less than a month',
-        'less than three months' => 'less than three months',
-        'more than three months' => 'more than three months',
-        'not sure' => 'not sure'
-    ];
-
-    protected $expertise = [
-        'Beginner' => 'Average',
-        'Experienced' => 'Experienced',
-        'Expert' => 'Expert',
-        'veteran' => 'Veteran'
-    ];
-
-    protected $metaData = [
-        array('metaname' => 'color', 'metavalue' => 'blue'),
-        array('metaname' => 'size', 'metavalue' => 'big')
-    ];
-
     protected $project;
 
     public function __construct(Project $project)
@@ -56,7 +34,7 @@ class ProjectController extends Controller
    
     public function usersProject()
     {
-        $projects =  $this->project->where('user_id', Auth::id());
+        $projects =  $this->project->where(['user_id' => Auth::id(), 'deleted_on' => null]);
         return $projects->count() ? ResponseHelper::sendSuccess($projects->paginate(20)) : ResponseHelper::notFound();
     }
 
@@ -66,69 +44,47 @@ class ProjectController extends Controller
         if ($validatedData->fails()) {
             return ResponseHelper::badRequest($validatedData->errors()->first());
         }
+        $createRequest = $request->all();
+        $createRequest['user_id'] = Auth::id();
        
-        $project =  $this->project->create($validatedData);
-        $project->owner->notify((new projectCreated)->delay(10));
-        return redirect()->action('ProjectController@edit', ['id' => $project->id]);
+        $project =  $this->project->create($createRequest);
+        return $project ? ResponseHelper::sendSuccess($project) : ResponseHelper::serverError();
+        // $project->owner->notify((new projectCreated));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Project $project)
+    public function show($projectId)
     {
-        return view("projects.show", compact('project'));
+        $project =  $this->project->where(['id' => $projectId, 'deleted_on' => null])->first();
+        return $project ? ResponseHelper::sendSuccess($project) : ResponseHelper::notFound();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Project $project)
+    public function update(Request $request, $projectId)
     {
-        return view('projects.edit', [
-            'project' => $project,
-            'metaData' => $this->metaData,
-            'expertise' => $this->expertise,
-            'duration' => $this->durationArray,
-            'countries' => $project->model == 'remote' ? '' : Country::all(['name', 'id']),
-            'tasks' => Tasks::with('subTasks:id,name')->get(['id', 'name'])
-        ]);
-    }
+        $project =  $this->project->where(['id' => $projectId, 'deleted_on' => null, 'user_id' => Auth::id()])->first();
+        if (! $project) {
+            return ResponseHelper::notFound();
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Project $project)
-    {
-        $this->authorize('edit', $project);
-        $project->posted();
-        $project->owner->notify((new ProjectPosted)->delay(10)->onQueue('notifs'));
-        return redirect()->action('ProjectController@create')->with('message', 'Task has been posted successfully. We will contact you shortly');
+        $validatedData = $this->validateCreateRequest($request->all());
+        if ($validatedData->fails()) {
+            return ResponseHelper::badRequest($validatedData->errors()->first());
+        }
+        $project =  $project->update($request->all());
+        return $project ? ResponseHelper::sendSuccess($project) : ResponseHelper::serverError();
+        // $project->posted();
+        // $project->owner->notify((new ProjectPosted)->delay(10)->onQueue('notifs'));
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Project $project)
+    public function delete($projectId)
     {
-        $this->authorize('edit', $project);
-        $project->cancelled();
-        $project->owner->notify((new ProjectCancelled)->delay(10));
-        return redirect()->action('ProjectController@create');
+        $project =  $this->project->where(['id' => $projectId, 'deleted_on' => null])->first();
+        if (! $project) {
+            return ResponseHelper::notFound();
+        }
+        $project->delete();
+        return $project ? ResponseHelper::sendSuccess([]) : ResponseHelper::serverError();
+        // $project->owner->notify((new ProjectCancelled)->delay(10));
     }
 
 
@@ -142,6 +98,7 @@ class ProjectController extends Controller
         if ($request->field == 'region_id') return City::fetchCitiesWithRegionId($request->value);
     }
     
+    // this is where i stop i dont knw what to do with it yet
     private function draftProjects($array)
     {
         return $array->filter(function($items) {
@@ -159,11 +116,21 @@ class ProjectController extends Controller
     private function validateCreateRequest($request)
     {
         return Validator::make($request, [
-                'model' => 'required', 
-                'task_id' => 'required'
-            ]
-        );
+            'model' => 'required', 
+            'task_id' => 'required|integer',
+            'num_of_taskMaster' => 'required|integer',
+            'budget' => 'required',
+            'experience' => 'required',
+            'proposed_start_date' => 'required',
+            'description' => 'required',
+            'title' => 'required',
+            'sub_task_id' => 'required|integer',
+            'country_id' => 'required|integer',
+            'city_id' => 'required|integer',
+            'duration' => 'required',
+        ]);
     }
 
 
 }
+
