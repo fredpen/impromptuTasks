@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Country;
 use App\Region;
 use App\City;
+use App\Helpers\ResponseHelper;
 use App\Notifications\ProjectCancelled;
 use App\Notifications\projectCreated;
 use App\Notifications\ProjectPosted;
 use App\Project;
-
+use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
@@ -39,62 +40,34 @@ class ProjectController extends Controller
         array('metaname' => 'size', 'metavalue' => 'big')
     ];
 
+    protected $project;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __construct()
+    public function __construct(Project $project)
     {
-        $this->middleware(['auth', 'verified', 'isActive'])->except(['show', 'index']);
+        $this->middleware(['auth:api', 'verifyEmail', 'isActive'])->except(['show', 'index']);
+        $this->project = $project;
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view("projects.index", [
-            'projects' => Project::where('status', '!=', 'draft')->paginate(10),
-        ]);
+        $projects =  $this->project;
+        return $projects->count() ? ResponseHelper::sendSuccess($projects->paginate(20)) : ResponseHelper::notFound();
     }
-    
-
-    public function create() 
-    {
-        if (Auth::user()->isTaskMaster()) return redirect()->action(
-            'AccountController@myTasks')->with('message', 'Task Masters can not post Tasks. To post tasks, create a Task Giver account'
-        );
-
-        $projects = Project::where([['user_id', '=', Auth::id()], ['status', '!=', 'deleted']])->get();
-
-        return view('projects.create', [
-            'draftProjects' => $this->draftProjects($projects),
-            'notDraftProjects' => $this->notDraftProjects($projects),
-            'tasks' => Tasks::pluck('name', 'id')
-        ]);
-    }
-
    
-    
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function usersProject()
+    {
+        $projects =  $this->project->where('user_id', Auth::id());
+        return $projects->count() ? ResponseHelper::sendSuccess($projects->paginate(20)) : ResponseHelper::notFound();
+    }
+
     public function store(Request $request)
     {
-        return $request;
-        $validatedData = $request->validate(
-            ['model' => 'required', 'task_id' => 'required', 'user_id' => 'required']
-        );
-        $project = Project::create($validatedData);
+        $validatedData = $this->validateCreateRequest($request->all());
+        if ($validatedData->fails()) {
+            return ResponseHelper::badRequest($validatedData->errors()->first());
+        }
+       
+        $project =  $this->project->create($validatedData);
         $project->owner->notify((new projectCreated)->delay(10));
         return redirect()->action('ProjectController@edit', ['id' => $project->id]);
     }
@@ -181,6 +154,15 @@ class ProjectController extends Controller
         return $array->filter(function($items) {
             return $items->status != 'Draft';
         });
+    }
+
+    private function validateCreateRequest($request)
+    {
+        return Validator::make($request, [
+                'model' => 'required', 
+                'task_id' => 'required'
+            ]
+        );
     }
 
 

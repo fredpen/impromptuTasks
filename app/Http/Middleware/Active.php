@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\ResponseHelper;
 
 class Active
 {
@@ -17,9 +18,9 @@ class Active
      */
     public function handle($request, Closure $next)
     {
-        $user = Auth::user();
-        if (!$user->isActive())  return redirect()->action('AccountController@edit', $user->id)->with("message", $this->message);
-        if ($user->status() === 2)  abort('402'); //incomplete reg
-        if ($user->status() === 4)  abort('401'); //your account has been deactivated
+        if (! Auth::user()->isActive()) 
+        {
+            return ResponseHelper::unAuthorised();
+        }
         return $next($request);    }
 }

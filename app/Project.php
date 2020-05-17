@@ -66,7 +66,8 @@ class Project extends Model
     public function hasBeenAssigned($user_id)
     {
         $project = DB::table('project_assigneduser')->where([
-            'project_id' => $this->id, 'user_id' => $user_id
+            'project_id' => $this->id, 
+            'user_id' => $user_id
         ])->get();
         return count($project) > 0;
     }
