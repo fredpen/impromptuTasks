@@ -21,6 +21,7 @@ Route::group(['prefix' => 'task', 'name' => 'task'], function(){
     Route::post('/{taskId}/update', 'TasksController@update')->name('update')->middleware(['auth:api', 'isAdmin']);
 });
 
+// subtasks
 Route::group(['prefix' => 'subTask', 'name' => 'subTask'], function(){
     
     Route::get('all', 'SubTaskController@index')->name('all');
@@ -29,6 +30,17 @@ Route::group(['prefix' => 'subTask', 'name' => 'subTask'], function(){
     Route::post('store', 'SubTaskController@store')->name('store')->middleware(['auth:api', 'isAdmin']);
     Route::post('/{taskId}/update', 'SubTaskController@update')->name('update')->middleware(['auth:api', 'isAdmin']);
 });
+
+// Projects
+Route::group(['prefix' => 'project', 'name' => 'project'], function(){
+    
+    Route::get('all', 'SubTaskController@index')->name('all');
+    Route::get('/{taskId}/delete', 'SubTaskController@delete')->name('delete')->middleware(['auth:api', 'isAdmin']);;
+    Route::get('/{taskId}/show', 'SubTaskController@show')->name('show');
+    Route::post('store', 'SubTaskController@store')->name('store')->middleware(['auth:api', 'isAdmin']);
+    Route::post('/{taskId}/update', 'SubTaskController@update')->name('update')->middleware(['auth:api', 'isAdmin']);
+});
+
 
 
 // Route::resources([

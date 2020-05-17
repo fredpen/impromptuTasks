@@ -18,8 +18,8 @@ class SubTaskController extends Controller
 
     public function index()
     {
-        $subTasks =  $this->subTask->all();
-        return $subTasks->count() ? ResponseHelper::sendSuccess($subTasks) : ResponseHelper::notFound();
+        $subTasks =  $this->subTask;
+        return $subTasks->count() ? ResponseHelper::sendSuccess($subTasks->paginate(20)) : ResponseHelper::notFound();
     }
 
     public function store(Request $request)
