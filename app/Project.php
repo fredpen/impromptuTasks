@@ -90,7 +90,7 @@ class Project extends Model
 
     public function live()
     {
-        return $this->update(['status' => 'live']);
+        return $this->update(['status' => 'started']);
     }
 
     public function markCreate()
