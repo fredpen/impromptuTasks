@@ -51,6 +51,21 @@ Route::group(['prefix' => 'project', 'name' => 'project'], function() {
     Route::post('/{projectId}/update', 'ProjectController@update')->name('update');
 });
 
+// Projects status
+Route::group(['prefix' => 'update-project-status', 'name' => 'projectStatus'], function() {
+    
+    Route::get('/{projectId}/{status}', 'ProjectStatusController@updateStatus')->name('update');
+});
+
+
+// location controller
+Route::group(['prefix' => 'location', 'name' => 'location'], function() {
+    Route::get('countries', 'LocationController@countries')->name('countries');
+    Route::get('regions/{countryId}', 'LocationController@regions')->name('regions');
+    Route::get('city/{regionId}', 'LocationController@cities')->name('cities');
+});
+
+
 
 
 // Route::resources([

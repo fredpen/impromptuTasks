@@ -11,13 +11,12 @@ Route::group(['prefix' => 'project', 'name' => 'project'], function() {
     Route::get('{completed}', 'ProjectController@fetchProjectWithStatus')->name('completedProjects');
     Route::get('{cancelled}', 'ProjectController@fetchProjectWithStatus')->name('cancelledProjects');
     Route::get('{deleted}', 'ProjectController@fetchProjectWithStatus')->name('deletedProjects');
-
+    Route::get('model/{model}', 'ProjectController@fetchProjectWithModel')->name('remote');
+    Route::get('model/{model}', 'ProjectController@fetchProjectWithModel')->name('onsite');
     Route::get('{userId}/user-projects', 'ProjectController@usersProject')->name('usersProject');
-    Route::post('store', 'ProjectController@store')->name('store');
-    Route::get('/{projectId}/show', 'ProjectController@show')->name('show');
-    Route::get('/{projectId}/delete', 'ProjectController@delete')->name('delete')->middleware(['auth:api', 'isAdmin']);
-    Route::post('/{projectId}/update', 'ProjectController@update')->name('update');
 });
+
+
 
 
 // Route::group(

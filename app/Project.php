@@ -72,15 +72,30 @@ class Project extends Model
         return count($project) > 0;
     }
 
+    public function updateStatus($status)
+    {
+        if ($status == "completed") {
+            return $this->completed();
+        } elseif ($status == "cancelled") {
+            return $this->cancelled();
+        } elseif ($status == "deleted") {
+            return $this->delete();
+        } elseif ($status == "started") {
+            return $this->live();
+        } elseif ($status == "posted") {
+            return $this->posted();
+        }
+    }
+
     public function completed()
     {
-        return $this->update(['status' => 'completed']);
+        return $this->update(['status' => 'completed', 'completed_on' => $this->timeNow()]);
     }
 
     public function cancelled()
     {
         if ($this->status == 'Draft')  return $this->delete();
-        return $this->update(['status' => 'deleted', 'cancelled_on' => $this->timeNow()]);
+        return $this->update(['status' => 'cancelled', 'cancelled_on' => $this->timeNow()]);
     }
     
     public function delete()
@@ -90,7 +105,7 @@ class Project extends Model
 
     public function live()
     {
-        return $this->update(['status' => 'started']);
+        return $this->update(['status' => 'started', 'started_on' => $this->timeNow()]);
     }
 
     public function markCreate()

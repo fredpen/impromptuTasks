@@ -2,37 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
+use App\Policies\ProjectPolicy;
 use App\Project;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectStatusController extends Controller
 {
-    
-    public function __construct()
+    protected $project;
+
+    public function __construct(Project $project)
     {
-        $this->middleware('auth');
+        $this->project = $project;
+        $this->middleware(['auth:api']);
     }
 
-    public function completed(Project $project)
+    private function getProject($projectId)
     {
-        $project->completed();
-        return back()->with('message', 'Project status has been updated');
+        return $this->project->where('id', $projectId)->first();
     }
 
-    public function cancelled(Project $project)
+    public function updateStatus($projectId, $status)
     {
-        $project->cancelled();
-        return back()->with('message', 'Project status has been updated');
+        $project = $this->getProject($projectId);
+        $canEdit = ProjectPolicy::edit(Auth::user(), $project);
+        
+        if (! $project) {
+            return ResponseHelper::notFound();
+        } else if (! $canEdit) {
+            return ResponseHelper::unAuthorised();
+        }
+        return $project->updateStatus($status) ? ResponseHelper::sendSuccess([]) : ResponseHelper::serverError();
     }
 
-    public function live(Project $project)
-    {
-        $project->live();
-        return back()->with('message', 'Project status has been updated');
-    }
-
-    public function posted(Project $project)
-    {
-        $project->posted();
-        return back()->with('message', 'Project status has been updated');
-    }
+   
 }

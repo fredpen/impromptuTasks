@@ -2,22 +2,13 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Project;
-use Illuminate\Auth\Access\HandlesAuthorization;
-
 class ProjectPolicy
 {
-    use HandlesAuthorization;
-
-    public function edit(User $user, Project $project)
+    public static function edit($user, $project)
     {
-        return $user->id === $project->user_id && (!$project->isAssigned());
+        if ($user->isAdmin() || $project->user_id == $user->id) {
+            return true;
+        }
+        return false;
     }
-
-    public function before($user)
-    {
-        if ($user->isAdmin()) return true;
-    }
-
 }
