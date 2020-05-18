@@ -34,6 +34,6 @@ class ProjectStatusController extends Controller
         }
         return $project->updateStatus($status) ? ResponseHelper::sendSuccess([]) : ResponseHelper::serverError();
     }
-
+   
    
 }

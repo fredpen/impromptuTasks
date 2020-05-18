@@ -57,12 +57,22 @@ Route::group(['prefix' => 'update-project-status', 'name' => 'projectStatus'], f
     Route::get('/{projectId}/{status}', 'ProjectStatusController@updateStatus')->name('update');
 });
 
-
 // location controller
 Route::group(['prefix' => 'location', 'name' => 'location'], function() {
     Route::get('countries', 'LocationController@countries')->name('countries');
     Route::get('regions/{countryId}', 'LocationController@regions')->name('regions');
     Route::get('city/{regionId}', 'LocationController@cities')->name('cities');
+});
+
+// Projects assign and application
+Route::group(['prefix' => 'project-assignment', 'name' => 'projectAssignment'], function() {
+    Route::get('/assigned-users/{projectId}', 'ProjectAssignmentController@projectAssignedUser')->name('projectAssignedUser');
+});
+
+// Projects application
+Route::group(['prefix' => 'project-application', 'name' => 'projectAssignment'], function() {
+
+    Route::post('/apply', 'ProjectApplicationController@apply')->name('apply');
 });
 
 

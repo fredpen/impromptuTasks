@@ -10,9 +10,6 @@ use App\Country;
 use App\Region;
 use App\City;
 use App\Helpers\ResponseHelper;
-use App\Notifications\ProjectCancelled;
-use App\Notifications\projectCreated;
-use App\Notifications\ProjectPosted;
 use App\Project;
 use Illuminate\Support\Facades\Validator;
 

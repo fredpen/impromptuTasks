@@ -16,6 +16,13 @@ Route::group(['prefix' => 'project', 'name' => 'project'], function() {
     Route::get('{userId}/user-projects', 'ProjectController@usersProject')->name('usersProject');
 });
 
+// Projects assign and reassign
+Route::group(['prefix' => 'project-assignment', 'name' => 'projectAssignment'], function() {
+    
+    Route::get('/assign/{projectId}/{user_id}', 'ProjectAssignmentController@assign')->name('assign');
+    Route::get('/withdrawAssignment/{projectId}/{user_id}', 'ProjectAssignmentController@withdrawAssignment')->name('withdrawAssignment');
+});
+
 
 
 

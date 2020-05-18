@@ -8,12 +8,14 @@ class ProjectAssignedUser extends Model
 {
     protected $table = "project_assigneduser";
 
+    protected $with = ['assignedUser'];
+
     protected $guarded = [];
     
 
     public function assignedUser()
     {
-        return $this->belongsToMany(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function assignedProject()
@@ -21,10 +23,4 @@ class ProjectAssignedUser extends Model
         return $this->belongsToMany(Project::class, 'project_id');
     }
 
-    public function unassignUser()
-    {
-        return $this->belongsToMany(Project::class, 'project_id');
-    }
-
-    
 }
