@@ -24,7 +24,7 @@ class ProjectApplicationController extends Controller
         if ($validatedData->fails()) {
             return ResponseHelper::badRequest($validatedData->errors()->first());
         }
-        $data = $request->only(['resume', 'project_id']);
+        // $data = $request->only(['resume', 'project_id']);
         // $data['user_id'] = Auth::id();
         // $this->projectAssignedUser->firstOrCreate($request);
         // Auth::user()->notify(new ProjectAppllication);
