@@ -73,6 +73,9 @@ Route::group(['prefix' => 'project-assignment', 'name' => 'projectAssignment'], 
 Route::group(['prefix' => 'project-application', 'name' => 'projectAssignment'], function() {
 
     Route::post('/apply', 'ProjectApplicationController@apply')->name('apply');
+    Route::get('/with-draw-application/{projectId}', 'ProjectApplicationController@withDrawApplication')->name('withDrawApplication');
+    Route::get('/applications/{projectId}', 'ProjectApplicationController@projectApplications')->name('projectApplications');
+    Route::get('/with-draw-application/{projectId}', 'ProjectApplicationController@withDrawApplication')->name('withDrawApplication');
 });
 
 

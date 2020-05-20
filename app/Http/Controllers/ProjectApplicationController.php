@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ProjectAppliedUser;
 use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectApplicationController extends Controller
@@ -14,22 +15,47 @@ class ProjectApplicationController extends Controller
     public function __construct(ProjectAppliedUser $projectAppliedUser)
     {
         $this->middleware(['auth:api', 'verified', 'isActive']);
-        $this->projectAssignedUser = $projectAppliedUser;
+        $this->projectAppliedUser = $projectAppliedUser;
     }
 
-    // this is where i am, i want to work on applying, withdrwaing applications and get applied user
+
     public function apply(Request $request)
     {
         $validatedData = $this->validateApply($request->all());
         if ($validatedData->fails()) {
             return ResponseHelper::badRequest($validatedData->errors()->first());
         }
-        // $data = $request->only(['resume', 'project_id']);
-        // $data['user_id'] = Auth::id();
-        // $this->projectAssignedUser->firstOrCreate($request);
-        // Auth::user()->notify(new ProjectAppllication);
-        // return back()->with("message", $this->applyMessage);
+        $data = $request->only(['resume', 'project_id']);
+        $data['user_id'] = Auth::id();
+        $apply = $this->projectAppliedUser->firstOrCreate($data);
+        return $apply ? ResponseHelper::sendSuccess($apply) : ResponseHelper::serverError();
     }
+
+    public function withDrawApplication($projectId) 
+    {
+        $projectAppliedUser = $this->projectAppliedUser->where(['project_id' => $projectId, 'user_id' => Auth::id()])->first();
+        if (! $projectAppliedUser) {
+            return ResponseHelper::notFound();
+        }
+        $status = $projectAppliedUser->delete();
+        return $status ? ResponseHelper::sendSuccess([]) : ResponseHelper::serverError();
+    }
+    
+    public function projectApplications($projectId) 
+    {
+        $projectAppliedUser = $this->projectAppliedUser->where('project_id', $projectId)->get();
+        return $projectAppliedUser->count() ? ResponseHelper::sendSuccess($projectAppliedUser) : ResponseHelper::notFound();
+    }
+    
+    // public function appliedProjectUsers() 
+    // {
+    //     $projectAppliedUser = $this->projectAppliedUser->where(['project_id' => $projectId, 'user_id' => Auth::id()])->first();
+    //     if (! $projectAppliedUser) {
+    //         return ResponseHelper::notFound();
+    //     }
+    //     $status = $projectAppliedUser->delete();
+    //     return $status ? ResponseHelper::sendSuccess([]) : ResponseHelper::serverError();
+    // }
 
 
     // public function accept(ProjectAssignedUser $projectAssignedUser) 
@@ -41,8 +67,8 @@ class ProjectApplicationController extends Controller
     private function validateApply($request)
     {
         return Validator::make($request, [
-            'project_id' => 'required',
-            'resume' => 'required',
+            'project_id' => 'required|integer',
+            'resume' => 'required|string',
         ]);
     }
 }
