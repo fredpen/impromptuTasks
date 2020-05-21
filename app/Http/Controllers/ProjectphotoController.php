@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Projectphoto;
 use App\Project;
-use Illuminate\Support\Facades\Storage;
 use App\User;
 
 class ProjectphotoController extends Controller

@@ -43,27 +43,17 @@ class ProjectApplicationController extends Controller
     
     public function projectApplications($projectId) 
     {
-        $projectAppliedUser = $this->projectAppliedUser->where('project_id', $projectId)->get();
+        $projectAppliedUser = $this->projectAppliedUser->where('project_id', $projectId)->with('applications')->get();
         return $projectAppliedUser->count() ? ResponseHelper::sendSuccess($projectAppliedUser) : ResponseHelper::notFound();
     }
     
-    // public function appliedProjectUsers() 
-    // {
-    //     $projectAppliedUser = $this->projectAppliedUser->where(['project_id' => $projectId, 'user_id' => Auth::id()])->first();
-    //     if (! $projectAppliedUser) {
-    //         return ResponseHelper::notFound();
-    //     }
-    //     $status = $projectAppliedUser->delete();
-    //     return $status ? ResponseHelper::sendSuccess([]) : ResponseHelper::serverError();
-    // }
+    public function myApplications() 
+    {
+        $projectAppliedUser = $this->projectAppliedUser->where('user_id', Auth::id())->with('projects')->get();
+        return $projectAppliedUser->count() ? ResponseHelper::sendSuccess($projectAppliedUser) : ResponseHelper::notFound();
+    }
 
-
-    // public function accept(ProjectAssignedUser $projectAssignedUser) 
-    // {
-    //     $projectAssignedUser->update(['status' => 'accepted']);
-    //     return redirect()->action('AccountController@show', $projectAssignedUser->user_id)->with("message", $this->acceptMessage);
-    // }
-
+   
     private function validateApply($request)
     {
         return Validator::make($request, [

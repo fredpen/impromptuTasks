@@ -67,30 +67,16 @@ Route::group(['prefix' => 'location', 'name' => 'location'], function() {
 // Projects assign and application
 Route::group(['prefix' => 'project-assignment', 'name' => 'projectAssignment'], function() {
     Route::get('/assigned-users/{projectId}', 'ProjectAssignmentController@projectAssignedUser')->name('projectAssignedUser');
+    Route::get('/accept/{projectId}', 'ProjectAssignmentController@accept')->name('accept');
 });
 
 // Projects application
 Route::group(['prefix' => 'project-application', 'name' => 'projectAssignment'], function() {
-
     Route::post('/apply', 'ProjectApplicationController@apply')->name('apply');
     Route::get('/with-draw-application/{projectId}', 'ProjectApplicationController@withDrawApplication')->name('withDrawApplication');
     Route::get('/applications/{projectId}', 'ProjectApplicationController@projectApplications')->name('projectApplications');
-    Route::get('/with-draw-application/{projectId}', 'ProjectApplicationController@withDrawApplication')->name('withDrawApplication');
+    Route::get('/my-applications', 'ProjectApplicationController@myApplications')->name('myApplications');
 });
-
-
-
-
-// Route::resources([
-//     'tasks' => 'TasksController',
-//     'account' => 'AccountController',
-//     'projects' => 'ProjectController',
-//     'admin/countries' => 'CountryController',
-//     'admin/regions' => 'RegionController',
-//     'admin/cities' => 'CityController'
-// ]);
-
-
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -100,10 +86,6 @@ Route::group(['prefix' => 'project-application', 'name' => 'projectAssignment'],
 //         Route::put('project/ajax/{id}', 'ProjectController@ajax')->name('project.ajax');
 //     }
 // );
-
-
-// Route::get('/', 'HomeController@index')->name('home');
-// Route::get('/welcome', 'HomeController@welcome')->name('welcome'); // redirect after signing in
 
 
 // // routes for outside users interacting with projects
