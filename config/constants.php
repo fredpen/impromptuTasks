@@ -8,6 +8,11 @@ return [
         '02' => 'Task Master',
     ],
 
+    // allowed upload
+    'userUpdate' => [
+        'name',  'title',  'phone_number',  'country_id',  'region_id',  'city_id',  'address', "imageurl", "linkedln", "bio", "email", "password"
+    ],
+
     // meta data
     'metaData' =>  [
         array('metaname' => 'color', 'metavalue' => 'blue'),
@@ -25,7 +30,7 @@ return [
     ],
 
     // project duration
-    'projectDuration' =>  [ 
+    'projectDuration' =>  [
         'Few Hours' => 'Few Hours',
         'A day' => 'A day',
         'less than a week' => 'less than a week',
@@ -36,7 +41,7 @@ return [
     ],
 
     // level of expertise
-    'expertise' =>  [ 
+    'expertise' =>  [
         'Beginner' => 'Average',
         'Experienced' => 'Experienced',
         'Expert' => 'Expert',
